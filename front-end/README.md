@@ -1,59 +1,113 @@
 # FrontEnd
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.15.
+Esse projeto é o front-end de um sistema de manuntenção de equipamentos e foi gerado pelo [Angular CLI](https://github.com/angular/angular-cli) na versão 19+.
 
-## Development server
+O projeto utiliza uma arquitetura baseada em funcionalidades (Feature-based architecture) para garantir escalabilidade e manutenibilidade.
 
-To start a local development server, run:
+## 🚀 Primeiros Passos
+
+Siga os passos abaixo para configurar e executar o projeto localmente.
+
+### Pré-requisitos
+
+- Node.js: Versão 20.x ou superior. No desenvolvimento foi utilizado a 20.12.2.
+- Angular CLI: npm install -g @angular/cli@19
+
+```bash
+cd ./front-end/
+```
+
+```bash
+npm install
+```
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Após executar o comando, acesse http://localhost:4200/ no seu navegador. A aplicação recarregará automaticamente sempre que você alterar os arquivos do projeto.
 
-## Code scaffolding
+## ⚙️ Comandos Úteis
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Utilize o Angular CLI para agilizar o desenvolvimento e manter a padronização do código. O comando principal é o ng generate, que pode ser abreviado para ng g.
 
 ```bash
-ng generate --help
+# Exemplo: Criando uma página no módulo de cliente
+ng g c features/client/minha-nova-pagina
 ```
-
-## Building
-
-To build the project run:
 
 ```bash
-ng build
+# Serviços ficam centralizados na pasta core
+ng g s core/services/meu-novo-servico
 ```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
 
 ```bash
-ng test
+# Models reutilizáveis ficam na pasta shared
+ng g i shared/models/meu-novo-model
 ```
 
-## Running end-to-end tests
+## 📦 Organização das pastas
 
-For end-to-end (e2e) testing, run:
+A estrutura de pastas foi pensada para organizar o código por funcionalidade de negócio, facilitando a localização de arquivos e a colaboração. 
 
-```bash
-ng e2e
+Link de Referência para definir a estrutura das pastas [Angular Folder Structure Guide](https://www.angular.courses/blog/angular-folder-structure-guide) e [Angular Best Practices](https://www.thinkitive.com/blog/angular-best-practices-tips-for-project-structure-and-organization/)
+
 ```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+src/
+├── app/
+│    ├── core/
+│    │    ├── auth/
+│    │    │   └── pages/    
+│    │    │       ├── login-page/           
+│    │    │       └── self-registration-page/ 
+│    │    │
+│    │    ├── interceptors/
+│    │    │
+│    │    ├── layout/
+│    │    │   ├── header/               
+│    │    │   ├── footer/               
+│    │    │   └── side-bar/          
+│    │    │
+│    │    └── services/
+│    │
+│    ├── features/
+│    │    ├── client/
+│    │    │   ├── client-dashboard-page/    
+│    │    │   │
+│    │    │   ├── new-request-page/        
+│    │    │   │
+│    │    │   └── request-detail-page/      
+│    │    │
+│    │    └── employee/
+│    │        ├── employee-dashboard-page/  
+│    │        │
+│    │        ├── request-management/
+│    │        │   ├── all-requests-page/      
+│    │        │   ├── budgeting-page/         
+│    │        │   └── maintenance-page/      
+│    │        │
+│    │        ├── admin/
+│    │        │   ├── manage-categories-page/ 
+│    │        │   └── manage-employees-page/  
+│    │        │
+│    │        └── reports/
+│    │            └── reports-page/           
+│    │
+│    └── shared/
+│        ├── components/
+│        │
+│        ├── directives/
+│        │
+│        ├── pipes/
+│        │
+│        └── utils/
+│
+├── assets/
+│    ├── icons/
+│    │
+│    ├── illustraions/
+│    │
+│    └── images/
+│
+└── styles/
+```
