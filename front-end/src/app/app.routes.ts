@@ -3,6 +3,7 @@ import { LoginPageComponent } from './core/auth/pages/login-page/login-page.comp
 import { PaymentPanelComponent } from './features/client/request-detail-page/components/payment-panel/payment-panel.component';
 import { BudgetDeliveryComponent } from './features/employee/budget-delivery/budget-delivery.component';
 import { ApproveRejectPanelComponent } from './features/client/request-detail-page/components/approve-reject-panel/approve-reject-panel.component';
+import { RequestDetailPageComponent } from './features/client/request-detail-page/request-detail-page.component';
 
 export const routes: Routes = [
   {
@@ -22,9 +23,13 @@ export const routes: Routes = [
     path: 'payment-page',
     component: PaymentPanelComponent
   },
-    {
+  {
     path:'approve-reject-panel',
     component:ApproveRejectPanelComponent
+  },
+  {
+    path: 'request-datail',
+    component:RequestDetailPageComponent
   }
 ];
   
