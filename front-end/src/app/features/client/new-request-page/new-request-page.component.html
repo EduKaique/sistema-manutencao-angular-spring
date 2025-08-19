@@ -1,0 +1,29 @@
+<div class ="request-form"> 
+    <h1>Solicitação de manutenção</h1>
+    <form class ="request-form-body">
+
+        <div class="form-group">
+            <label for="equipmentDescription">Descrição do equipamento </label>
+            <input type="text" id="equipmentDescription" name="equipmentDescription" placeholder="Ex: Dell Vostro 3500, Intel Core i3, 4GB RAM, HD 500GB" required/>
+        </div>
+
+        <div class="form-group">
+            <label for="equipmentCategory">Categoria do equipamento </label>
+            <select id="equipmentCategory" required> 
+                <option value="" disabled selected>Selecione</option>
+                <option value="notebook">Notebook</option>
+                <option value="desktop">Desktop</option>
+                <option value="impressora">Impressora</option>
+                <option value="mouse">Mouse</option>
+                <option value="teclado">Teclado</option>
+            </select>
+        </div>
+            
+        <div class="form-group">
+            <label for="effectDescription">Descrição do defeito </label>
+            <input type="text" id="effectDescription" name="effectDescription" required/>
+        </div>
+
+        <button type="submit">Enviar</button> 
+    </form>
+</div>
