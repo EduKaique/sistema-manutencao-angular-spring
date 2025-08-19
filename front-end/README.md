@@ -1,27 +1,113 @@
 # FrontEnd
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.17.
+Esse projeto é o front-end de um sistema de manuntenção de equipamentos e foi gerado pelo [Angular CLI](https://github.com/angular/angular-cli) na versão 19+.
 
-## Development server
+O projeto utiliza uma arquitetura baseada em funcionalidades (Feature-based architecture) para garantir escalabilidade e manutenibilidade.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 🚀 Primeiros Passos
 
-## Code scaffolding
+Siga os passos abaixo para configurar e executar o projeto localmente.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Pré-requisitos
 
-## Build
+- Node.js: Versão 20.x ou superior. No desenvolvimento foi utilizado a 20.12.2.
+- Angular CLI: npm install -g @angular/cli@19
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```bash
+cd ./front-end/
+```
 
-## Running unit tests
+```bash
+npm install
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```bash
+ng serve
+```
 
-## Running end-to-end tests
+Após executar o comando, acesse http://localhost:4200/ no seu navegador. A aplicação recarregará automaticamente sempre que você alterar os arquivos do projeto.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## ⚙️ Comandos Úteis
 
-## Further help
+Utilize o Angular CLI para agilizar o desenvolvimento e manter a padronização do código. O comando principal é o ng generate, que pode ser abreviado para ng g.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```bash
+# Exemplo: Criando uma página no módulo de cliente
+ng g c features/client/minha-nova-pagina
+```
+
+```bash
+# Serviços ficam centralizados na pasta core
+ng g s core/services/meu-novo-servico
+```
+
+```bash
+# Models reutilizáveis ficam na pasta shared
+ng g i shared/models/meu-novo-model
+```
+
+## 📦 Organização das pastas
+
+A estrutura de pastas foi pensada para organizar o código por funcionalidade de negócio, facilitando a localização de arquivos e a colaboração. 
+
+Link de Referência para definir a estrutura das pastas [Angular Folder Structure Guide](https://www.angular.courses/blog/angular-folder-structure-guide) e [Angular Best Practices](https://www.thinkitive.com/blog/angular-best-practices-tips-for-project-structure-and-organization/)
+
+```
+src/
+├── app/
+│    ├── core/
+│    │    ├── auth/
+│    │    │   └── pages/    
+│    │    │       ├── login-page/           
+│    │    │       └── self-registration-page/ 
+│    │    │
+│    │    ├── interceptors/
+│    │    │
+│    │    ├── layout/
+│    │    │   ├── header/               
+│    │    │   ├── footer/               
+│    │    │   └── side-bar/          
+│    │    │
+│    │    └── services/
+│    │
+│    ├── features/
+│    │    ├── client/
+│    │    │   ├── client-dashboard-page/    
+│    │    │   │
+│    │    │   ├── new-request-page/        
+│    │    │   │
+│    │    │   └── request-detail-page/      
+│    │    │
+│    │    └── employee/
+│    │        ├── employee-dashboard-page/  
+│    │        │
+│    │        ├── request-management/
+│    │        │   ├── all-requests-page/      
+│    │        │   ├── budgeting-page/         
+│    │        │   └── maintenance-page/      
+│    │        │
+│    │        ├── admin/
+│    │        │   ├── manage-categories-page/ 
+│    │        │   └── manage-employees-page/  
+│    │        │
+│    │        └── reports/
+│    │            └── reports-page/           
+│    │
+│    └── shared/
+│        ├── components/
+│        │
+│        ├── directives/
+│        │
+│        ├── pipes/
+│        │
+│        └── utils/
+│
+├── assets/
+│    ├── icons/
+│    │
+│    ├── illustraions/
+│    │
+│    └── images/
+│
+└── styles/
+```

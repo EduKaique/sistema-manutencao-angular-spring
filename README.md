@@ -8,16 +8,16 @@ O objetivo é criar um sistema completo para gerenciamento de ordens de serviço
 
 Este projeto foi construído com as seguintes tecnologias:
 
--   **Frontend:** [Angular 17](https://angular.io/)
+-   **Frontend:** [Angular 19](https://v19.angular.dev/overview)
 -   **Backend:** [Spring Boot 3](https://spring.io/projects/spring-boot)
 -   **Banco de Dados:** [MySQL](https://www.mysql.com/)
 
 ## 📋 Pré-requisitos
 
 Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
-*   [JDK 17 ou superior](https://www.oracle.com/java/technologies/downloads/)
-*   [Node.js e npm](https://nodejs.org/en/)
-*   [Angular CLI](https://angular.io/cli)
+*   [JDK 21 (LTS)](https://www.oracle.com/java/technologies/downloads/)
+*   [Node.js 20.+ e npm](https://nodejs.org/en/)
+*   [Angular CLI 19](https://angular.io/cli)
 *   [MySQL Server](https://dev.mysql.com/downloads/mysql/)
 *   Uma IDE de sua preferência (ex: VS Code, IntelliJ IDEA)
 
@@ -27,8 +27,8 @@ Siga os passos abaixo para executar o projeto localmente.
 
 ### 1. Clonar o Repositório
 ```bash
-git clone <URL_DO_SEU_REPOSITORIO>
-cd <NOME_DA_PASTA_DO_PROJETO>
+git clone https://github.com/EduKaique/sistema-manutencao-angular-spring
+cd ./sistema-manutencao-angular-spring
 ```
 
 ### 2. Configurar o Backend (Spring Boot)
