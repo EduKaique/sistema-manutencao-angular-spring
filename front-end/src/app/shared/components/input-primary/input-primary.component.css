@@ -1,0 +1,31 @@
+@import url("../../../../styles/variables.css");
+
+.input-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+label {
+    color: var(--color-text-label, #475756);
+}
+
+input {
+    display: flex;
+    height: 48px;
+    width: 500px;
+    padding: var(--spacing-3xs) var(--spacing-xs);
+    align-items: center;
+    gap: var(--spacing-3xs);
+    align-self: stretch;
+    border-radius: var(--border-sm);
+    border: 1px solid var(--color-border-dark);
+    background: var(--color-background-inputs);
+    color: var(--color-text-default);
+}
+
+input:focus-visible{
+    outline: none;
+    box-shadow: 0 0 0 0;
+    border: 1px solid var(--color-border-active);
+}

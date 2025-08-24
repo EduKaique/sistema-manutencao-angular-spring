@@ -1,24 +1,20 @@
 <main>
-  <section class="illustration"></section>
+  <section class="illustration">
+    <h1></h1>
+  </section>
   <section class="form">
-    <div class="form-container">
-      <mat-form-field appearance="outline">
-        <mat-label>Digite seu Email</mat-label>
-        <input matInput placeholder="" />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Digite sua Senha</mat-label>
-        <input matInput [type]="hide() ? 'password' : 'text'" />
-        <button
-          matIconButton
-          matSuffix
-          (click)="clickEvent($event)"
-          [attr.aria-label]="'Hide password'"
-          [attr.aria-pressed]="hide()"
-        >
-          <mat-icon>{{ hide() ? "visibility_off" : "visibility" }}</mat-icon>
-        </button>
-      </mat-form-field>
-    </div>
+    <form class="form-container">
+      <app-input-primary
+        label="Email"
+        type="email"
+        formControlName="email"
+        placeholder="exemple@email.com"
+      ></app-input-primary>
+      <app-input-primary
+        label="Senha"
+        type="password"
+        formControlName="password"
+      ></app-input-primary>
+    </form>
   </section>
 </main>
