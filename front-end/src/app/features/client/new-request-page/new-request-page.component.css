@@ -1,53 +1,149 @@
-* {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    box-sizing: border-box;
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
 }
 
-.request-form{
+.request-modal-container {
+    display: flex;
+    width: 100%;
+    max-width: 565px;
+    position:relative;
+    padding: var(--spacing-md);
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    background: var(--color-background-card);
+}
+
+.request-modal-container h2 {
+    color: var(--color-heading-default);
+    font-family: var(--heading-h5-font-family);
+    font-size: var(--heading-h5-font-size);
+    font-style: normal;
+    font-weight: var(--heading-h5-font-weight);
+    line-height: var(--heading-h5-line-height);
+    letter-spacing: var(--heading-h5-letter-spacing);
+    align-self: flex-start;
+}
+
+.request-form-body {
     display: flex;
     flex-direction: column;
-    align-items: center;
-}
-
-.request-form-body{
+    gap: var(--spacing-md);
     width: 100%;
-    max-width: 500px;
-}
-
-h1{
-    color: rgb(0, 99, 197);
 }
 
 .form-group {
-    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
+    gap: 4px;
+    align-self: stretch;
 }
 
-label {
-    font-weight: bold;
-    margin-bottom: 5px;
+.form-group label {
+    align-self: stretch;
+    color: var(--color-text-label);
+    font-family: var(--label-default-font-family);
+    font-size: var(--label-default-font-size);
+    font-style: normal;
+    font-weight: var(--label-default-font-weight);
+    line-height: var(--label-default-line-height);
+    letter-spacing: 0;
 }
 
-input {
-    padding: 10px;
+.form-group input,
+.form-group select,
+.form-group textarea {
+    height: 48px;
+    padding: var(--spacing-3xs) var(--spacing-xs);
+    align-items: center;
+    align-self: stretch;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border-dark);
+    background: var(--color-background-inputs);
+    color: var(--color-text-placeholder);
+    font-family: var(--body-default-font-family);
+    font-size: var(--body-default-font-size);
+    font-style: normal;
+    font-weight: var(--body-default-font-weight);
+    line-height: var(--body-default-line-height);
+    letter-spacing: var(--body-default-letter-spacing);
+    outline: none;
 }
 
-select {
-    padding: 7px;
+#effectDescription {
+    height: 168px;
+    resize: none;
 }
 
-button{
-    background-color:  rgb(0, 99, 197); 
+.required-field {
+    color: var(--color-text-placeholder);
+    font-family: var(--body-default-font-family);
+    font-size: var(--body-default-font-size);
+    font-style: normal;
+    font-weight: var(--body-default-font-weight);
+    line-height: var(--body-default-line-height);
+    letter-spacing: var(--body-default-letter-spacing);
+}
+
+.submit-button {
+    display: inline-flex;
+    width: 245px;
+    height: 48px;
+    padding: var(--spacing-2xs);
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    border-radius: var(--radius-sm);
+    background: var(--color-primary-default);
     color: white;
-    width: 100px;
-    padding: 10px;
-    border-radius: 4px;
-    font-weight: bold;
+    font-weight: 600;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    margin: 0 auto;
+    }
+
+.submit-button:hover {
+    background-color: #0000007a;
+    color: white;
+    cursor: pointer;
 }
 
-button:hover {
-  background-color: #03030335;
-  color: rgb(0, 0, 0);
-  cursor: pointer;
+.submit-button svg {
+    width: 16.3px;
+    height: 12.025px;
+    flex-shrink: 0;
+    aspect-ratio: 61 / 45;
+    fill: var(--color-primary-lightest, #F3FAFA);
+
+}
+
+.close-button {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 24px;
+    height: 24px;
+    aspect-ratio: 1 / 1;
+    background-color: transparent;  
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.close-button svg {
+    width: 100%;
+    height: 100%;
 }
