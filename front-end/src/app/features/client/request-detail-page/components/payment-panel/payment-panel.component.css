@@ -1,12 +1,140 @@
-.action-buttons {
-  padding-bottom: 20px;
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background: #e9ecef;
 }
 
-.headers-align .mat-expansion-panel-header-description {
+.card {
+  display: flex;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+
+.card-left {
+  width: 684px;
+  padding: 32px 24px;
+  background: #f4f6fb;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.back-link {
+  color: #349896;
+  font-size: 18px;
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: 16px;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.info-section {
+  margin-bottom: 20px;
+}
+
+.info-item {
+  margin-bottom: 16px;
+}
+
+.info-item h3,
+.info-section h3 {
+  color: #627877;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.info-item p,
+.info-section p {
+  color: #374343;
+  font-size: 16px;
+  margin: 0;
+}
+
+.payment-item {
+  display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 12px 0;
 }
 
-.headers-align .mat-mdc-form-field + .mat-mdc-form-field {
-  margin-left: 8px;
+.payment-title {
+  font-size: 20px;
+  color: #374343;
+  margin: 0;
+}
+
+.payment-desc {
+  font-size: 14px;
+  color: #627877;
+  margin: 0;
+}
+
+.payment-price {
+  font-size: 20px;
+  font-weight: bold;
+  color: #3b598e;
+}
+
+.card-right {
+  width: 627px;
+  background: #fafafa;
+  padding: 76px 71px;
+}
+
+.card-right h2 {
+  font-size: 28px;
+  font-weight: 500;
+  color: #546666;
+}
+
+.payment-methods {
+  display: flex;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.pay-btn {
+  padding: 12px 24px;
+  border: 2px solid #349896;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  color: #349896;
+  transition: all 0.3s;
+}
+
+.pay-btn:hover {
+  background: #e6f4f3;
+}
+
+.pay-btn.selected {
+  background: #349896;
+  color: #fff;
+}
+
+.pay-now {
+  width: 100%;
+  padding: 16px;
+  background: #349896;
+  color: #fff;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.pay-now:hover {
+  background: #26726f;
 }
