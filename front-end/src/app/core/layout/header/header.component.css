@@ -1,0 +1,63 @@
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--primary-color, #1976d2);
+  color: white;
+  padding: 12px 24px;
+  height: var(--header-height, 64px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.logo a {
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.menu {
+  display: flex;
+  gap: 16px;
+}
+
+.menu a {
+  text-decoration: none;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.menu a:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.menu a.active {
+  border-bottom: 2px solid white;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.search-input {
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: none;
+  font-family: var(--body-default-font-family);
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-profile .avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+}

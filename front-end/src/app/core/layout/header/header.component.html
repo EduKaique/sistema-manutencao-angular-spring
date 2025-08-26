@@ -1,1 +1,20 @@
-<p>header works!</p>
+<header class="app-header">
+  <div class="logo heading_6">
+    <a routerLink="/home">Remont</a>
+  </div>
+
+  <nav class="menu">
+    <a routerLink="/home" routerLinkActive="active" class="label_large">Home</a>
+    <a routerLink="/sobre" routerLinkActive="active" class="label_large">Sobre</a>
+    <a routerLink="/contato" routerLinkActive="active" class="label_large">Contato</a>
+  </nav>
+
+  <div class="header-actions">
+    <input type="text" placeholder="Pesquisar..." class="search-input label_medium">
+    <div class="user-profile">
+      <img src="assets/user.png" alt="Usuário" class="avatar">
+      <span class="label_medium">nome-do-usuário
+      </span>
+    </div>
+  </div>
+</header>
