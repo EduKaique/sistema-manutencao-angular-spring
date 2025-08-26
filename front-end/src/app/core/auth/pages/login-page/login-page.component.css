@@ -2,26 +2,90 @@
 
 main {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
     background-color: #f0f0f0;
     height: 100%;
+    padding-left: 48px;
 }
 
 section{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     height: 100%;
 }
 
-.form-container {
+
+
+.illustration {
+    width: 70%;
+}
+
+.title-login {
+    color: var(--color-heading-subtle);
+}
+
+.emphasis {
+    color: var(--color-primary-default);
+}
+
+.container-illustration {
     display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.form {
+    align-items: center;
+    width: 30%;
+    padding: var(--spacing-lg, 32px) var(--spacing-xl, 40px);
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #fff;
-    width: auto;
-    padding: 24px;
+    gap: var(--spacing-xl, 40px);
+    flex-shrink: 0;
+    background: var(--color-background-card, #FAFAFA);
+}
+
+.form-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-3xs, 8px);
+    color: var(--color-text-default);
+}
+
+.form-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 40px;
+    align-self: stretch;
+}
+
+.form-inputs {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    align-self: stretch;
+    width: 100%;
+}
+
+
+.row-link-btn {
+    color: var(--color-text-default);
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.button {
+    width: 200px;
+    height: 48px;
+    padding: var(--spacing-2xs, 12px);
+    border-radius: var(--radius-sm, 8px);
+    background: var(--color-primary-default, #349896);
+    border: 0;
+    color: var(--color-primary-lightest);
 }

@@ -1,20 +1,38 @@
 <main>
   <section class="illustration">
-    <h1></h1>
+    <h1 class="display_medium title-login">Com a <span class="emphasis">Remont</span>, <br> seus equipamentos <br> nunca param.</h1>
+    <div class="container-illustration">
+      <img src="assets/illustrations/login-illustration.svg" alt="Ilustração de Login" width="600">
+    </div>
   </section>
   <section class="form">
-    <form class="form-container">
-      <app-input-primary
-        label="Email"
-        type="email"
-        formControlName="email"
-        placeholder="exemple@email.com"
-      ></app-input-primary>
-      <app-input-primary
-        label="Senha"
-        type="password"
-        formControlName="password"
-      ></app-input-primary>
-    </form>
+    <img src="assets/images/logo.png" alt="Logomarca" width="200">
+    <div class="form-content">
+      <div class="form-text">
+        <h3 class="heading_3">Login</h3>
+        <p class="body_medium">Preencha Preencha suas informações para entrar.</p>
+      </div>
+      <form class="form-inputs">
+        <app-input-primary
+          label="Email"
+          type="email"
+          formControlName="email"
+          placeholder="exemple@email.com"
+          style="width: inherit;"
+        ></app-input-primary>
+        <app-input-primary
+          label="Senha"
+          type="password"
+          formControlName="password"
+          style="width: inherit;"
+        ></app-input-primary>
+        <div class="row-link-btn">
+          <p><a href="#">Esqueceu a senha?</a></p>
+          <button class="button label_large">Entrar</button>
+        </div>
+      </form>
+      
+      <p class="body_medium">Ainda não possui uma conta? <a href="#">Faça o cadastro.</a> </p>
+    </div>
   </section>
 </main>
