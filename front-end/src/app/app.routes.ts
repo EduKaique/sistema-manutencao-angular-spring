@@ -33,7 +33,7 @@ export const routes: Routes = [
     component:RequestDetailPageComponent
   },
   {
-    path: 'new-request',
+    path: 'home',
     component: NewRequestPageComponent
 }
 ];
