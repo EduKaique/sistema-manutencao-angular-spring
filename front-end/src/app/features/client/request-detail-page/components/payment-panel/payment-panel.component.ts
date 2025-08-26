@@ -1,30 +1,29 @@
-import {ChangeDetectionStrategy, Component, viewChild} from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { provideNativeDateAdapter } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
-/**
- * @title Accordion with expand/collapse all toggles
- */
 @Component({
   selector: 'app-payment-panel',
   templateUrl: './payment-panel.component.html',
   styleUrls: ['./payment-panel.component.css'],
-  providers: [provideNativeDateAdapter()],
-  imports: [
-    MatButtonModule,
-    MatExpansionModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDatepickerModule,
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PaymentPanelComponent {
-  accordion = viewChild.required(MatAccordion);
+  selectedMethod: 'cartao' | 'pix' | null = null;
+
+  selectMethod(method: 'cartao' | 'pix') {
+    this.selectedMethod = method;
+    console.log('Método selecionado:', method);
+  }
+
+  payNow() {
+    if (!this.selectedMethod) {
+      alert('Selecione uma forma de pagamento antes de continuar.');
+      return;
+    }
+
+    if (this.selectedMethod === 'cartao') {
+      alert('Pagamento via Cartão realizado!');
+    } else if (this.selectedMethod === 'pix') {
+      alert('Pagamento via PIX realizado!');
+    }
+  }
 }
