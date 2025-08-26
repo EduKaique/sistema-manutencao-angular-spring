@@ -11,6 +11,10 @@ html, body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+a {
+    color: var(--color-primary-default);
+}
+
 /* TYPESCALE*/
 
 .display_large {
@@ -118,3 +122,4 @@ html, body {
     font-weight: var(--label-small-font-weight);
     letter-spacing: var(--label-small-letter-spacing)
 }
+
