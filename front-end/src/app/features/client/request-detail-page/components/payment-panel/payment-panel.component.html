@@ -1,54 +1,88 @@
-<h1>Análise do Orçamento</h1>
-<h3>Revise os detalhes da solicitação e o orçamento apresentado</h3>
+<body>
+  <div class="card">
+    <div class="card-left">
+      <a href="/" class="back-link">← Voltar para Página Inicial</a>
 
-<div class="action-buttons">
-  <button mat-button (click)="accordion().openAll()">Expand All</button>
-  <button mat-button (click)="accordion().closeAll()">Collapse All</button>
+      <div class="info-section">
+        <div class="info-item">
+          <h3>Item</h3>
+          <p>Notebook Dell Inspiron 15</p>
+        </div>
+        <div class="info-item">
+          <h3>Categoria</h3>
+          <p>Notebook</p>
+        </div>
+      </div>
+
+      <div class="info-section">
+        <h3>Descrição do Defeito</h3>
+        <p>
+          O equipamento liga, mas a tela permanece preta (sem imagem). O LED indicador de energia acende
+          e é possível ouvir o som da ventoinha em funcionamento, mas não há qualquer sinal de vídeo.
+          O problema persiste mesmo após reiniciar o dispositivo várias vezes.
+        </p>
+      </div>
+
+      <div class="info-section">
+        <h3>Resumo do Pagamento</h3>
+
+        <div class="payment-item">
+          <div>
+            <p class="payment-title">Diagnóstico técnico</p>
+            <p class="payment-desc">Descrição</p>
+          </div>
+          <span class="payment-price">R$ 100,00</span>
+        </div>
+
+        <div class="payment-item">
+          <div>
+            <p class="payment-title">Substituição do cabo flat da tela</p>
+            <p class="payment-desc">Descrição</p>
+          </div>
+          <span class="payment-price">R$ 180,00</span>
+        </div>
+
+        <div class="payment-item">
+          <div>
+            <p class="payment-title">Mão de obra</p>
+            <p class="payment-desc">Descrição</p>
+          </div>
+          <span class="payment-price">R$ 150,00</span>
+        </div>
+
+        <div class="payment-item">
+          <div>
+            <p class="payment-title">Limpeza interna + pasta térmica</p>
+            <p class="payment-desc">Descrição</p>
+          </div>
+          <span class="payment-price">R$ 90,00</span>
+        </div>
+      </div>
+    </div>
+
+<div class="card-right">
+  <h2>Pagamento</h2>
+
+  <div class="payment-methods">
+    <button 
+      class="pay-btn" 
+      [class.selected]="selectedMethod === 'cartao'" 
+      (click)="selectMethod('cartao')">
+      Cartão
+    </button>
+
+    <button 
+      class="pay-btn" 
+      [class.selected]="selectedMethod === 'pix'" 
+      (click)="selectMethod('pix')">
+      Pix
+    </button>
+  </div>
+
+  <button class="pay-now" (click)="payNow()">
+    PAGAR AGORA
+  </button>
 </div>
 
-<mat-accordion class="headers-align" multi>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title> Detalhes da Solicitação </mat-panel-title>
-      <mat-icon>account_circle</mat-icon>
-    </mat-expansion-panel-header>
-
-    <p>João Silva</p>
-    <p>Brasil</p>
-  </mat-expansion-panel>
-
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title> Detalhes do equipamento </mat-panel-title>
-      <mat-icon>computer</mat-icon>
-    </mat-expansion-panel-header>
-
-    <p>Computador Acer Nitro 5</p>
-    <p>Data: 20/10/2025</p>
-    <p>Descrição: Computador apresenta parte da tela descolada, piscando em verde ao ligar.</p>
-  </mat-expansion-panel>
-</mat-accordion>
-
-<p></p>
-
-<mat-accordion class="headers-align" multi>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title> Orçamento Apresentado </mat-panel-title>
-      <mat-icon>account_circle</mat-icon>
-    </mat-expansion-panel-header>
-
-    <p>Valor do serviço R$350,00</p>
-    <p>Parcelamento disponível: 10x de R$40</p>
-  </mat-expansion-panel>
-
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title> Serviços Inclusos </mat-panel-title>
-      <mat-icon>computer</mat-icon>
-    </mat-expansion-panel-header>
-
-    <p>Troca de tela, troca de teclado, troca de processador</p>
-    <p>Técnico: Gabriel Brasil</p>
-  </mat-expansion-panel>
-</mat-accordion>
+  </div>
+</body>
