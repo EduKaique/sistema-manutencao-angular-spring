@@ -1,0 +1,43 @@
+<main>
+  <section class="resgitration-container">
+    <div class="resgitration-text">
+      <h1 class="heading_3">Crie sua conta</h1>
+      <p class="body_medium">Preencha suas informações para criar um contra.</p>
+    </div>
+    <form class="form-content" [formGroup]="form">
+      <app-input-primary
+        label="Nome Completo"
+        type="text"
+        formName="nameUser"
+        placeholder="Digite seu Nome Completo"
+        style="width: inherit"
+      ></app-input-primary>
+
+      <div class="row-form-cpf-phone">
+        <app-input-primary
+          label="CPF"
+          type="text"
+          formName="cpfUser"
+          placeholder="___.___.___-__"
+          style="width: inherit"
+        ></app-input-primary>
+
+        <app-input-primary
+          label="Celular"
+          type="text"
+          formName="phoneUser"
+          placeholder="(__) _ ___-__"
+          style="width: inherit"
+        ></app-input-primary>
+      </div>
+
+      <app-input-primary
+        label="Email"
+        type="email"
+        formName="email"
+        placeholder="exemple@email.com"
+        style="width: inherit"
+      ></app-input-primary>
+    </form>
+  </section>
+</main>
