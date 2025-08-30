@@ -3,8 +3,6 @@
 main {
     display: flex;
     justify-content: space-between;
-    background-color: #f0f0f0;
-    height: 100%;
     padding-left: 48px;
 }
 
@@ -14,8 +12,6 @@ section{
     justify-content: center;
     height: 100%;
 }
-
-
 
 .illustration {
     width: 70%;
@@ -88,4 +84,16 @@ section{
     background: var(--color-primary-default, #349896);
     border: 0;
     color: var(--color-primary-lightest);
+}
+
+@media (max-width: 720px) {
+    main {
+        padding: 0;
+    }
+    .illustration {
+        display: none;
+    }
+    .form {
+        width: 100%;
+    }
 }
