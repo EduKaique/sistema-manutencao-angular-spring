@@ -6,6 +6,7 @@ import { ApproveRejectPanelComponent } from './features/client/request-detail-pa
 import { RequestDetailPageComponent } from './features/client/request-detail-page/request-detail-page.component';
 import { NewRequestPageComponent } from './features/client/new-request-page/new-request-page.component';
 import { SignupPageComponent } from './core/auth/pages/signup-page/signup-page.component';
+import { ClientDashboardPageComponent } from './features/client/client-dashboard-page/client-dashboard-page.component';
 
 export const routes: Routes = [
   {
@@ -40,6 +41,9 @@ export const routes: Routes = [
   {
     path: 'home',
     component: NewRequestPageComponent
-}
+  },
+  {
+    path: 'client-dashboard',
+    component: ClientDashboardPageComponent
+  }
 ];
-  
