@@ -71,6 +71,12 @@ body {
   margin: 0;
 }
 
+.payment-title-total {
+  font-size: 30px;
+  color: #374343;
+  margin: 0;
+}
+
 .payment-desc {
   font-size: 14px;
   color: #627877;
@@ -79,6 +85,12 @@ body {
 
 .payment-price {
   font-size: 20px;
+  font-weight: bold;
+  color: #3b598e;
+}
+
+.payment-price-total {
+  font-size: 50px;
   font-weight: bold;
   color: #3b598e;
 }

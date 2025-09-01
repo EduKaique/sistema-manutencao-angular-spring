@@ -1,88 +1,66 @@
 <body>
   <div class="card">
     <div class="card-left">
-      <a href="/" class="back-link">← Voltar para Página Inicial</a>
+      <a href="/" class="back-link">{{ backLink }}</a>
 
       <div class="info-section">
         <div class="info-item">
           <h3>Item</h3>
-          <p>Notebook Dell Inspiron 15</p>
+          <p>{{ item }}</p>
         </div>
         <div class="info-item">
           <h3>Categoria</h3>
-          <p>Notebook</p>
+          <p>{{ categoria }}</p>
         </div>
       </div>
 
       <div class="info-section">
         <h3>Descrição do Defeito</h3>
-        <p>
-          O equipamento liga, mas a tela permanece preta (sem imagem). O LED indicador de energia acende
-          e é possível ouvir o som da ventoinha em funcionamento, mas não há qualquer sinal de vídeo.
-          O problema persiste mesmo após reiniciar o dispositivo várias vezes.
-        </p>
+        <p>{{ defeito }}</p>
       </div>
 
       <div class="info-section">
         <h3>Resumo do Pagamento</h3>
 
-        <div class="payment-item">
+        <div class="payment-item" *ngFor="let p of pagamentos">
           <div>
-            <p class="payment-title">Diagnóstico técnico</p>
-            <p class="payment-desc">Descrição</p>
+            <p class="payment-title">{{ p.titulo }}</p>
           </div>
-          <span class="payment-price">R$ 100,00</span>
+          <span class="payment-price">R$ {{ p.preco.toFixed(2).replace('.',',') }}</span>
         </div>
+        <hr>
+        <div class="payment-item total">
+        <div>
+          <span class="payment-title-total"><strong>Total</strong></span>
+        </div>
+        <span class="payment-price-total"><strong>R$ {{ total.toFixed(2).replace('.',',') }}</strong></span>
+      </div>
 
-        <div class="payment-item">
-          <div>
-            <p class="payment-title">Substituição do cabo flat da tela</p>
-            <p class="payment-desc">Descrição</p>
-          </div>
-          <span class="payment-price">R$ 180,00</span>
-        </div>
-
-        <div class="payment-item">
-          <div>
-            <p class="payment-title">Mão de obra</p>
-            <p class="payment-desc">Descrição</p>
-          </div>
-          <span class="payment-price">R$ 150,00</span>
-        </div>
-
-        <div class="payment-item">
-          <div>
-            <p class="payment-title">Limpeza interna + pasta térmica</p>
-            <p class="payment-desc">Descrição</p>
-          </div>
-          <span class="payment-price">R$ 90,00</span>
-        </div>
       </div>
     </div>
 
-<div class="card-right">
-  <h2>Pagamento</h2>
+    <div class="card-right">
+      <h2>Pagamento</h2>
 
-  <div class="payment-methods">
-    <button 
-      class="pay-btn" 
-      [class.selected]="selectedMethod === 'cartao'" 
-      (click)="selectMethod('cartao')">
-      Cartão
-    </button>
+      <div class="payment-methods">
+        <button 
+          class="pay-btn" 
+          [class.selected]="selectedMethod === 'cartao'" 
+          (click)="selectMethod('cartao')">
+          Cartão
+        </button>
 
-    <button 
-      class="pay-btn" 
-      [class.selected]="selectedMethod === 'pix'" 
-      (click)="selectMethod('pix')">
-      Pix
-    </button>
-  </div>
+        <button 
+          class="pay-btn" 
+          [class.selected]="selectedMethod === 'pix'" 
+          (click)="selectMethod('pix')">
+          Pix
+        </button>
+      </div>
 
-  <button class="pay-now" (click)="payNow()">
-    PAGAR AGORA
-  </button>
-</div>
-
+      <button class="pay-now" (click)="payNow()">
+        PAGAR AGORA
+      </button>
+    </div>
   </div>
 </body>
