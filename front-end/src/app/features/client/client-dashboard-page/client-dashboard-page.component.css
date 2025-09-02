@@ -1,94 +1,182 @@
 
-    body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  background-color: #f2f4f6;
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-header {
-  background-color: #0c2d2d;
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #d9dcdc;
+    color: #333;
+    min-height: 100vh;
+}
+
+/* Header */
+.header {
+    background-color: #14282c;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 24px;
 }
 
 .logo {
-  display: flex;
-  align-items: center;
-  font-weight: bold;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #27a7b3;
 }
 
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 20px;
+/* Navegação do usuário */
+.user-nav {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 0.9rem;
 }
 
-.user-info span {
-  font-size: 14px;
+.user-nav span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-main {
-  background: white;
-  margin: 20px;
-  padding: 20px;
-  border-radius: 6px;
-  box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+/* Botões */
+.btn-icon {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
 }
 
-h2 {
-  font-size: 18px;
-  margin: 0 0 15px 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.btn-logout {
+    background: none;
+    border: none;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
 }
 
-.actions {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 15px;
+/* Container principal */
+.container {
+    max-width: 960px;
+    margin: 24px auto;
+    padding: 0 16px;
 }
 
-.actions input {
-  padding: 8px;
-  width: 250px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+/* Sessão de solicitações */
+.requests h2 {
+    font-weight: 600;
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #4b4b4b;
 }
 
-.actions button {
-  background-color: #1e8b60;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 4px;
-  cursor: pointer;
+.icon {
+    font-size: 1.4rem;
 }
 
-.actions button:hover {
-  background-color: #15714d;
+/* Busca e botão nova solicitação */
+.search-add {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
+.search-add input[type="text"] {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    width: 240px;
+    font-size: 0.9rem;
 }
 
-thead {
-  background-color: #1c2d45;
-  color: white;
+.btn-new-request {
+    background-color: #349896;
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
 }
 
-th, td {
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-  font-size: 14px;
+.btn-new-request:hover {
+    background-color: #0a925c;
 }
 
-tbody tr:hover {
-  background-color: #f9f9f9;
+.table-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    background-color: #ffffff;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.table-toolbar .mat-mdc-form-field {
+    width: 300px;
+}
+
+.new-request-button {
+    background-color: #007bff;
+    color: white;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.new-request-button:hover {
+    background-color: #0056b3;
+}
+
+.new-request-button .mat-icon {
+    margin-right: 8px;
+}
+
+/* --- Tabela de Dados --- */
+
+table.mat-mdc-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border-radius: 0 0 8px 8px;
+    overflow: hidden;
+}
+
+th.mat-mdc-header-cell {
+    background-color: #343a40;
+    color: #ffffff;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 14px;
+    padding: 16px 24px;
+    border-bottom: 1px solid #4a545e;
+}
+
+td.mat-mdc-cell {
+    padding: 12px 24px;
+    font-size: 14px;
+    color: #444;
+    border-bottom: 1px solid #eee;
+}
+
+tr.mat-mdc-footer-row,
+tr.mat-mdc-row {
+    height: auto;
+}
+
+tr.mat-mdc-row:hover {
+    background-color: #f9f9f9;
 }
