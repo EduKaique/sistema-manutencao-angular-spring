@@ -1,40 +1,73 @@
-<header>
-  <div class="logo">Remont</div>
-  <div class="user-info">
-    <span>Olá, Nilton Nativas</span>
-    <span>🔔 Notificações</span>
-    <a href="#" style="color:white; text-decoration:none;">Sair</a>
-  </div>
-</header>
 
-<main>
-  <h2>🔧 Minhas Solicitações</h2>
+    <header class="header">
+        <div class="logo">Remont</div>
+        <nav class="user-nav">
+            <span>Olá, Nilton Nativas</span>
+            <button class="btn-icon" aria-label="Notificações">🔔</button>
+            <button class="btn-logout" aria-label="Sair">Sair ➔</button>
+        </nav>
+    </header>
 
-  <div class="actions">
-    <input type="text" placeholder="Pesquisar Solicitação">
-    <button (click)='openNewRequest()'>Nova Solicitação +</button>
-  </div>
+    <main class="container">
+        <div class="requests">
 
-  <table>
-    <thead>
-      <tr>
-        <th>Nome do Equipamento</th>
-        <th>Categoria</th>
-        <th>Data de Criação</th>
-        <th>Última Atualização</th>
-        <th>Status Atual</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>---</td>
-        <td>---</td>
-        <td>---</td>
-        <td>---</td>
-        <td>---</td>
-        <td>---</td>
-      </tr>
-    </tbody>
-  </table>
-</main>
+            <h2><span class="icon">🔧</span> Minhas Solicitações</h2>
+
+            <div class="search-add">
+                <input type="text" placeholder="Pesquisar Solicitação" />
+                <button (click)='openNewRequest()' class="btn-new-request">Nova Solicitação +</button>
+            </div>
+        </div>
+
+            <mat-form-field>
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+            </mat-form-field>
+
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="nome">
+                <th mat-header-cell *matHeaderCellDef> Nome do Equipamento </th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+
+        
+            <ng-container matColumnDef="categoria">
+                <th mat-header-cell *matHeaderCellDef> Categoria </th>
+                <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+            </ng-container>
+
+            
+            <ng-container matColumnDef="Data">
+                <th mat-header-cell *matHeaderCellDef> Data de Criação </th>
+                <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Atualizacao">
+                <th mat-header-cell *matHeaderCellDef> Ultima Atualização </th>
+                <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Atual">
+                <th mat-header-cell *matHeaderCellDef> Status Atual </th>
+                <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Acao">
+                <th mat-header-cell *matHeaderCellDef> Ações </th>
+                <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            <!-- Row shown when there is no matching data. -->
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+            </tr>
+            </table>
+        
+    </main>
+

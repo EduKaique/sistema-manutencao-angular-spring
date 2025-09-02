@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+
+
 import { ClientDashboardPageComponent } from './client-dashboard-page.component';
 
 describe('ClientDashboardPageComponent', () => {
@@ -22,8 +24,4 @@ describe('ClientDashboardPageComponent', () => {
   });
 });
 
-@Component({
-  selector: 'app-client-dashboard-page',
-  templateUrl: './client-dashboard-page.component.html',
-  styleUrls: ['./client-dashboard-page.component.css']  // 🔹 aqui é o link
-})
+
