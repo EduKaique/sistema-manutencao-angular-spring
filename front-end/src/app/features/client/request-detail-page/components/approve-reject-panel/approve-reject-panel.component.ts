@@ -8,4 +8,14 @@ import { Component } from '@angular/core';
 })
 export class ApproveRejectPanelComponent {
 
+
+  aprovar() {
+    console.log('Orçamento aprovado!');
+  }
+
+  reprovar() {
+    console.log('Orçamento reprovado!');
+  }
+
 }
+
