@@ -1,20 +1,22 @@
-<header class="app-header">
-  <div class="logo heading_6">
-    <a routerLink="/home">Remont</a>
+<mat-toolbar class="app-header">
+  <div class="header-left">
+    <img src="assets/images/logo.png" alt="Logo" class="logo">
   </div>
 
-  <nav class="menu">
-    <a routerLink="/home" routerLinkActive="active" class="label_large">Home</a>
-    <a routerLink="/sobre" routerLinkActive="active" class="label_large">Sobre</a>
-    <a routerLink="/contato" routerLinkActive="active" class="label_large">Contato</a>
-  </nav>
+  <div class="header-right">
+    <span class="body_medium">Olá {{ nomeDeUsuario }}</span>
 
-  <div class="header-actions">
-    <input type="text" placeholder="Pesquisar..." class="search-input label_medium">
-    <div class="user-profile">
-      <img src="assets/user.png" alt="Usuário" class="avatar">
-      <span class="label_medium">nome-do-usuário
-      </span>
+    <div class="user-avatar">
+      <mat-icon>account_circle</mat-icon>
     </div>
+    <span class="body_medium">Notificações</span>
+    <button class="icon-button">
+      <mat-icon>notifications</mat-icon>
+      <span class="badge">3</span>
+    </button>
+    <span class="body_medium">Sair</span>
+    <button class="icon-button">  
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
   </div>
-</header>
+</mat-toolbar>
