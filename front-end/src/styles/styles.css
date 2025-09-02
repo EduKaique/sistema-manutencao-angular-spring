@@ -22,6 +22,28 @@ a {
     cursor: pointer;
 }
 
+.button-primary {
+    width: 200px;
+    height: 48px;
+    padding: var(--spacing-2xs);
+    border-radius: var(--radius-sm);
+    background: var(--color-primary-default);
+    border: 0;
+    color: var(--color-primary-lightest);
+    cursor: pointer;
+}
+
+.button-secondary {
+    width: 200px;
+    height: 48px;
+    padding: var(--spacing-2xs);
+    border-radius: var(--radius-sm);
+    background: none;
+    border: 2.5px solid var(--color-primary-default);
+    color: var(--color-primary-default);
+    cursor: pointer;
+}
+
 /* TYPESCALE*/
 
 .display_large {
@@ -130,3 +152,25 @@ a {
     letter-spacing: var(--label-small-letter-spacing)
 }
 
+/* Cor da bolinha normal */
+.mat-step-icon {
+    color: white !important;
+}
+
+/* Fundo quando selecionado */
+.mat-step-icon-selected {
+  background-color: var(--color-secondary-default) !important;
+  color: white !important;
+}
+
+/* Fundo quando concluído */
+.mat-step-icon-state-done {
+  background-color: var(--color-secondary-default) !important;
+  color: white !important;
+}
+
+/* Fundo quando em edição */
+.mat-step-icon-state-edit {
+  background-color: var(--color-secondary-default) !important;
+  color: white !important;
+}
