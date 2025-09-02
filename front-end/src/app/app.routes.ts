@@ -35,7 +35,7 @@ export const routes: Routes = [
     component:ApproveRejectPanelComponent
   },
   {
-    path: 'request-datail',
+    path: 'request-detail',
     component:RequestDetailPageComponent
   },
   {
