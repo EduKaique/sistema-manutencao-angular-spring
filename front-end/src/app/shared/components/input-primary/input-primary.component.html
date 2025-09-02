@@ -1,11 +1,15 @@
-<div class="input-content">
-  <label [for]="formName" class="label_medium">
-    {{ label }}
-  </label>
-  <input
+<div class="input-wrapper"> 
+  <label [for]="formName" class="label_medium">{{ label }}</label>
+  <div class="input-content">
+    <input
     [type]="type"
     [formControlName]="formName"
     [placeholder]="placeholder"
     class="body_medium"
   />
+    <div class="icon">
+      <ng-content></ng-content>
+    </div>
+  </div>
+  
 </div>

@@ -5,6 +5,7 @@ import { BudgetDeliveryComponent } from './features/employee/budget-delivery/bud
 import { ApproveRejectPanelComponent } from './features/client/request-detail-page/components/approve-reject-panel/approve-reject-panel.component';
 import { RequestDetailPageComponent } from './features/client/request-detail-page/request-detail-page.component';
 import { NewRequestPageComponent } from './features/client/new-request-page/new-request-page.component';
+import { SignupPageComponent } from './core/auth/pages/signup-page/signup-page.component';
 import { ClientDashboardPageComponent } from './features/client/client-dashboard-page/client-dashboard-page.component';
 
 export const routes: Routes = [
@@ -16,6 +17,10 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginPageComponent,
+  },
+  {
+    path: 'signup',
+    component: SignupPageComponent,
   },
   {
     path: 'budget-delivery',

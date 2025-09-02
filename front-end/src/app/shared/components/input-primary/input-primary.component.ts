@@ -1,17 +1,18 @@
 import { Component, Input } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
-type InputTypes = "text" | "email" | "password" | "number"
+type InputTypes = "text" | "email" | "password" | "number";
 
 @Component({
   selector: 'app-input-primary',
+  standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './input-primary.component.html',
-  styleUrl: './input-primary.component.css'
+  styleUrls: ['./input-primary.component.css']
 })
 export class InputPrimaryComponent {
   @Input() label: string = "";
-  @Input() type: InputTypes = "text";
   @Input() formName!: string;
+  @Input() type: InputTypes = "text";
   @Input() placeholder: string = "";
 }

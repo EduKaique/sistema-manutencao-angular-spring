@@ -1,12 +1,14 @@
 import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon'
 import { InputPrimaryComponent } from '../../../../shared/components/input-primary/input-primary.component';
+import { Router } from '@angular/router';
 
 
 @Component({
   selector: 'app-login-page',
-  imports: [MatButtonModule, InputPrimaryComponent],
+  imports: [MatButtonModule, InputPrimaryComponent, MatIconModule],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -20,7 +22,7 @@ export class LoginPageComponent {
 
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private router: Router) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
@@ -32,6 +34,10 @@ export class LoginPageComponent {
       console.log('Email:', this.loginForm.value.email);
       console.log('Senha:', this.loginForm.value.password);
     }
+  }
+
+  navigate() {
+    this.router.navigate(['/signup'])
   }
 }
 

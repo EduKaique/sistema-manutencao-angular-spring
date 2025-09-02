@@ -1,0 +1,49 @@
+@import url("../../../../../styles/variables.css");
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.resgitration-container {
+    display: flex;
+    width: 660px;
+    height: auto;
+    padding: var(--spacing-lg) var(--spacing-xl);
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    background: var(--color-background-card);
+}
+
+.resgitration-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-3xs, 8px);
+}
+
+.resgitration-text h1 {
+    color: var(--color-heading-subtle);
+}
+
+.resgitration-text p {
+    color: var(--color-text-default);
+
+}
+
+.form-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm, 20px);
+}
+
+.row-form-cpf-phone {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    align-self: stretch;
+    width: 100%;
+}

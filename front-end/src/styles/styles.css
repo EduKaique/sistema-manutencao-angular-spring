@@ -9,10 +9,17 @@
 html, body {
     height: 100%;
     font-family: Arial, Helvetica, sans-serif;
+    background: var(--color-background-page);
+}
+
+main {
+    height: 100%;
 }
 
 a {
+    text-decoration: underline;
     color: var(--color-primary-default);
+    cursor: pointer;
 }
 
 /* TYPESCALE*/

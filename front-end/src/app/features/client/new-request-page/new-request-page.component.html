@@ -1,7 +1,7 @@
 <div class ="modal-overlay" role="dialog" aria-modal="true"> 
     <div class="request-modal-container">
 
-        <button class="close-button" aria-label="Fechar modal">
+        <button class="close-button" aria-label="Fechar modal" (click)="confirmCloseRequest()">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <mask id="mask0_67_3535" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
                     <rect width="24" height="24" fill="#D9D9D9"/>
@@ -14,15 +14,15 @@
 
         <h2>Nova solicitação de manutenção</h2>
 
-        <form class ="request-form-body">
+        <form #formRequest="ngForm" (ngSubmit)="send(formRequest)" class ="request-form-body">
             <div class="form-group">
-                <label for="equipmentDescription">Equipamento </label>
-                <input type="text" id="equipmentDescription" placeholder="Digite qual é o seu equipamento" required/>
+                <label for="equipmentDescription" >Equipamento </label>
+                <input type="text" id="equipmentDescription" name="equipmentDescription" placeholder="Digite qual é o seu equipamento" ngModel required/>
             </div>
 
             <div class="form-group">
                 <label for="equipmentCategory">Categoria </label>
-                <select id="equipmentCategory" required> 
+                <select id="equipmentCategory" name="equipmentCategory" ngModel required> 
                     <option value="" disabled selected>Selecione a categoria</option>
                     <option value="notebook">Notebook</option>
                     <option value="desktop">Desktop</option>
@@ -34,7 +34,7 @@
                 
             <div class="form-group">
                 <label for="effectDescription">Descrição do defeito </label>
-                <textarea id="effectDescription" placeholder="Descreva o defeito" required></textarea>
+                <textarea id="effectDescription" name="effectDescription" placeholder="Descreva o defeito" ngModel required></textarea>
             </div>
 
             <p class="required-field">* Campo de preenchimento obrigatório</p>
@@ -44,5 +44,6 @@
                     <path d="M6.5501 13L0.850098 7.29998L2.2751 5.87498L6.5501 10.15L15.7251 0.974976L17.1501 2.39998L6.5501 13Z" fill="var(--color-primary-lightest, #F3FAFA)"/>
                 </svg>
             </button> 
-    </form>
+        </form>
+    </div>
 </div>
