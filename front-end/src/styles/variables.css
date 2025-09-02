@@ -302,7 +302,8 @@
   
     /* Border Radius*/
     --radius-none: var(--size-0);
-    --radius-sm: var(--size-100);
+    --radius-xs: var(--size-100);
+    --radius-sm: var(--size-200);
     --radius-md: var(--size-400);
     --radius-lg: var(--size-600);
     --radius-xl: var(--size-900);
