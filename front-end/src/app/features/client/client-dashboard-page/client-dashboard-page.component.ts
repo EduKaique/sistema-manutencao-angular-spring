@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { RequestService } from '../../../core/services/request.service';
 import { Request } from '../../../shared/models/request.model';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-client-dashboard-page',
@@ -45,6 +46,8 @@ export class ClientDashboardPageComponent implements OnInit{
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log('Solicitação enviada', result);
+        this.requests = this.listarTodos();
+        this.dataSource.data = this.requests;
       }
     });
   }
@@ -55,11 +58,16 @@ export class ClientDashboardPageComponent implements OnInit{
   }
 
   listarTodos(): Request[] {
-    //return this.requestService.listarTodos();
-    return [
-      new Request(1, 'Equipamento 1', 'Categoria 1', '2023-01-01', '2023-01-02', 'Defeito 1', 'Pendente'),
-      new Request(2, 'Equipamento 2', 'Categoria 2', '2023-02-01', '2023-02-02', 'Defeito 2', 'Concluida'),
-    ];
+    return this.requestService.listarTodos(); 
   }
+
+  remover($event: any, request: Request) : void {
+      $event.preventDefault();
+      if(confirm('Deseja realmente excluir essa solicitação?')) {
+            this.requestService.remover(request.id!);
+            this.requests = this.listarTodos();
+            this.dataSource.data = this.requests;
+      }
+    }
 }
 

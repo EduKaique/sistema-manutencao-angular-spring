@@ -57,7 +57,7 @@
                     <th mat-header-cell *matHeaderCellDef> Ações </th>
                     <td mat-cell *matCellDef="let element">  
                         <button class="btn-custom">Ver</button>
-                        <button class="btn-custom">Excluir</button>
+                        <button class="btn-custom" (click)="remover($event, element)">Excluir</button>
                     </td>
                 </ng-container>
 
