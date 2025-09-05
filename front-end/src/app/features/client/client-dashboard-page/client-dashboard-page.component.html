@@ -14,60 +14,59 @@
             <h2><span class="icon">🔧</span> Minhas Solicitações</h2>
 
             <div class="search-add">
-                <input type="text" placeholder="Pesquisar Solicitação" />
+                <mat-form-field>
+                    <mat-label>Pesquisar solicitação</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" #input>
+                 </mat-form-field>
+                <!--<input type="text" placeholder="Pesquisar Solicitação" />  versão figma-->
                 <button (click)='openNewRequest()' class="btn-new-request">Nova Solicitação +</button>
             </div>
         </div>
 
-            <mat-form-field>
-            <mat-label>Filter</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
-            </mat-form-field>
-
+            <p *ngIf="requests.length === 0" class="no-requests">Você ainda não possui solicitações.</p>
+            
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
+                <!-- Columns -->
+                <ng-container matColumnDef="equipamento">
+                    <th mat-header-cell *matHeaderCellDef> Nome do Equipamento </th>
+                    <td mat-cell *matCellDef="let element"> {{element.equipamento}} </td>
+                </ng-container>
 
-            <!-- Name Column -->
-            <ng-container matColumnDef="nome">
-                <th mat-header-cell *matHeaderCellDef> Nome do Equipamento </th>
-                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-            </ng-container>
+                <ng-container matColumnDef="categoria">
+                    <th mat-header-cell *matHeaderCellDef> Categoria </th>
+                    <td mat-cell *matCellDef="let element"> {{element.categoria}} </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="dataCriacao">
+                    <th mat-header-cell *matHeaderCellDef> Data de Criação </th>
+                    <td mat-cell *matCellDef="let element"> {{element.dataCriacao}} </td>
+                </ng-container>
 
-        
-            <ng-container matColumnDef="categoria">
-                <th mat-header-cell *matHeaderCellDef> Categoria </th>
-                <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-            </ng-container>
+                <ng-container matColumnDef="ultimaAtualizacao">
+                    <th mat-header-cell *matHeaderCellDef> Ultima Atualização </th>
+                    <td mat-cell *matCellDef="let element"> {{element.ultimaAtualizacao}} </td>
+                </ng-container>
 
-            
-            <ng-container matColumnDef="Data">
-                <th mat-header-cell *matHeaderCellDef> Data de Criação </th>
-                <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-            </ng-container>
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef> Status Atual </th>
+                    <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                </ng-container>
 
-            <ng-container matColumnDef="Atualizacao">
-                <th mat-header-cell *matHeaderCellDef> Ultima Atualização </th>
-                <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-            </ng-container>
+                <ng-container matColumnDef="acoes">
+                    <th mat-header-cell *matHeaderCellDef> Ações </th>
+                    <td mat-cell *matCellDef="let element">  
+                        <button class="btn-custom">Ver</button>
+                        <button class="btn-custom">Excluir</button>
+                    </td>
+                </ng-container>
 
-            <ng-container matColumnDef="Atual">
-                <th mat-header-cell *matHeaderCellDef> Status Atual </th>
-                <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-            </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-            <ng-container matColumnDef="Acao">
-                <th mat-header-cell *matHeaderCellDef> Ações </th>
-                <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-            <!-- Row shown when there is no matching data. -->
-            <tr class="mat-row" *matNoDataRow>
-                <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-            </tr>
-            </table>
-        
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="6">Sem resultados </td>
+                </tr>
+            </table> 
     </main>
-
