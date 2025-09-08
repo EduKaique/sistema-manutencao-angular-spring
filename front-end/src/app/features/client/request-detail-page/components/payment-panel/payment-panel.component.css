@@ -150,3 +150,11 @@ body {
 .pay-now:hover {
   background: #26726f;
 }
+
+.back-link {
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
