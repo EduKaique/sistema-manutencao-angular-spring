@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Request } from '../../../shared/models/request.model';
-import { RequestService } from '../../../core/services/request.service';
+import { Request } from '../../../shared/models/request';
+import { RequestService } from '../../../shared/services/request.service';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -14,18 +14,19 @@ import { CommonModule } from '@angular/common';
   styleUrl: './new-request-page.component.css',
 })
 export class NewRequestPageComponent {
+  @ViewChild('formRequest') formRequest!: NgForm;
+  request: Request = {} as Request;
 
-  @ViewChild('formRequest') formRequest! : NgForm;
-  request: Request = new Request();
-  
   constructor(
     public dialogRef: MatDialogRef<NewRequestPageComponent>,
     private requestService: RequestService,
-    private router : Router
-    ) {}
+    private router: Router
+  ) {}
 
   confirmCloseRequest() {
-    const confirmation = confirm('Tem certeza que deseja fechar a solicitação?');
+    const confirmation = confirm(
+      'Tem certeza que deseja fechar a solicitação?'
+    );
     if (confirmation) {
       this.dialogRef.close();
     }
@@ -34,10 +35,10 @@ export class NewRequestPageComponent {
     if (form.valid) {
       this.requestService.inserir(this.request);
       console.log('Solicitação enviada', form.value);
-      this.dialogRef.close(this.request); 
+      this.dialogRef.close(this.request);
       this.router.navigate(['/client/dashboard']);
     } else {
-      alert('Preencha todos os campos'); 
+      alert('Preencha todos os campos');
     }
   }
 }
