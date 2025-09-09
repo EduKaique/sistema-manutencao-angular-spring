@@ -1,72 +1,84 @@
 
     <header class="header">
-        <div class="logo">Remont</div>
-        <nav class="user-nav">
-            <span>Olá, Nilton Nativas</span>
-            <button class="btn-icon" aria-label="Notificações">🔔</button>
-            <button class="btn-logout" aria-label="Sair">Sair ➔</button>
-        </nav>
-    </header>
+  <div class="logo">Remont</div>
+  <nav class="user-nav">
+    <span>Olá, Nilton Nativas</span>
+    <button class="btn-icon" aria-label="Notificações">🔔</button>
+    <button class="btn-logout" aria-label="Sair">Sair ➔</button>
+  </nav>
+</header>
 
-    <main class="container">
-        <div class="requests">
+<main class="container">
+  <div class="requests">
+    <h2><span class="icon">🔧</span> Minhas Solicitações</h2>
 
-            <h2><span class="icon">🔧</span> Minhas Solicitações</h2>
+    <div class="search-add">
+      <mat-form-field>
+        <mat-label>Pesquisar solicitação</mat-label>
+        <input matInput (keyup)="applyFilter($event)" #input>
+      </mat-form-field>
+      <button (click)="openNewRequest()" class="btn-new-request">Nova Solicitação +</button>
+    </div>
+  </div>
 
-            <div class="search-add">
-                <mat-form-field>
-                    <mat-label>Pesquisar solicitação</mat-label>
-                    <input matInput (keyup)="applyFilter($event)" #input>
-                 </mat-form-field>
-                <!--<input type="text" placeholder="Pesquisar Solicitação" />  versão figma-->
-                <button (click)='openNewRequest()' class="btn-new-request">Nova Solicitação +</button>
-            </div>
-        </div>
+  <p *ngIf="requests.length === 0" class="no-requests">
+    Você ainda não possui solicitações.
+  </p>
 
-            <p *ngIf="requests.length === 0" class="no-requests">Você ainda não possui solicitações.</p>
-            
-            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-                <!-- Columns -->
-                <ng-container matColumnDef="equipamento">
-                    <th mat-header-cell *matHeaderCellDef> Nome do Equipamento </th>
-                    <td mat-cell *matCellDef="let element"> {{element.equipamento}} </td>
-                </ng-container>
+    <!-- Equipamento -->
+    <ng-container matColumnDef="equipamento">
+      <th mat-header-cell *matHeaderCellDef> Nome do Equipamento </th>
+      <td mat-cell *matCellDef="let element"> {{ element.equipamento }} </td>
+    </ng-container>
 
-                <ng-container matColumnDef="categoria">
-                    <th mat-header-cell *matHeaderCellDef> Categoria </th>
-                    <td mat-cell *matCellDef="let element"> {{element.categoria}} </td>
-                </ng-container>
-                
-                <ng-container matColumnDef="dataCriacao">
-                    <th mat-header-cell *matHeaderCellDef> Data de Criação </th>
-                    <td mat-cell *matCellDef="let element"> {{element.dataCriacao}} </td>
-                </ng-container>
+    <!-- Categoria -->
+    <ng-container matColumnDef="categoria">
+      <th mat-header-cell *matHeaderCellDef> Categoria </th>
+      <td mat-cell *matCellDef="let element"> {{ element.categoria }} </td>
+    </ng-container>
 
-                <ng-container matColumnDef="ultimaAtualizacao">
-                    <th mat-header-cell *matHeaderCellDef> Ultima Atualização </th>
-                    <td mat-cell *matCellDef="let element"> {{element.ultimaAtualizacao}} </td>
-                </ng-container>
+    <!-- Data de Criação -->
+    <ng-container matColumnDef="dataCriacao">
+      <th mat-header-cell *matHeaderCellDef> Data de Criação </th>
+      <td mat-cell *matCellDef="let element"> {{ element.dataCriacao | date:'dd/MM/yyyy' }} </td>
+    </ng-container>
 
-                <ng-container matColumnDef="status">
-                    <th mat-header-cell *matHeaderCellDef> Status Atual </th>
-                    <td mat-cell *matCellDef="let element"> {{element.status}} </td>
-                </ng-container>
+    <!-- Última Atualização -->
+    <ng-container matColumnDef="ultimaAtualizacao">
+      <th mat-header-cell *matHeaderCellDef> Última Atualização </th>
+      <td mat-cell *matCellDef="let element"> {{ element.ultimaAtualizacao | date:'dd/MM/yyyy HH:mm' }} </td>
+    </ng-container>
 
-                <ng-container matColumnDef="acoes">
-                    <th mat-header-cell *matHeaderCellDef> Ações </th>
-                    <td mat-cell *matCellDef="let element">  
-                        <button class="btn-custom">Ver</button>
-                        <button class="btn-custom" (click)="remover($event, element)">Excluir</button>
-                    </td>
-                </ng-container>
+    <!-- Status -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status Atual </th>
+      <td mat-cell *matCellDef="let element"> {{ element.status }} </td>
+    </ng-container>
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <!-- Descrição -->
+    <ng-container matColumnDef="descricao">
+      <th mat-header-cell *matHeaderCellDef> Descrição do Defeito </th>
+      <td mat-cell *matCellDef="let element"> {{ element.descricao }} </td>
+    </ng-container>
 
-                <!-- Row shown when there is no matching data. -->
-                <tr class="mat-row" *matNoDataRow>
-                    <td class="mat-cell" colspan="6">Sem resultados </td>
-                </tr>
-            </table> 
-    </main>
+    <!-- Ações -->
+    <ng-container matColumnDef="acoes">
+      <th mat-header-cell *matHeaderCellDef> Ações </th>
+      <td mat-cell *matCellDef="let element">
+        <button class="btn-custom">Ver</button>
+        <button class="btn-custom" (click)="remover(element)">Excluir</button>
+      </td>
+    </ng-container>
+
+    <!-- Header e Rows -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <!-- Nenhum resultado -->
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="7">Sem resultados</td>
+    </tr>
+  </table>
+</main>
