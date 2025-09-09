@@ -1,0 +1,9 @@
+.card-title {
+    color: var(--color-heading-subtle, #546666);
+    font-family: var(--heading-h5-font-family, Inter);
+    font-size: var(--heading-h5-font-size, 24px);
+    font-style: normal;
+    font-weight: var(--heading-h5-font-weight, 500);
+    line-height: var(--heading-h5-line-height, 28px); 
+    letter-spacing: var(--heading-h5-letter-spacing, -0.2px);
+}

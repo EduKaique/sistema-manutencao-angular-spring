@@ -6,14 +6,20 @@ main {
     align-items: center;
 }
 
+.img-logo {
+    position: absolute;
+    top: 24px;
+    left: 48px;
+}
+
 .resgitration-container {
     display: flex;
-    width: 660px;
+    width: 720px;
     height: auto;
     padding: var(--spacing-lg) var(--spacing-xl);
     flex-direction: column;
     justify-content: center;
-    gap: var(--spacing-xl);
+    gap: var(--spacing-lg);
     border-radius: var(--radius-lg);
     background: var(--color-background-card);
 }
@@ -40,10 +46,43 @@ main {
     gap: var(--spacing-sm, 20px);
 }
 
+.mat-icon {
+    color: var(--color-primary-default);
+}
+
 .row-form-cpf-phone {
     display: flex;
     align-items: flex-start;
     gap: 24px;
     align-self: stretch;
     width: 100%;
+}
+
+
+.div-row {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    align-self: stretch;
+    width: 100%;
+}
+
+.row-button {
+    justify-content: space-between;
+}
+
+.first-button {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+}
+
+#input-numero {
+    width: 30%;
+}
+
+
+.body_medium {
+    color: var(--color-text-default);
+    text-align: center;
 }

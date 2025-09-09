@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AppSuccessModalComponent } from './app-success-modal';
+import { RequestHistoryComponent } from './request-history.component';
 
-describe('ModalMensagemComponent', () => {
-  let component: AppSuccessModalComponent;
-  let fixture: ComponentFixture<AppSuccessModalComponent>;
+describe('RequestHistoryComponent', () => {
+  let component: RequestHistoryComponent;
+  let fixture: ComponentFixture<RequestHistoryComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppSuccessModalComponent]
+      imports: [RequestHistoryComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AppSuccessModalComponent);
+    fixture = TestBed.createComponent(RequestHistoryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

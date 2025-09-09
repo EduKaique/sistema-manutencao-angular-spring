@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AppSuccessModalComponent } from './app-success-modal';
+import { RequestBudgetComponent } from './request-budget.component';
 
-describe('ModalMensagemComponent', () => {
-  let component: AppSuccessModalComponent;
-  let fixture: ComponentFixture<AppSuccessModalComponent>;
+describe('RequestBudgetComponent', () => {
+  let component: RequestBudgetComponent;
+  let fixture: ComponentFixture<RequestBudgetComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppSuccessModalComponent]
+      imports: [RequestBudgetComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AppSuccessModalComponent);
+    fixture = TestBed.createComponent(RequestBudgetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

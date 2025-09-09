@@ -1,0 +1,21 @@
+<div class="modal-overlay" *ngIf="mostrar">
+  <div class="modal-container">
+    <div class="modal-content">
+      <div class="success-icon">
+        <i>✓</i>
+      </div>
+      
+      <h2 class="modal-title">{{ titulo }}</h2>
+      <p class="modal-subtitle">{{ subtitulo }}</p>
+      
+      <!-- Exibe dados adicionais apenas se foram fornecidos -->
+      <div class="modal-additional" *ngIf="dadosAdicionais">
+        <p>{{ dadosAdicionais }}</p>
+      </div>
+      
+      <button class="modal-button" (click)="fecharModal()">
+        {{ textoBotao }}
+      </button>
+    </div>
+  </div>
+</div>
