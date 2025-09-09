@@ -6,5 +6,5 @@ export interface Request {
   status_id: number; 
   categoria_id: number; 
   cliente_id: number; 
-  funcionario_id: number; 
+  funcionario_id?: number; 
 }
