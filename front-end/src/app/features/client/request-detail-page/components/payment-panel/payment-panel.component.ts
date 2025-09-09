@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { AppSuccessModalComponent } from '../../../../../shared/components/modal-mensagem/app-success-modal';
 
 interface Pagamento {
   titulo: string;
@@ -9,7 +10,7 @@ interface Pagamento {
 @Component({
   selector: 'app-payment-panel',
   templateUrl: './payment-panel.component.html',
-  imports: [CommonModule],
+  imports: [CommonModule, AppSuccessModalComponent],
   styleUrls: ['./payment-panel.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -30,6 +31,18 @@ export class PaymentPanelComponent {
   ];
 
   selectedMethod: 'cartao' | 'pix' | null = null;
+  mostrarModal = false;
+
+  // Propriedades do modal de mensagem de confirmação
+  data = new Date();
+  modalTitulo = 'Pagamento realizado com sucesso!';
+  modalSubtitulo = '';
+  modalDadosAdicionais = '';
+  modalTextoBotao = 'Voltar para Página Inicial';
+  modalRotaDestino = '/';
+
+  constructor() {
+  }
 
   selectMethod(method: 'cartao' | 'pix') {
     this.selectedMethod = method;
@@ -41,20 +54,18 @@ export class PaymentPanelComponent {
       alert('Selecione uma forma de pagamento antes de continuar.');
       return;
     }
-
-    if (this.selectedMethod === 'cartao') {
-      alert('Pagamento via Cartão realizado!');
-    } else if (this.selectedMethod === 'pix') {
-      alert('Pagamento via PIX realizado!');
-    }
+    
+    this.atualizarDataConfirmacao();
+    
+    this.mostrarModal = true;
   }
-get total() {
-  let soma = 0;
-  for (let p of this.pagamentos) {
-    soma = soma + p.preco;
+
+  get total() {
+    return this.pagamentos.reduce((soma, p) => soma + p.preco, 0);
   }
-  return soma;
-}
 
-
+  private atualizarDataConfirmacao(): void {
+    const now = new Date();
+    this.modalDadosAdicionais = `Data: ${now.toLocaleDateString('pt-BR')} às ${now.toLocaleTimeString('pt-BR')}`;
+  }
 }

@@ -63,4 +63,14 @@
       </button>
     </div>
   </div>
+  
+  <!-- Modal de confirmação de pagamento -->
+  <app-success-modal 
+    [(mostrar)]="mostrarModal"
+    [titulo]="modalTitulo"
+    [subtitulo]="modalSubtitulo"
+    [dadosAdicionais]="modalDadosAdicionais"
+    [textoBotao]="modalTextoBotao"
+    [rotaDestino]="modalRotaDestino">
+  </app-success-modal>
 </body>
