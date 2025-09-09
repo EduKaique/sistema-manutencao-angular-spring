@@ -18,13 +18,13 @@
             <div class="form-group">
                 <label for="equipmentDescription" >Equipamento </label>
                 <input type="text" id="equipmentDescription" name="equipmentDescription" placeholder="Digite qual é o seu equipamento" 
-                [(ngModel)]="request.equipamento" #equipamento="ngModel" required/>
+                [(ngModel)]="request.equipmentName" #equipmentName="ngModel" required/>
             </div>
 
             <div class="form-group">
                 <label for="equipmentCategory">Categoria </label>
                 <select id="equipmentCategory" name="equipmentCategory" 
-                [(ngModel)]="request.categoria" #categoria="ngModel" required> 
+                [(ngModel)]="request.categoryId" #categoria="ngModel" required> 
                     <option value="" disabled selected>Selecione a categoria</option>
                     <option value="notebook">Notebook</option>
                     <option value="desktop">Desktop</option>
@@ -37,7 +37,7 @@
             <div class="form-group">
                 <label for="effectDescription">Descrição do defeito </label>
                 <textarea id="effectDescription" name="effectDescription" placeholder="Descreva o defeito" 
-                [(ngModel)]="request.descricaoDefeito" #descricaoDefeito="ngModel" required></textarea>
+                [(ngModel)]="request.equipmentDescription" #descricaoDefeito="ngModel" required></textarea>
             </div>
             <!-- adicionar # em descrição do defeito -->
 
