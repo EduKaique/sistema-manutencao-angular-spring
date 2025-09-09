@@ -18,10 +18,12 @@ import { RouterModule } from '@angular/router';
     MatInputModule,
     MatTableModule,
     CommonModule,
+  
   ],
   templateUrl: './client-dashboard-page.component.html',
   styleUrl: './client-dashboard-page.component.css',
 })
+
 export class ClientDashboardPageComponent implements OnInit {
   displayedColumns: string[] = [
     'equipamento',
@@ -68,12 +70,12 @@ export class ClientDashboardPageComponent implements OnInit {
     return this.requestService.listarTodos();
   }
 
-  remover($event: any, request: Request): void {
-    $event.preventDefault();
-    if (confirm('Deseja realmente excluir essa solicitação?')) {
-      this.requestService.remover(request.id!);
-      this.requests = this.listarTodos();
-      this.dataSource.data = this.requests;
+  remover(request: Request): void {
+      if(confirm('Deseja realmente excluir essa solicitação?')) {
+            this.requestService.remover(request.id!);
+            this.requests = this.listarTodos();
+            this.dataSource.data = this.requests;
+      }
     }
-  }
 }
+
