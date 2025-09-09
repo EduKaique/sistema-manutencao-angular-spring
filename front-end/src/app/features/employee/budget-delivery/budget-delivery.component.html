@@ -1,17 +1,25 @@
 <app-header></app-header>
-
-<mat-card appearance="outlined">
-  <mat-card-header class="card-header">
-    <mat-card-title>
-      <div class="card-title-content">
-        <div>Detalhes da Solicitação</div>
-        <div>01/09/2025</div>
-        <div>Status</div>
+<div class="main-content">
+  <div class="cards-row">
+    <mat-card class="tecnico-card">
+      <div class="tecnico-header">
+        <mat-icon class="tecnico-icon" color="primary">groups</mat-icon>
+        <span class="tecnico-title">Técnico Responsável</span>
       </div>
-    </mat-card-title>
-  </mat-card-header>
-
-  <mat-card-content>
-    Simple card
-  </mat-card-content>
-</mat-card>
+      <div class="tecnico-content">
+        Nenhum Técnico Atribuído
+      </div>
+      <button mat-stroked-button color="primary" class="atribuir-btn">
+        Atribuir Responsável
+      </button>
+    </mat-card>
+    <div class="side-card">
+      <div class="side-card-header">
+        <span class="side-card-title">Outro Card</span>
+      </div>
+      <div class="side-card-content">
+        Conteúdo do outro card aqui.
+      </div>
+    </div>
+  </div>
+</div>
