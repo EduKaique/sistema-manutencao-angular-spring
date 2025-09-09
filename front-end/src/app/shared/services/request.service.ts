@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Request } from '../../shared/models/request.model';
+import { Request } from '../../shared/models/request';
 
 const LS_CHAVE = "requests";
 
