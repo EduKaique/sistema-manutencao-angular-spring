@@ -1,31 +1,59 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.budget-info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.info-block h3 {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 4px;
+}
+
 .action-buttons {
     display: flex;
     justify-content: center;
     gap: 20px;
     margin-top: 20px;
+    width: 100%;
 }
 
-.reject-button{
+.reject-button, .approve-button {
     display: flex;
-    height: 48px;
-    padding: var(--spacing-2xs, 12px);
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--spacing-2xs, 12px);
-    flex: 1 0 0;
-    border-radius: var(--radius-sm, 8px);   
-    background: var(--color-error-light, #FF5E5B);
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    padding: 0 40px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: 250px;
 }
 
-.approve-button{
-    display: flex;
-    height: 48px;
-    padding: var(--spacing-2xs, 12px);
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--spacing-2xs, 12px);
-    flex: 1 0 0;
-    border-radius: var(--radius-sm, 8px);
-    background: var(--color-green-50, #25A46B);
+.reject-button {
+    background-color: #FF5E5B;
+    color: white;
+}
 
+.approve-button {
+    background-color: #25A46B;
+    color: white;
 }
