@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModalMensagemComponent } from './modal-mensagem.component';
+import { AppSuccessModalComponent } from './app-success-modal';
 
 describe('ModalMensagemComponent', () => {
-  let component: ModalMensagemComponent;
-  let fixture: ComponentFixture<ModalMensagemComponent>;
+  let component: AppSuccessModalComponent;
+  let fixture: ComponentFixture<AppSuccessModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ModalMensagemComponent]
+      imports: [AppSuccessModalComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ModalMensagemComponent);
+    fixture = TestBed.createComponent(AppSuccessModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

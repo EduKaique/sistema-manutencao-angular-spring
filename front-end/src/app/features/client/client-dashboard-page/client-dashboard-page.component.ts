@@ -5,8 +5,8 @@ import { NewRequestPageComponent } from '../new-request-page/new-request-page.co
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { RequestService } from '../../../core/services/request.service';
-import { Request } from '../../../shared/models/request.model';
+import { RequestService } from '../../../shared/services/request.service';
+import { Request } from '../../../shared/models/request';
 import { CommonModule } from '@angular/common';
 
 
@@ -19,15 +19,23 @@ import { CommonModule } from '@angular/common';
     MatInputModule,
     MatTableModule,
     CommonModule,
-],
+  ],
   templateUrl: './client-dashboard-page.component.html',
-  styleUrl: './client-dashboard-page.component.css'
+  styleUrl: './client-dashboard-page.component.css',
 })
-export class ClientDashboardPageComponent implements OnInit{
-  displayedColumns: string[] = ['equipamento', 'categoria', 'dataCriacao', 'ultimaAtualizacao', 'status', 'acoes'];
-  dataSource = new MatTableDataSource<Request>(); 
-  requests : Request[] = [];
-  
+
+export class ClientDashboardPageComponent implements OnInit {
+  displayedColumns: string[] = [
+    'equipamento',
+    'categoria',
+    'dataCriacao',
+    'ultimaAtualizacao',
+    'status',
+    'acoes',
+  ];
+  dataSource = new MatTableDataSource<Request>();
+  requests: Request[] = [];
+
   constructor(
     private dialog: MatDialog,
     private requestService: RequestService,
@@ -42,10 +50,10 @@ export class ClientDashboardPageComponent implements OnInit{
   openNewRequest() {
     const dialogRef = this.dialog.open(NewRequestPageComponent, {
       width: '565px',
-      disableClose: true
+      disableClose: true,
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         console.log('Solicitação enviada', result);
         this.requests = this.listarTodos();
@@ -60,13 +68,12 @@ export class ClientDashboardPageComponent implements OnInit{
   }
 
   listarTodos(): Request[] {
-    return this.requestService.listarTodos(); 
+    return this.requestService.listarTodos();
   }
 
-  remover($event: any, request: Request) : void {
-      $event.preventDefault();
+  remover(request: Request): void {
       if(confirm('Deseja realmente excluir essa solicitação?')) {
-            this.requestService.remover(request.id!);
+            this.requestService.remover(request.id!); 
             this.requests = this.listarTodos();
             this.dataSource.data = this.requests;
       }
