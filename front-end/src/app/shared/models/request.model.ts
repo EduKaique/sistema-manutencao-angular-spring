@@ -1,6 +1,6 @@
 export class Request {
     constructor(
-        public id: number = 0,
+        public id: string = "",
         public equipamento: string = "",
         public categoria: string = "",
         public dataCriacao: string = "",

@@ -1,12 +1,16 @@
-<article class ="card">
+<article class ="card" >
     <header>
         <h2 class="card-title">Detalhes da solicitação</h2>
     </header>
-    <div class="card-details">
-        <p>Status<br/></p>
-        <p>Equipamento<br/></p>
-        <p>Categoria<br/></p>
-        <p>Data da solicitação<br/></p>
-        <p class="card-description">Descrição do defeito<br/></p>
+    <div class="card-details" *ngIf="request">
+        <p class="status">Status {{request.status}}</p>
+        <p class="equipament">Equipamento {{request.equipamento}}</p>
+        <p class="category">Categoria {{request.categoria}}</p>
+        <p class="request-date">Data da solicitação {{request.dataCriacao}}</p>
+        <div>
+            <p class="card-description">Descrição do defeito {{request.descricaoDefeito}}</p>
+        </div>
+
     </div>
+    
 </article>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { NewRequestPageComponent } from '../new-request-page/new-request-page.component';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -7,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { RequestService } from '../../../core/services/request.service';
 import { Request } from '../../../shared/models/request.model';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+
 
 @Component({
   selector: 'app-client-dashboard-page',
@@ -17,8 +18,8 @@ import { RouterModule } from '@angular/router';
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
-    CommonModule
-  ],
+    CommonModule,
+],
   templateUrl: './client-dashboard-page.component.html',
   styleUrl: './client-dashboard-page.component.css'
 })
@@ -29,11 +30,12 @@ export class ClientDashboardPageComponent implements OnInit{
   
   constructor(
     private dialog: MatDialog,
-    private requestService: RequestService
+    private requestService: RequestService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.requests = this.listarTodos();
+    this.requests = this.requestService.listarTodos();
     this.dataSource.data = this.requests;
   }
 
@@ -68,6 +70,12 @@ export class ClientDashboardPageComponent implements OnInit{
             this.requests = this.listarTodos();
             this.dataSource.data = this.requests;
       }
+    }
+
+    verServico(id: string) {
+      console.log('Tentando navegar para:', `/request-detail/${id}`);
+
+      this.router.navigate(['/request-detail', id]);
     }
 }
 

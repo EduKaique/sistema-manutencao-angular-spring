@@ -32,11 +32,11 @@ export const routes: Routes = [
   },
   {
     path:'approve-reject-panel',
-    component:ApproveRejectPanelComponent
+    component: ApproveRejectPanelComponent
   },
   {
-    path: 'request-detail',
-    component:RequestDetailPageComponent
+    path: 'request-detail/:id', 
+    component: RequestDetailPageComponent
   },
   {
     path: 'home',
