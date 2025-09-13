@@ -1,8 +1,20 @@
-<article>
-    <header>
-        <h2 class="card-title">Histórico</h2>
-    </header>
-    <div class="card-body">
-        
-    </div>
-</article>
+<div class="history-container">
+  <h2>Histórico</h2>
+  <div *ngIf="history.length === 0" class="no-history">
+    Nenhum histórico encontrado para esta solicitação.
+  </div>
+
+  <div class="history-list">
+    <ng-container *ngFor="let entry of history">
+      <div class="history-item">
+      <span class="date"> {{ entry.date | date:'dd/MM' }}</span>        
+      <div class="history-body">
+          <span class="time"> {{ entry.date | date:'HH:mm' }}</span>
+          <!-- adicionar ícoce -->
+          <span class="responsible"> {{ entry.userId }}</span>
+          <p class="title">{{ entry.title }}</p>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

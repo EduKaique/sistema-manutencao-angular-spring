@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Request } from '../../shared/models/request';
+import { RequestHistory } from '../../shared/models/request-history';
+import { RequestHistoryService } from './request-history.service';
+import { StatusService } from './status.service';
 
 const LS_CHAVE = "requests";
 
@@ -8,10 +11,10 @@ const LS_CHAVE = "requests";
 })
 export class RequestService {
 
-  constructor() { }
+  constructor(private requestHistoryService: RequestHistoryService, private statusService: StatusService) { }
 
   listarTodos(): Request[] {
-    const requests = localStorage[LS_CHAVE];
+    const requests = localStorage.getItem(LS_CHAVE);
     return requests ? JSON.parse(requests) : [];
   }
 
@@ -23,12 +26,20 @@ export class RequestService {
     //request.lastAtualization = new Date();
     requests.push(request);
     localStorage[LS_CHAVE] = JSON.stringify(requests);
+
+    const inicialEntry: RequestHistory = {
+      id: 0,
+      title: 'Solicitação criada',
+      date: request.requestDate,
+      requestId: request.id,
+      userId: 1, //usuario logado
+      statusId: request.statusId
+    };
+    this.requestHistoryService.addHistory(inicialEntry);
   }
 
   buscarPorId(id: number): Request | undefined {
     const requests: Request[] = this.listarTodos();
-    console.log('ID que o serviço está procurando:', id); // Verifique o ID aqui
-    console.log('IDs disponíveis no Local Storage:', requests.map(r => r.id)); // Compare os IDs
     return requests.find(request => request.id === id);
   }
 
@@ -36,6 +47,25 @@ export class RequestService {
     const requests = this.listarTodos();
     requests.forEach((obj, index, objs) => {
       if (request.id === obj.id) {
+        const oldStatusId = obj.statusId;
+        const newStatusId = request.statusId;
+        if (oldStatusId !== newStatusId) {
+          const oldStatus =  this.statusService.getById(oldStatusId);
+          const newStatus =  this.statusService.getById(newStatusId);
+        
+          const description = `Status atualizado de ${oldStatus?.nome} para ${newStatus?.nome}`;
+          const employee = 1;
+          const entry: RequestHistory = {
+            id: 0,
+            title: description,
+            date: new Date(),
+            requestId: request.id,
+            userId: employee,
+            statusId: request.statusId
+          };
+          this.requestHistoryService.addHistory(entry);
+        
+        }
         //request.lastAtualization = new Date();
         objs[index] = request;
       }
