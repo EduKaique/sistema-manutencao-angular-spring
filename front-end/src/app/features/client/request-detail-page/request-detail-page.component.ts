@@ -1,33 +1,41 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RequestDescriptionComponent } from "./components/request-description/request-description.component";
 import { RequestHistoryComponent } from "./components/request-history/request-history.component";
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { RequestService } from '../../../shared/services/request.service';
 import { Request } from '../../../shared/models/request';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @Component({
   selector: 'app-request-detail-page',
   standalone: true,
-  imports: [RequestDescriptionComponent, RequestHistoryComponent],
+  imports: [RequestDescriptionComponent, RequestHistoryComponent, CommonModule, MatIconModule, RouterModule],
   templateUrl: './request-detail-page.component.html',
   styleUrl: './request-detail-page.component.css'
-})
+})   
 
 export class RequestDetailPageComponent implements OnInit{
 
   request: Request | undefined
+  currentRequestId!: number;
 
   constructor(
     private route: ActivatedRoute, // parâmetros da rota
-    private requestService: RequestService
+    private requestService: RequestService,
+    private router: Router
   ) {}
   
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-        this.request = this.requestService.buscarPorId(Number(id));
+      this.currentRequestId = Number(id);
+      this.request = this.requestService.buscarPorId(Number(id));
     }
   }
 
+  backToDashboard() : void {
+    this.router.navigate(['/client-dashboard']);
+  }
 }

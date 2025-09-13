@@ -1,39 +1,19 @@
-<app-request-description [request]="request"></app-request-description>
-<app-request-history></app-request-history>
+<header class="header">
+  <div class="logo">Remont</div>
+  <nav class="user-nav">
+    <span>Olá, Nilton Nativas</span>
+    <button class="btn-icon" aria-label="Notificações">🔔</button>
+    <button class="btn-logout" aria-label="Sair">Sair ➔</button>
+  </nav>
+</header>
 
-      <!--<tbody>
-        <tr>
-          <td>001</td>
-          <td>Emanuelle Rodrigues</td>
-          <td>Manutenção</td>
-          <td>19/08/2025 14:12</td>
-          <td><span class="status andamento">Em andamento</span></td>
-          <td class="actions">
-            <a href="visualizar-servico.html" class="view">Visualizar</a>
-            <a href="#" class="edit">Editar</a>
-          </td>
-        </tr>
-        <tr>
-          <td>002</td>
-          <td>Maria Carvalho</td>
-          <td>Suporte</td>
-          <td>18/08/2025 09:40</td>
-          <td><span class="status aberto">Aberto</span></td>
-          <td class="actions">
-            <a href="visualizar-servico.html" class="view">Visualizar</a>
-            <a href="#" class="edit">Editar</a>
-          </td>
-        </tr>
-        <tr>
-          <td>003</td>
-          <td>João Silva</td>
-          <td>Manutenção</td>
-          <td>15/08/2025 11:30</td>
-          <td><span class="status concluido">Concluído</span></td>
-          <td class="actions">
-            <a href="visualizar-servico.html" class="view">Visualizar</a>
-            <a href="#" class="edit">Editar</a>
-          </td>
-        </tr>
-      </tbody>-->
-   
+<a routerLink="/client-dashboard"> ← Voltar para Página Inicial </a>
+
+<div *ngIf="request">
+    <app-request-description [request]="request"></app-request-description>
+    <app-request-history [requestId]="currentRequestId"></app-request-history>
+</div>
+
+<div *ngIf="!request">
+    <p>Solicitação não encontrada</p>
+</div>

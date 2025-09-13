@@ -1,4 +1,20 @@
-.card-title {
+.history-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding: 24px;
+    margin: 20px 0;
+    max-width: 800px;
+    color: var(--color-text-secondary, #627877);
+    font-family: var(--label-large-font-family, Inter);
+    font-size: var(--label-large-font-size, 18px);
+    font-style: normal;
+    font-weight: var(--label-large-font-weight, 600);
+    line-height: var(--label-large-line-height, 24px); 
+    letter-spacing: var(--label-large-letter-spacing, 0);
+}
+
+h2 {
     color: var(--color-heading-subtle, #546666);
     font-family: var(--heading-h5-font-family, Inter);
     font-size: var(--heading-h5-font-size, 24px);
