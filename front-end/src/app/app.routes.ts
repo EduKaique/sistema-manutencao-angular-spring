@@ -6,6 +6,7 @@ import { ApproveRejectPanelComponent } from './features/client/request-detail-pa
 import { RequestDetailPageComponent } from './features/client/request-detail-page/request-detail-page.component';
 import { SignupPageComponent } from './core/auth/pages/signup-page/signup-page.component';
 import { ClientDashboardPageComponent } from './features/client/client-dashboard-page/client-dashboard-page.component';
+import { EmployeeListComponent } from './features/employee/components/employee-list/employee-list.component';
 
 export const routes: Routes = [
   {
@@ -40,5 +41,9 @@ export const routes: Routes = [
   {
     path: 'client-dashboard',
     component: ClientDashboardPageComponent
+  },
+  {
+    path: 'employee-list',
+    component: EmployeeListComponent
   }
 ];

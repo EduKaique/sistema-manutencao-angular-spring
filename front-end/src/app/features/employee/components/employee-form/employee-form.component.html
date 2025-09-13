@@ -1,0 +1,62 @@
+<h2 mat-dialog-title>{{ isEdit ? 'Editar' : 'Novo' }} Funcionário</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="employeeForm">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="nome" required>
+      <mat-error *ngIf="employeeForm.get('nome')?.hasError('required')">
+        Nome é obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Cargo</mat-label>
+      <mat-select formControlName="cargo" required>
+        <mat-option *ngFor="let cargo of cargos" [value]="cargo">
+          {{ cargo }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="employeeForm.get('cargo')?.hasError('required')">
+        Cargo é obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" required>
+      <mat-error *ngIf="employeeForm.get('email')?.hasError('required')">
+        Email é obrigatório
+      </mat-error>
+      <mat-error *ngIf="employeeForm.get('email')?.hasError('email')">
+        Email inválido
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Celular</mat-label>
+      <input matInput formControlName="celular" required>
+      <mat-error *ngIf="employeeForm.get('celular')?.hasError('required')">
+        Celular é obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Salário</mat-label>
+      <input matInput type="number" formControlName="salario" required>
+      <mat-error *ngIf="employeeForm.get('salario')?.hasError('required')">
+        Salário é obrigatório
+      </mat-error>
+      <mat-error *ngIf="employeeForm.get('salario')?.hasError('min')">
+        Salário deve ser maior que zero
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!employeeForm.valid">
+    {{ isEdit ? 'Atualizar' : 'Salvar' }}
+  </button>
+</mat-dialog-actions>
