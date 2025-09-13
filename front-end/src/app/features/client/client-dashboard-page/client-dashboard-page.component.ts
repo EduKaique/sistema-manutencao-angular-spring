@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { NewRequestPageComponent } from '../new-request-page/new-request-page.component';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -7,7 +8,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { RequestService } from '../../../shared/services/request.service';
 import { Request } from '../../../shared/models/request';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { StatusService } from '../../../shared/services/status.service';
+
 
 @Component({
   selector: 'app-client-dashboard-page',
@@ -18,7 +20,6 @@ import { RouterModule } from '@angular/router';
     MatInputModule,
     MatTableModule,
     CommonModule,
-  
   ],
   templateUrl: './client-dashboard-page.component.html',
   styleUrl: './client-dashboard-page.component.css',
@@ -26,11 +27,11 @@ import { RouterModule } from '@angular/router';
 
 export class ClientDashboardPageComponent implements OnInit {
   displayedColumns: string[] = [
-    'equipamento',
-    'categoria',
-    'dataCriacao',
-    'ultimaAtualizacao',
-    'status',
+    'equipmentName',
+    'categoryId',
+    'requestDate',
+    //'lastAtualization',
+    'statusId',
     'acoes',
   ];
   dataSource = new MatTableDataSource<Request>();
@@ -38,13 +39,23 @@ export class ClientDashboardPageComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private requestService: RequestService
+    private requestService: RequestService,
+    private statusService: StatusService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.requests = this.listarTodos();
+    this.requests = this.requestService.listarTodos();
     this.dataSource.data = this.requests;
   }
+// possível substituição por pipes:
+    getStatusName(id: number): string {
+      return this.statusService.getById(id)?.nome || '';
+    }
+
+    getStatusColor(id: number): string {
+      return this.statusService.getById(id)?.cor || '';
+    }
 
   openNewRequest() {
     const dialogRef = this.dialog.open(NewRequestPageComponent, {
@@ -55,7 +66,7 @@ export class ClientDashboardPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         console.log('Solicitação enviada', result);
-        this.requests = this.listarTodos();
+        this.requests = this.requestService.listarTodos();
         this.dataSource.data = this.requests;
       }
     });
@@ -72,10 +83,16 @@ export class ClientDashboardPageComponent implements OnInit {
 
   remover(request: Request): void {
       if(confirm('Deseja realmente excluir essa solicitação?')) {
-            this.requestService.remover(request.id!);
+            this.requestService.remover(request.id!); 
             this.requests = this.listarTodos();
             this.dataSource.data = this.requests;
       }
+    }
+
+    verServico(id: number) {
+      console.log('Tentando navegar para:', `/request-detail/${id}`);
+
+      this.router.navigate(['/request-detail', id]);
     }
 }
 

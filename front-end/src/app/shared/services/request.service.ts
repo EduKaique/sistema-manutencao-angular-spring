@@ -18,12 +18,17 @@ export class RequestService {
   inserir(request: Request): void {
     const requests = this.listarTodos();
     request.id = new Date().getTime();
+    request.statusId = 1;
+    request.requestDate = new Date();
+    //request.lastAtualization = new Date();
     requests.push(request);
     localStorage[LS_CHAVE] = JSON.stringify(requests);
   }
 
   buscarPorId(id: number): Request | undefined {
     const requests: Request[] = this.listarTodos();
+    console.log('ID que o serviço está procurando:', id); // Verifique o ID aqui
+    console.log('IDs disponíveis no Local Storage:', requests.map(r => r.id)); // Compare os IDs
     return requests.find(request => request.id === id);
   }
 
@@ -31,6 +36,7 @@ export class RequestService {
     const requests = this.listarTodos();
     requests.forEach((obj, index, objs) => {
       if (request.id === obj.id) {
+        //request.lastAtualization = new Date();
         objs[index] = request;
       }
     });

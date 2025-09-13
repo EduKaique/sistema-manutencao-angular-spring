@@ -1,11 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Request } from '../../../../../shared/models/request';
 
 @Component({
   selector: 'app-request-description',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './request-description.component.html',
   styleUrl: './request-description.component.css'
 })
 export class RequestDescriptionComponent {
+ 
+  @Input() request: Request | undefined; 
 
 }
