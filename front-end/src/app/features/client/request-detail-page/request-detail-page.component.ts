@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { RequestDescriptionComponent } from "./components/request-description/request-description.component";
 import { RequestHistoryComponent } from "./components/request-history/request-history.component";
 import { ActivatedRoute } from '@angular/router';
-import { RequestService } from '../../../core/services/request.service';
-import { Request } from '../../../shared/models/request.model';
+import { RequestService } from '../../../shared/services/request.service';
+import { Request } from '../../../shared/models/request';
 
 
 @Component({
@@ -25,9 +25,8 @@ export class RequestDetailPageComponent implements OnInit{
   
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    console.log('ID recebido da URL:', id); // Verifique se o ID está correto, tirar dps
     if (id) {
-        this.request = this.requestService.buscarPorId(id);
+        this.request = this.requestService.buscarPorId(Number(id));
     }
   }
 

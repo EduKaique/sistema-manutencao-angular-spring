@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Request } from '../../../../../shared/models/request.model';
+import { Request } from '../../../../../shared/models/request';
 
 @Component({
   selector: 'app-request-description',

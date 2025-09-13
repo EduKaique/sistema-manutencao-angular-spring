@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { RequestService } from '../../../shared/services/request.service';
 import { Request } from '../../../shared/models/request';
 import { CommonModule } from '@angular/common';
+import { StatusService } from '../../../shared/services/status.service';
 
 
 @Component({
@@ -26,11 +27,11 @@ import { CommonModule } from '@angular/common';
 
 export class ClientDashboardPageComponent implements OnInit {
   displayedColumns: string[] = [
-    'equipamento',
-    'categoria',
-    'dataCriacao',
-    'ultimaAtualizacao',
-    'status',
+    'equipmentName',
+    'categoryId',
+    'requestDate',
+    //'lastAtualization',
+    'statusId',
     'acoes',
   ];
   dataSource = new MatTableDataSource<Request>();
@@ -39,6 +40,7 @@ export class ClientDashboardPageComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private requestService: RequestService,
+    private statusService: StatusService,
     private router: Router
   ) {}
 
@@ -46,6 +48,14 @@ export class ClientDashboardPageComponent implements OnInit {
     this.requests = this.requestService.listarTodos();
     this.dataSource.data = this.requests;
   }
+// possível substituição por pipes:
+    getStatusName(id: number): string {
+      return this.statusService.getById(id)?.nome || '';
+    }
+
+    getStatusColor(id: number): string {
+      return this.statusService.getById(id)?.cor || '';
+    }
 
   openNewRequest() {
     const dialogRef = this.dialog.open(NewRequestPageComponent, {
@@ -56,7 +66,7 @@ export class ClientDashboardPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         console.log('Solicitação enviada', result);
-        this.requests = this.listarTodos();
+        this.requests = this.requestService.listarTodos();
         this.dataSource.data = this.requests;
       }
     });
@@ -79,7 +89,7 @@ export class ClientDashboardPageComponent implements OnInit {
       }
     }
 
-    verServico(id: string) {
+    verServico(id: number) {
       console.log('Tentando navegar para:', `/request-detail/${id}`);
 
       this.router.navigate(['/request-detail', id]);

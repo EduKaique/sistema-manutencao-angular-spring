@@ -3,6 +3,7 @@ export interface Request {
   equipmentName: string;
   equipmentDescription: string;
   requestDate: Date;
+  //lastAtualization: Date;
   statusId: number;
   categoryId: number;
   clientId: number;

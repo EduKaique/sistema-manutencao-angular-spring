@@ -28,21 +28,21 @@
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
     <!-- Equipamento -->
-    <ng-container matColumnDef="equipamento">
+    <ng-container matColumnDef="equipmentName">
       <th mat-header-cell *matHeaderCellDef> Nome do Equipamento </th>
-      <td mat-cell *matCellDef="let element"> {{ element.equipamento }} </td>
+      <td mat-cell *matCellDef="let element"> {{ element.equipmentName }} </td>
     </ng-container>
 
     <!-- Categoria -->
-    <ng-container matColumnDef="categoria">
+    <ng-container matColumnDef="categoryId">
       <th mat-header-cell *matHeaderCellDef> Categoria </th>
-      <td mat-cell *matCellDef="let element"> {{ element.categoria }} </td>
+      <td mat-cell *matCellDef="let element"> {{ element.categoryId }} </td>
     </ng-container>
 
     <!-- Data de Criação -->
-    <ng-container matColumnDef="dataCriacao">
+    <ng-container matColumnDef="requestDate">
       <th mat-header-cell *matHeaderCellDef> Data de Criação </th>
-      <td mat-cell *matCellDef="let element"> {{ element.dataCriacao | date:'dd/MM/yyyy' }} </td>
+      <td mat-cell *matCellDef="let element"> {{ element.requestDate | date:'dd/MM/yyyy' }} </td>
     </ng-container>
 
     <!-- Última Atualização -->
@@ -51,30 +51,27 @@
       <td mat-cell *matCellDef="let element"> {{ element.ultimaAtualizacao | date:'dd/MM/yyyy HH:mm' }} </td>
     </ng-container>
 
-                <ng-container matColumnDef="acoes">
-                    <th mat-header-cell *matHeaderCellDef> Ações </th>
-                    <td mat-cell *matCellDef="let element"> 
-                        <button class="btn-custom" (click)="verServico(element.id)">Ver serviço</button>
-                        <button class="btn-custom" (click)="remover(element)">Excluir</button>
-                    </td>
-                </ng-container>
     <!-- Status -->
-    <ng-container matColumnDef="status">
+    <ng-container matColumnDef="statusId">
       <th mat-header-cell *matHeaderCellDef> Status Atual </th>
-      <td mat-cell *matCellDef="let element"> {{ element.status }} </td>
+      <td mat-cell *matCellDef="let element"> 
+        <span *ngIf="getStatusName(element.statusId)" [ngStyle]="{'color': getStatusColor(element.statusId)}">
+          {{ getStatusName(element.statusId) }}
+        </span>
+      </td>
     </ng-container>
 
     <!-- Descrição -->
-    <ng-container matColumnDef="descricao">
+    <ng-container matColumnDef="description">
       <th mat-header-cell *matHeaderCellDef> Descrição do Defeito </th>
-      <td mat-cell *matCellDef="let element"> {{ element.descricao }} </td>
+      <td mat-cell *matCellDef="let element"> {{ element.equipmentDescription }} </td>
     </ng-container>
 
     <!-- Ações -->
     <ng-container matColumnDef="acoes">
       <th mat-header-cell *matHeaderCellDef> Ações </th>
       <td mat-cell *matCellDef="let element">
-        <button class="btn-custom">Ver</button>
+        <button class="btn-custom" (click)="verServico(element.id)">Ver serviço</button>
         <button class="btn-custom" (click)="remover(element)">Excluir</button>
       </td>
     </ng-container>

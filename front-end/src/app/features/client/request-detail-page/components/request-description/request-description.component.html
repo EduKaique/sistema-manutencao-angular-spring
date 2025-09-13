@@ -3,12 +3,12 @@
         <h2 class="card-title">Detalhes da solicitação</h2>
     </header>
     <div class="card-details" *ngIf="request">
-        <p class="status">Status {{request.status}}</p>
-        <p class="equipament">Equipamento {{request.equipamento}}</p>
-        <p class="category">Categoria {{request.categoria}}</p>
-        <p class="request-date">Data da solicitação {{request.dataCriacao}}</p>
+        <p class="status">Status {{request.statusId}}</p>
+        <p class="equipament">Equipamento {{request.equipmentName}}</p>
+        <p class="category">Categoria {{request.categoryId}}</p>
+        <p class="request-date">Data da solicitação {{request.requestDate}}</p>
         <div>
-            <p class="card-description">Descrição do defeito {{request.descricaoDefeito}}</p>
+            <p class="card-description">Descrição do defeito {{request.equipmentDescription}}</p>
         </div>
 
     </div>
