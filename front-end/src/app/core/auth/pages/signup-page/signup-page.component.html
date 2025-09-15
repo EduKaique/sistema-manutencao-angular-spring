@@ -1,5 +1,10 @@
 <main>
-  <img class="img-logo" src="assets/images/logo.png" alt="Logomarca" width="200" />
+  <img
+    class="img-logo"
+    src="assets/images/logo.png"
+    alt="Logomarca"
+    width="200"
+  />
   <section class="resgitration-container">
     <div class="resgitration-text">
       <h1 class="heading_3">Crie sua conta</h1>
@@ -23,17 +28,22 @@
               type="text"
               formName="cpfUser"
               placeholder="___.___.___-__"
+              mask="000.000.000-00"
               style="width: inherit"
               required
             ></app-input-primary>
+            <span class="body_small">{{
+              firstFormGroup.get("cpfUser")?.value | cpfPipes
+            }}</span>
             <app-input-primary
               label="Celular"
               type="text"
               formName="phoneUser"
               placeholder="(__) _ ___-__"
+              mask="(00) 0 0000-0000"
               style="width: inherit"
-              required
             ></app-input-primary>
+            <!-- Caso queira, podemos criar um pipe de telefone semelhante ao CPF e usar aqui -->
           </div>
           <app-input-primary
             label="Email"
@@ -44,7 +54,9 @@
             required
           ></app-input-primary>
           <div class="first-button">
-            <button class="button-primary label_large" matStepperNext>Próximo</button>
+            <button class="button-primary label_large" matStepperNext>
+              Próximo
+            </button>
           </div>
         </form>
       </mat-step>
@@ -57,9 +69,14 @@
               type="text"
               formName="cep"
               placeholder="___-__"
+              mask="00000-000"
               required
-            /> 
-            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon>
+            />
+            <mat-icon
+              aria-hidden="false"
+              aria-label="Example home icon"
+              fontIcon="search"
+            ></mat-icon>
           </div>
           <div class="div-row">
             <app-input-primary
@@ -114,15 +131,25 @@
               required
             />
           </div>
-            <div class="div-row row-button">
-              <button class="button-secondary label_large" matStepperPrevious>Voltar</button>
-              <button class="button-primary label_large" matStepperNext (click)="onSubmit()">Registrar</button>
-            </div>
+          <div class="div-row row-button">
+            <button class="button-secondary label_large" matStepperPrevious>
+              Voltar
+            </button>
+            <button
+              class="button-primary label_large"
+              matStepperNext
+              (click)="onSubmit()"
+            >
+              Registrar
+            </button>
+          </div>
         </form>
       </mat-step>
-   </mat-stepper>
+    </mat-stepper>
     <div class="text-direct-login">
-      <p class="body_medium">Já possui uma conta? <a (click)="navigate()"> Faça o Login</a></p>
+      <p class="body_medium">
+        Já possui uma conta? <a (click)="navigate()"> Faça o Login</a>
+      </p>
     </div>
   </section>
 </main>

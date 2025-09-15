@@ -1,32 +1,42 @@
-import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon'
+import { MatIconModule } from '@angular/material/icon';
 import { InputPrimaryComponent } from '../../../../shared/components/input-primary/input-primary.component';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-login-page',
-  imports: [MatButtonModule, InputPrimaryComponent, MatIconModule],
+  imports: [
+    MatButtonModule,
+    InputPrimaryComponent,
+    MatIconModule,
+    ReactiveFormsModule,
+  ],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginPageComponent {
+  loginForm: FormGroup;
+
+  constructor(private router: Router) {
+    this.loginForm = new FormGroup({
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required]),
+    });
+  }
+
   hide = signal(true);
   clickEvent(event: MouseEvent) {
     this.hide.set(!this.hide());
     event.stopPropagation();
-  }
-
-  loginForm: FormGroup;
-
-  constructor(private fb: FormBuilder, private router: Router) {
-    this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
-    });
   }
 
   onSubmit() {
@@ -37,7 +47,6 @@ export class LoginPageComponent {
   }
 
   navigate() {
-    this.router.navigate(['/signup'])
+    this.router.navigate(['/signup']);
   }
 }
-
