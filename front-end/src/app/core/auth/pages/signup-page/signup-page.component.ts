@@ -13,6 +13,7 @@ import { CpfPipesPipe } from '../../../../shared/pipes/cpf.pipes.pipe';
 import { MatDialog } from '@angular/material/dialog';
 import { AppSuccessModalComponent } from '../../../../shared/components/modal-mensagem/app-success-modal';
 import { SuccessfulSignupComponent } from './successful-signup/successful-signup.component';
+import { ViaCepService, Endereco } from '../../../services/api-service.service';
 
 @Component({
   selector: 'app-signup-page',
@@ -29,8 +30,10 @@ import { SuccessfulSignupComponent } from './successful-signup/successful-signup
 })
 export class SignupPageComponent {
   private _formBuilder = inject(FormBuilder);
+  cep = '';
+  endereco?: Endereco;
 
-  constructor(private router: Router, private dialog: MatDialog) {}
+  constructor(private router: Router, private dialog: MatDialog, public viaCepService: ViaCepService) {}
 
   // Primeiro Step: dados pessoais
   firstFormGroup: FormGroup = this._formBuilder.group({
@@ -72,5 +75,13 @@ export class SignupPageComponent {
 
   navigate() {
     this.router.navigate(['/login']);
+  }
+
+  consultarCep() {
+    this.viaCepService.buscarCep(this.cep).subscribe({
+      next: (res) => this.endereco = res,
+      error: (err) => console.error('Erro ao buscar CEP', err)
+    });
+    console.log(this.endereco)
   }
 }
