@@ -22,18 +22,18 @@
           Preencha Preencha suas informações para entrar.
         </p>
       </div>
-      <form class="form-inputs">
+      <form class="form-inputs" [formGroup]="loginForm">
         <app-input-primary
           label="Email"
           type="email"
-          formControlName="email"
+          [formName]="'email'"
           placeholder="exemple@email.com"
           style="width: inherit"
         ></app-input-primary>
         <app-input-primary
           label="Senha"
           [type]="hide() ? 'password' : 'text'"
-          formControlName="password"
+          [formName]="'password'"
           style="width: inherit"
         >
           <mat-icon
@@ -41,11 +41,14 @@
             (click)="clickEvent($event)"
             [attr.aria-label]="'Hide password'"
             [attr.aria-pressed]="hide()"
-          >{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+            >{{ hide() ? "visibility_off" : "visibility" }}</mat-icon
+          >
         </app-input-primary>
         <div class="row-link-btn">
           <p><a href="#">Esqueceu a senha?</a></p>
-          <button class="button-primary label_large" (click)="onSubmit()">Entrar</button>
+          <button class="button-primary label_large" (click)="onSubmit()">
+            Entrar
+          </button>
         </div>
       </form>
 

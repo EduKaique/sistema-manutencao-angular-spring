@@ -2,9 +2,10 @@
   <label [for]="formName" class="label_medium">{{ label }}</label>
   <div class="input-content">
     <input
+    [id]="formName"
     [type]="type"
-    [formControlName]="formName"
     [placeholder]="placeholder"
+      [mask]="mask"
     class="body_medium"
   />
     <div class="icon">
