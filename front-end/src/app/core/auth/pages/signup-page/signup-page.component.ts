@@ -10,10 +10,9 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { CpfPipesPipe } from '../../../../shared/pipes/cpf.pipes.pipe';
-import { MatDialog } from '@angular/material/dialog';
-import { AppSuccessModalComponent } from '../../../../shared/components/modal-mensagem/app-success-modal';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { SuccessfulSignupComponent } from './successful-signup/successful-signup.component';
-import { ViaCepService, Endereco } from '../../../services/api-service.service';
+import { ViaCepService, Endereco } from '../../../services/viacep.service';
 
 @Component({
   selector: 'app-signup-page',
@@ -23,17 +22,21 @@ import { ViaCepService, Endereco } from '../../../services/api-service.service';
     ReactiveFormsModule,
     MatStepperModule,
     MatIconModule,
+    MatDialogModule,
     CpfPipesPipe,
   ],
   templateUrl: './signup-page.component.html',
-  styleUrl: './signup-page.component.css',
+  styleUrls: ['./signup-page.component.css'],
 })
 export class SignupPageComponent {
   private _formBuilder = inject(FormBuilder);
-  cep = '';
   endereco?: Endereco;
 
-  constructor(private router: Router, private dialog: MatDialog, public viaCepService: ViaCepService) {}
+  constructor(
+    private router: Router,
+    private dialog: MatDialog,
+    private viaCepService: ViaCepService
+  ) {}
 
   // Primeiro Step: dados pessoais
   firstFormGroup: FormGroup = this._formBuilder.group({
@@ -61,27 +64,45 @@ export class SignupPageComponent {
         ...this.secondFormGroup.value,
       };
       console.log('Dados do formulário:', formData);
-
     }
-    const dialogMessageSucess = this.dialog.open(SuccessfulSignupComponent, {
-        width: '565px',
-        disableClose: true,
-      });
 
-      dialogMessageSucess.afterClosed().subscribe(() => {
-        this.navigate();
-      });
+    const dialogMessageSucess = this.dialog.open(SuccessfulSignupComponent, {
+      width: '565px',
+      disableClose: true,
+    });
+
+    dialogMessageSucess.afterClosed().subscribe(() => {
+      this.navigate();
+    });
   }
 
   navigate() {
+    console.log('Teste');
     this.router.navigate(['/login']);
   }
 
-  consultarCep() {
-    this.viaCepService.buscarCep(this.cep).subscribe({
-      next: (res) => this.endereco = res,
-      error: (err) => console.error('Erro ao buscar CEP', err)
+  searchCep() {
+    const cep = this.secondFormGroup.get('cep')?.value as string | null;
+    if (!cep) return;
+
+    this.viaCepService.buscarCep(cep).subscribe({
+      next: (res) => {
+        this.endereco = res;
+        this.secondFormGroup.patchValue({
+          address: res.logradouro || '',
+          neighborhood: res.bairro || '',
+          city: res.localidade || '',
+          state: res.uf || '',
+        });
+      },
+      error: (err) => console.error('Erro ao buscar CEP', err),
     });
-    console.log(this.endereco)
+  }
+
+  get isCepValid(): boolean {
+    const cep = this.secondFormGroup.get('cep')?.value as string | null;
+    if (!cep) return false;
+    const digits = cep.replace(/\D/g, '');
+    return digits.length === 8;
   }
 }

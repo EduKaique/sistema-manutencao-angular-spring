@@ -67,12 +67,21 @@
             <app-input-primary
               label="CEP"
               type="text"
-              formName="cep"
+              [formName]="'cep'"
               placeholder="___-__"
               mask="00000-000"
-              required
-            /> 
-            <mat-icon aria-hidden="false" aria-label="Pesquisar" fontIcon="search" (click)="consultarCep()"></mat-icon>
+            />
+            <span
+              class="button-search-cep label_large"
+              [class.disabled]="!isCepValid"
+              (click)="isCepValid && searchCep()"
+              ><mat-icon
+                aria-hidden="false"
+                aria-label="Pesquisar"
+                fontIcon="search"
+              ></mat-icon>
+              Pesquisar</span
+            >
           </div>
           <div class="div-row">
             <app-input-primary
