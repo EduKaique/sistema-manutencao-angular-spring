@@ -1,45 +1,25 @@
-<main>
-  <section>
-    <h2>Detalhes do Orçamento</h2>
-    
-    <div>
-      <h3>Informações da Solicitação</h3>
-      <ul>
+<main class="container" *ngIf="budget">
+  <h2>Orçamento #{{ budget.id }}</h2>
+  <p class="subtitle">Orçamento aguardando aprovação</p>
 
-        <li><strong>Serviço:</strong> </li>
-        <li><strong>Descrição:</strong> </li>
-    
-        </ul>
-          <section class="budget-info">
-
-      <div class="info-block">
-        <h3>Valor do Serviço</h3>
-        <p class="price">R$ 520,00</p>
-      </div>
-
-      <div class="info-block">
-        <h3>Prazo de Execução</h3>
-        <p class="deadline">2-5 dias úteis</p>
-      </div>
-      
-    </section>
-
-    <section class="services">
-      <h4>Serviços Inclusos</h4>
-      <p>
-        Diagnóstico técnico, Substituição do cabo flat da tela, Mão de obra,
-        Limpeza interna + pasta térmica
-      </p>
-    </section>
-
-      
-      <div class="action-buttons">
-        <button class="reject-button" (click)="reprovar()">Reprovar</button>
-        <button class="approve-button" (click)="aprovar()">Aprovar</button>
-      </div>
-
-    <div></div>
-        
+  <section class="budget-info">
+    <div class="info-block">
+      <h3>Valor do Serviço</h3>
+      <p class="price">R$ {{ budget.valor }},00</p>
+    </div>
+    <div class="info-block">
+      <h3>Prazo de Execução</h3>
+      <p class="deadline">{{ budget.prazo }}</p>
     </div>
   </section>
+
+  <section class="services">
+    <h4>Serviços Inclusos</h4>
+    <p>{{ budget.servicos }}</p>
+  </section>
+
+  <div class="action-buttons">
+    <button class="reject-button" (click)="reprovar()">Reprovar</button>
+    <button class="approve-button" (click)="aprovar()">Aprovar</button>
+  </div>
 </main>
