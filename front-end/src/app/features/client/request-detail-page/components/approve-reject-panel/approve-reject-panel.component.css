@@ -1,59 +1,68 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.subtitle {
+  color: #777;
+  margin-top: -10px;
 }
 
 .budget-info {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 16px;
 }
 
 .info-block h3 {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 4px;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.price, .deadline {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.services {
+  width: 100%;
+  text-align: left;
 }
 
 .action-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 20px;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+  width: 100%;
 }
 
 .reject-button, .approve-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 60px;
-    padding: 0 40px;
-    border-radius: 8px;
-    font-size: 18px;
-    font-weight: 600;
-    border: none;
-    text-transform: uppercase;
-    cursor: pointer;
-    width: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  padding: 0 40px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  width: 250px;
 }
 
-.reject-button {
-    background-color: #FF5E5B;
-    color: white;
-}
-
-.approve-button {
-    background-color: #25A46B;
-    color: white;
-}
+.reject-button { background-color: #FF5E5B; color: white; }
+.approve-button { background-color: #25A46B; color: white; }
