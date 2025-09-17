@@ -17,7 +17,7 @@
           <app-input-primary
             label="Nome Completo"
             type="text"
-            formName="nameUser"
+            formControlName="nameUser"
             placeholder="Digite seu Nome Completo"
             style="width: inherit"
             required
@@ -26,7 +26,7 @@
             <app-input-primary
               label="CPF"
               type="text"
-              formName="cpfUser"
+              formControlName="cpfUser"
               placeholder="___.___.___-__"
               mask="000.000.000-00"
               style="width: inherit"
@@ -38,7 +38,7 @@
             <app-input-primary
               label="Celular"
               type="text"
-              formName="phoneUser"
+              formControlName="phoneUser"
               placeholder="(__) _ ___-__"
               mask="(00) 0 0000-0000"
               style="width: inherit"
@@ -48,7 +48,7 @@
           <app-input-primary
             label="Email"
             type="email"
-            formName="email"
+            formControlName="email"
             placeholder="exemple@email.com"
             style="width: inherit"
             required
@@ -65,9 +65,10 @@
           <ng-template matStepLabel>Endereço Completo</ng-template>
           <div class="div-row">
             <app-input-primary
-              label="CEP"
+              formControlName="cep"
               type="text"
-              [formName]="'cep'"
+              inputName="cep"
+              label="CEP"
               placeholder="___-__"
               mask="00000-000"
             />
@@ -85,34 +86,35 @@
           </div>
           <div class="div-row">
             <app-input-primary
-              label="Endereço"
+              formControlName="address"
               type="text"
-              formName="address"
+              inputName="address"
+              label="Endereço"
               placeholder="Digite seu Endereço"
               style="width: inherit"
               required
             />
             <app-input-primary
-              id="input-numero"
-              label="Número"
+              formControlName="number"
               type="text"
-              formName="number"
+              inputName="input-numero"
+              label="Número"
               placeholder="Digite seu número"
               required
             />
           </div>
           <div class="div-row">
             <app-input-primary
+              formControlName="complement"
               label="Complemento"
               type="text"
-              formName="complement"
               placeholder="Ex: Bloco, Apto, ..."
               style="width: inherit"
             />
             <app-input-primary
               label="Bairro"
               type="text"
-              formName="neighborhood"
+              formControlName="neighborhood"
               placeholder=""
               style="width: inherit"
               required
@@ -122,7 +124,7 @@
             <app-input-primary
               label="Cidade"
               type="text"
-              formName="city"
+              formControlName="city"
               placeholder=""
               style="width: inherit"
               required
@@ -130,7 +132,7 @@
             <app-input-primary
               label="Estado"
               type="text"
-              formName="state"
+              formControlName="state"
               placeholder="Selecione seu Estado"
               style="width: inherit"
               required

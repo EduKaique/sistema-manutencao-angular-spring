@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Employee, Cargo } from '../../../shared/models/employee';
+import { Employee, Role } from '../../../shared/models/employee';
 
 const LS_KEY = "funcionarios";
 
@@ -9,10 +9,10 @@ const LS_KEY = "funcionarios";
 export class EmployeService {
   constructor() { }
 
-    getCargos(): { value: Cargo, label: string }[] {
-    return Object.values(Cargo).map(cargo => ({
-      value: cargo,
-      label: cargo.toString()
+    getCargos(): { value: Role, label: string }[] {
+    return Object.values(Role).map(role => ({
+      value: role,
+      label: role.toString()
     }));
   }
 
