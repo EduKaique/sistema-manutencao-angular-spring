@@ -1,8 +1,9 @@
 export interface User {
   id: number;
-  nome: string;
+  name: string;
   email: string;
   cpf: string;
-  celular: string;
-  senha: string;
+  phoneNumber: string;
+  password: string;
+  userAccess: 'employee' | 'client'; 
 }

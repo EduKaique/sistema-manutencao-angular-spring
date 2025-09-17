@@ -7,6 +7,10 @@ import { RequestDetailPageComponent } from './features/client/request-detail-pag
 import { SignupPageComponent } from './core/auth/pages/signup-page/signup-page.component';
 import { ClientDashboardPageComponent } from './features/client/client-dashboard-page/client-dashboard-page.component';
 import { EmployeeListComponent } from './features/employee/components/employee-list/employee-list.component';
+import { EmployeeDashboardPageComponent } from './features/employee/employee-dashboard-page/employee-dashboard-page.component';
+import { AuthGuard } from './core/auth/guards/auth.guard';
+import { RoleGuard } from './core/auth/guards/role.guard';
+import { UnauthorizedPageComponent } from './core/layout/unauthorized-page/unauthorized-page.component';
 
 export const routes: Routes = [
   {
@@ -23,27 +27,49 @@ export const routes: Routes = [
     component: SignupPageComponent,
   },
   {
-    path: 'budget-delivery',
-    component: BudgetDeliveryComponent 
-  },
-  {
-    path: 'payment-page',
-    component: PaymentPanelComponent
-  },
-  {
-    path:'approve-reject-panel',
-    component: ApproveRejectPanelComponent
-  },
-  {
-    path: 'request-detail/:id', 
-    component: RequestDetailPageComponent
+    path: 'error-unauthorized',
+    component: UnauthorizedPageComponent,
   },
   {
     path: 'client-dashboard',
-    component: ClientDashboardPageComponent
+    component: ClientDashboardPageComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { expectedRole: 'client' },
+  },
+  {
+    path: 'request-detail/:id',
+    component: RequestDetailPageComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { expectedRole: 'client' },
+  },
+  {
+    path: 'approve-reject-panel',
+    component: ApproveRejectPanelComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { expectedRole: 'client' },
+  },
+  {
+    path: 'payment-page',
+    component: PaymentPanelComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { expectedRole: 'client' },
+  },
+  {
+    path: 'employee-dashboard',
+    component: EmployeeDashboardPageComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { expectedRole: 'employee' },
+  },
+  {
+    path: 'budget-delivery',
+    component: BudgetDeliveryComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { expectedRole: 'employee' },
   },
   {
     path: 'employee-list',
-    component: EmployeeListComponent
-  }
+    component: EmployeeListComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { expectedRole: 'employee' },
+  },
 ];

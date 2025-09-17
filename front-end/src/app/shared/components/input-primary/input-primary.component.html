@@ -1,16 +1,17 @@
-<div class="input-wrapper"> 
-  <label [for]="formName" class="label_medium">{{ label }}</label>
+<div class="input-wrapper">
+  <label [for]="inputName" class="label_medium">{{ label }}</label>
   <div class="input-content">
     <input
-    [id]="formName"
-    [type]="type"
-    [placeholder]="placeholder"
+      [id]="inputName"
+      [type]="type"
+      [placeholder]="placeholder"
+      [value]="value"
+      (input)="onInput($event)"
       [mask]="mask"
-    class="body_medium"
-  />
+      class="body_medium"
+    />
     <div class="icon">
       <ng-content></ng-content>
     </div>
   </div>
-  
 </div>

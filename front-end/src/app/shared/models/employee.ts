@@ -1,6 +1,6 @@
 import { User } from './user';
 
-export enum Cargo {
+export enum Role {
   TecnicoEmEletronica = 'Técnico em Eletrônica',
   TecnicoEmInformatica = 'Técnico em Informática',
   Instalador = 'Instalador',
@@ -8,7 +8,8 @@ export enum Cargo {
 }
 
 export interface Employee extends User {
-  cargo: Cargo;
-  salario: number;
-  dataNascimento: Date;
+  employeeId: number
+  role: Role;
+  salary: number;
+  birthDate: Date;
 }

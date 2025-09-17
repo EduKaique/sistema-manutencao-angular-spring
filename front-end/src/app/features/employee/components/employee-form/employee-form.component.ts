@@ -14,7 +14,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 
 import { EmployeService } from '../../services/employe.service';
-import { Employee, Cargo } from '../../../../shared/models/employee';
+import { Employee, Role } from '../../../../shared/models/employee';
 @Component({
   selector: 'app-employee-form',
   imports: [
@@ -34,7 +34,7 @@ import { Employee, Cargo } from '../../../../shared/models/employee';
 export class EmployeeFormComponent implements OnInit {
   employeeForm: FormGroup;
   isEdit = false;
-  cargos = Object.values(Cargo);
+  roles = Object.values(Role);
 
   constructor(
     private fb: FormBuilder,

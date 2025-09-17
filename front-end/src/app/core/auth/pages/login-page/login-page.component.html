@@ -22,18 +22,20 @@
           Preencha Preencha suas informações para entrar.
         </p>
       </div>
-      <form class="form-inputs" [formGroup]="loginForm">
+      <form class="form-inputs" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <app-input-primary
-          label="Email"
+          formControlName="email"
           type="email"
-          [formName]="'email'"
+          inputName="email"
+          label="Email"
           placeholder="exemple@email.com"
           style="width: inherit"
         ></app-input-primary>
         <app-input-primary
-          label="Senha"
+          formControlName="password"
           [type]="hide() ? 'password' : 'text'"
-          [formName]="'password'"
+          inputName="password"
+          label="Senha"
           style="width: inherit"
         >
           <mat-icon
@@ -44,10 +46,20 @@
             >{{ hide() ? "visibility_off" : "visibility" }}</mat-icon
           >
         </app-input-primary>
+        @if (loginError) {
+          <div  class="error-message">
+            {{ loginError }}
+          </div>
+        }
         <div class="row-link-btn">
           <p><a href="#">Esqueceu a senha?</a></p>
-          <button class="button-primary label_large" (click)="onSubmit()">
-            Entrar
+          <button class="button-primary label_large" type="submit" [disabled]="loginForm.invalid || isLoading" [style.opacity]=" !isLoading ? '1' : '0.7'">
+            @if (!isLoading) {
+              Entrar
+            } @else
+            {
+              Aguarde...
+            }
           </button>
         </div>
       </form>

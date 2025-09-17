@@ -5,19 +5,19 @@
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>Nome</mat-label>
       <input matInput formControlName="nome" required>
-      <mat-error *ngIf="employeeForm.get('nome')?.hasError('required')">
+      <mat-error *ngIf="employeeForm.get('name')?.hasError('required')">
         Nome é obrigatório
       </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>Cargo</mat-label>
-      <mat-select formControlName="cargo" required>
-        <mat-option *ngFor="let cargo of cargos" [value]="cargo">
-          {{ cargo }}
+      <mat-select formControlName="role" required>
+        <mat-option *ngFor="let role of roles" [value]="role">
+          {{ role }}
         </mat-option>
       </mat-select>
-      <mat-error *ngIf="employeeForm.get('cargo')?.hasError('required')">
+      <mat-error *ngIf="employeeForm.get('role')?.hasError('required')">
         Cargo é obrigatório
       </mat-error>
     </mat-form-field>
@@ -35,19 +35,19 @@
 
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>Celular</mat-label>
-      <input matInput formControlName="celular" required>
-      <mat-error *ngIf="employeeForm.get('celular')?.hasError('required')">
+      <input matInput formControlName="phoneNumber" required>
+      <mat-error *ngIf="employeeForm.get('phoneNumber')?.hasError('required')">
         Celular é obrigatório
       </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>Salário</mat-label>
-      <input matInput type="number" formControlName="salario" required>
-      <mat-error *ngIf="employeeForm.get('salario')?.hasError('required')">
+      <input matInput type="number" formControlName="salary" required>
+      <mat-error *ngIf="employeeForm.get('salary')?.hasError('required')">
         Salário é obrigatório
       </mat-error>
-      <mat-error *ngIf="employeeForm.get('salario')?.hasError('min')">
+      <mat-error *ngIf="employeeForm.get('salary')?.hasError('min')">
         Salário deve ser maior que zero
       </mat-error>
     </mat-form-field>
