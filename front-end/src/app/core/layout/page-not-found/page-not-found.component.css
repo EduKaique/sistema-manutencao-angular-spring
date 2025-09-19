@@ -1,0 +1,23 @@
+@import url("../../../../styles/variables.css");
+
+
+.error-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.illustration-error {
+    width: 500px;
+}
+
+.error-content p {
+    color: var(--color-heading-subtle);
+}
+
+.error-content h1 {
+    color: var(--color-text-default);
+}
