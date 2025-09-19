@@ -11,6 +11,7 @@ import { EmployeeDashboardPageComponent } from './features/employee/employee-das
 import { AuthGuard } from './core/auth/guards/auth.guard';
 import { RoleGuard } from './core/auth/guards/role.guard';
 import { UnauthorizedPageComponent } from './core/layout/unauthorized-page/unauthorized-page.component';
+import { PageNotFoundComponent } from './core/layout/page-not-found/page-not-found.component';
 
 export const routes: Routes = [
   {
@@ -72,4 +73,8 @@ export const routes: Routes = [
     canActivate: [AuthGuard, RoleGuard],
     data: { expectedRole: 'employee' },
   },
+  {
+    path: '**',
+    component: PageNotFoundComponent,
+  }
 ];
