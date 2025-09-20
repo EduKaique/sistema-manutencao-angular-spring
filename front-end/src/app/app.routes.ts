@@ -8,6 +8,7 @@ import { SignupPageComponent } from './core/auth/pages/signup-page/signup-page.c
 import { ClientDashboardPageComponent } from './features/client/client-dashboard-page/client-dashboard-page.component';
 import { EmployeeListComponent } from './features/employee/components/employee-list/employee-list.component';
 import { EmployeeDashboardPageComponent } from './features/employee/employee-dashboard-page/employee-dashboard-page.component';
+import { ManageCategoriesPageComponent } from './features/employee/admin/manage-categories-page/manage-categories-page.component';
 import { AuthGuard } from './core/auth/guards/auth.guard';
 import { RoleGuard } from './core/auth/guards/role.guard';
 import { UnauthorizedPageComponent } from './core/layout/unauthorized-page/unauthorized-page.component';
@@ -72,6 +73,10 @@ export const routes: Routes = [
     component: EmployeeListComponent,
     canActivate: [AuthGuard, RoleGuard],
     data: { expectedRole: 'employee' },
+  },
+  {
+    path: 'manage-categories-page',
+    component: ManageCategoriesPageComponent,
   },
   {
     path: '**',

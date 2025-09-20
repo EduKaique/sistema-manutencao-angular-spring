@@ -1,24 +1,37 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Request } from '../../../../../shared/models/request';
 import { StatusService } from '../../../../../shared/services/status.service';
 import { Status } from '../../../../../shared/models/status';
-import { CommonModule } from '@angular/common';
+import { CategoryService } from '../../../../employee/services/category.service';
+import { Category } from '../../../../../shared/models/category';
 @Component({
   selector: 'app-request-description',
   imports: [CommonModule],
   templateUrl: './request-description.component.html',
   styleUrl: './request-description.component.css'
 })
-export class RequestDescriptionComponent {
+export class RequestDescriptionComponent implements OnInit {
  
   @Input() request!: Request;
-
   status?: Status & { textColor: string };
+  categoryName: string = '';
 
-  constructor(private statusService: StatusService) {}
+  constructor
+    (private statusService: StatusService, 
+    private categoryService: CategoryService) {}
+
+    ngOnInit(): void {
+      this.loadCategoryName();
+    }
 
   getStatus(statusId: number): Status | undefined {
     return this.statusService.getById(statusId);
+  }
+
+  loadCategoryName(): void {
+    const category = this.categoryService.getAllCategories().find(category => category.id === this.request.categoryId);
+    this.categoryName = category ? category.nome : 'Categoria não encontrada';
   }
 
   formatDate(date: string | Date): string {

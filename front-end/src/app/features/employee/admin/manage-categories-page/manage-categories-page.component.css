@@ -1,0 +1,114 @@
+.header-category {
+    display: flex;
+    justify-content: space-between;
+    margin: 55px 40px 35px 350px;
+}
+
+h1 {
+    color: var(--color-heading-subtle, #546666);
+    font-family: var(--heading-h1-font-family, Inter);
+    font-size: var(--heading-h1-font-size, 44px);
+    font-style: normal;
+    font-weight: var(--heading-h1-font-weight, 600);
+    line-height: var(--heading-h1-line-height, 44px);
+    letter-spacing: var(--heading-h1-letter-spacing, -0.6px);
+    margin: 0;
+}
+
+.btn-new-category {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 241px;
+    height: 48px;
+    padding: 0 16px;
+    margin-right: 40px;
+    background-color: #349896;
+    color: white;
+    border: none;
+    font-size: 17px;
+    cursor: pointer;
+    border-radius: var(--radius-sm, 8px);
+    transition: background-color 0.3s ease;
+}
+
+.btn-new-category svg{
+    width: 24px;
+    height: 24px;
+    aspect-ratio: 1/1;
+}
+
+.btn-new-category:hover {
+    background-color: #0a925c;
+}
+
+.categories-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.category-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: var(--color-background-card, #FAFAFA);
+    padding: 20px;
+    border-radius: var(--radius-md, 16px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
+}
+
+.category-card-icon svg {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 12px;
+}
+
+.category-card:hover {
+  transform: translateY(-3px);
+}
+
+.category-card h3 {
+    color: var(--color-text-default, #374343);
+    align-self: stretch;
+    font-family: var(--heading-h4-font-family, Inter);
+    font-size: var(--heading-h4-font-size, 28px);
+    font-style: normal;
+    font-weight: var(--heading-h4-font-weight, 500);
+    line-height: var(--heading-h4-line-height, 32px);
+    letter-spacing: var(--heading-h4-letter-spacing, -0.4px);
+}
+
+.card-actions{
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.editButton, .deleteButton {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.editButton svg,
+.deleteButton svg {
+    width: 24px;
+    height: 24px;
+}
+
+.editButton { color: #349896; }
+.deleteButton { color: #FF5E5B; }
+
+.no-categories {
+    margin: 55px 40px 35px 350px;
+}

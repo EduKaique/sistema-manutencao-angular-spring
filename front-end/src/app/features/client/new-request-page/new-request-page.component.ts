@@ -1,10 +1,12 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Request } from '../../../shared/models/request';
 import { RequestService } from '../../../shared/services/request.service';
-import { Router, RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CategoryService } from '../../employee/services/category.service';
+import { Category } from '../../../shared/models/category';
 
 @Component({
   selector: 'app-new-request-page',
@@ -13,13 +15,27 @@ import { CommonModule } from '@angular/common';
   templateUrl: './new-request-page.component.html',
   styleUrl: './new-request-page.component.css',
 })
-export class NewRequestPageComponent {
+export class NewRequestPageComponent implements OnInit{
+
   @ViewChild('formRequest') formRequest!: NgForm;
-  request: Request = {} as Request;
+  categories: Category[] = [];
+  request: Partial<Request> = {
+    categoryId: undefined
+  };
+
+
+  ngOnInit(): void {
+      this.getAllCategories();
+  }
+
+  getAllCategories(): void {
+    this.categories = this.categoryService.getAllCategories() || [];
+  }
 
   constructor(
     public dialogRef: MatDialogRef<NewRequestPageComponent>,
     private requestService: RequestService,
+    private categoryService: CategoryService,
     private router: Router
   ) {}
 
@@ -33,10 +49,10 @@ export class NewRequestPageComponent {
   }
   send(form: NgForm) {
     if (form.valid) {
-      this.requestService.inserir(this.request);
+      this.requestService.inserir(this.request as Request);
       console.log('Solicitação enviada', form.value);
       this.dialogRef.close(this.request);
-      this.router.navigate(['/client/dashboard']);
+      this.router.navigate(['/client-dashboard']);
     } else {
       alert('Preencha todos os campos');
     }
