@@ -9,6 +9,7 @@ import { RequestService } from '../../../shared/services/request.service';
 import { Request } from '../../../shared/models/request';
 import { CommonModule } from '@angular/common';
 import { StatusService } from '../../../shared/services/status.service';
+import { HeaderComponent } from '../../../core/layout/header/header.component';
 
 
 @Component({
@@ -20,6 +21,7 @@ import { StatusService } from '../../../shared/services/status.service';
     MatInputModule,
     MatTableModule,
     CommonModule,
+    HeaderComponent,
   ],
   templateUrl: './client-dashboard-page.component.html',
   styleUrl: './client-dashboard-page.component.css',
