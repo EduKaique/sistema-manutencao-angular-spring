@@ -1,10 +1,90 @@
-.full-width {
-  width: 100%;
-  margin-bottom: 10px;
+:host {
+  display: block;
+}
+
+mat-dialog-content {
+  padding: 16px 32px !important;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-header h2 {
+  font-size: 24px;
+  font-weight: 500;
+  color: #333;
+  margin: 0 0 8px 0;
+}
+
+.form-header p {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
 }
 
 form {
   display: flex;
   flex-direction: column;
-  min-width: 400px;
+  gap: 12px;
+  padding-top: 20px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.form-row {
+  display: flex;
+  gap: 24px;
+  width: 100%;
+}
+
+.form-row > mat-form-field {
+  flex: 1;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.form-actions.first-step {
+  justify-content: flex-end;
+}
+
+.form-actions button {
+  padding: 0 32px;
+  height: 44px;
+  border-radius: 8px;
+}
+
+mat-dialog-actions {
+  border-top: none;
+}
+
+::ng-deep .mat-horizontal-stepper-header-container {
+  padding: 0;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+::ng-deep .mat-step-header .mat-step-label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+::ng-deep .mat-step-header {
+  flex: auto;
+}
+
+::ng-deep .mat-horizontal-stepper-header::after,
+::ng-deep .mat-horizontal-stepper-header::before {
+   border-top-width: 2px;
+   border-top-style: solid;
+   margin: 0 !important;
 }

@@ -1,3 +1,5 @@
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+
 function validarCPF(cpf: string): boolean {
     let soma : number = 0;  
     let resto : number;
@@ -38,4 +40,17 @@ function validarCPF(cpf: string): boolean {
     }
 
 return true;
+}
+
+export class CustomValidators {
+  static useExistingCpfValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.value) {
+        return null;
+      }
+      
+      const ehValido = validarCPF(control.value);
+      return ehValido ? null : { cpfInvalido: true };
+    };
+  }
 }
