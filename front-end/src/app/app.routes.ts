@@ -77,9 +77,11 @@ export const routes: Routes = [
   {
     path: 'manage-categories-page',
     component: ManageCategoriesPageComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { expectedRole: 'employee' },
   },
   {
     path: '**',
-    component: PageNotFoundComponent,
-  }
+    component: PageNotFoundComponent
+  },
 ];
