@@ -74,7 +74,11 @@ export const routes: Routes = [
     data: { expectedRole: 'employee' },
   },
   {
+    path: 'employee-dashboard',
+    component: EmployeeDashboardPageComponent,
+  },
+  {
     path: '**',
-    component: PageNotFoundComponent,
-  }
+    component: PageNotFoundComponent
+  },
 ];
