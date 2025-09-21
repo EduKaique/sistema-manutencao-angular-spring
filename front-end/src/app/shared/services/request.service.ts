@@ -25,6 +25,7 @@ export class RequestService {
     request.statusId = 1;
     request.requestDate = new Date();
     //request.lastAtualization = new Date();
+    request.clientId = 1; 
     requests.push(request);
     localStorage[LS_CHAVE] = JSON.stringify(requests);
 

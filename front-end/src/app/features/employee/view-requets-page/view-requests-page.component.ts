@@ -19,8 +19,8 @@ interface GroupedRequests {
 @Component({
   selector: 'app-view-requests-page',
   imports: [HeaderComponent, InputPrimaryComponent, MatIcon, CommonModule, StatusColumnComponent],
-  templateUrl: './view-requets-page.component.html',
-  styleUrl: './view-requets-page.component.css'
+  templateUrl: './view-requests-page.component.html',
+  styleUrl: './view-requests-page.component.css'
 })
 export class ViewRequestsPageComponent {
 
