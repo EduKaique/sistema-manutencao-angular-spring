@@ -1,18 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ViewRequetsPageComponent } from './view-requets-page.component';
+import { ViewRequestsPageComponent } from './view-requests-page.component';
 
 describe('ViewRequetsPageComponent', () => {
-  let component: ViewRequetsPageComponent;
-  let fixture: ComponentFixture<ViewRequetsPageComponent>;
+  let component: ViewRequestsPageComponent;
+  let fixture: ComponentFixture<ViewRequestsPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ViewRequetsPageComponent]
-    })
-    .compileComponents();
+      imports: [ViewRequestsPageComponent],
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(ViewRequetsPageComponent);
+    fixture = TestBed.createComponent(ViewRequestsPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

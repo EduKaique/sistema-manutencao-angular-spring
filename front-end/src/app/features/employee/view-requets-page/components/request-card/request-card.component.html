@@ -7,21 +7,29 @@
           <mat-icon fontIcon="category"></mat-icon>
           <p class="label_medium">Categoria</p>
         </div>
-        <span class="category-value">{{ categoryMap[request.categoryId] }}</span>
+        <span class="category-value">{{
+          categoryMap[request.categoryId]
+        }}</span>
       </div>
       <div class="client-container">
         <div class="client-label">
           <mat-icon fontIcon="person"></mat-icon>
           <p class="label_medium">Cliente</p>
         </div>
-        <span class="client-value">{{ request.clientId }}</span>
+        <span class="client-value">{{
+          clientMap[request.clientId]
+        }}</span>
       </div>
     </div>
   </div>
   <div class="card-footer">
     <div class="footer-content">
-      <img class="employee-image" src="assets/images/brazil-nativas.jpeg" alt="Brazil Nativas">
-      <span class="date">{{ request.requestDate | date:'dd/MM/yyyy' }}</span>
+      <img
+        class="employee-image"
+        src="assets/images/brazil-nativas.jpeg"
+        alt="Brazil Nativas"
+      />
+      <span class="date">{{ request.requestDate | date : "dd/MM/yyyy" }}</span>
     </div>
   </div>
 </div>

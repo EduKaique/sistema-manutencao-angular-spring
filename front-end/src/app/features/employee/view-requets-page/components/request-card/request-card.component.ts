@@ -1,17 +1,33 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Request } from '../../../../../shared/models/request';
 import { DatePipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
-
+import { CategoryService } from '../../../services/category.service';
+import { CLIENT_MOCKS } from '../../../../../shared/mocks/user.mock';
 
 @Component({
   selector: 'app-request-card',
   imports: [DatePipe, MatIcon],
   templateUrl: './request-card.component.html',
-  styleUrl: './request-card.component.css'
+  styleUrl: './request-card.component.css',
 })
-export class RequestCardComponent {
+export class RequestCardComponent implements OnInit {
   @Input({ required: true }) request!: Request;
+  categoryMap: Record<number, string> = {};
+  clientMap: Record<number, string> = {};
 
-  
+  constructor(private categoryService: CategoryService) {}
+
+  ngOnInit(): void {
+    const categories = this.categoryService.getAllCategories();
+    this.categoryMap = categories.reduce<Record<number, string>>((acc, c) => {
+      acc[c.id] = c.nome;
+      return acc;
+    }, {});
+
+    this.clientMap = CLIENT_MOCKS.reduce<Record<number, string>>((acc, c) => {
+      acc[c.clientid] = c.name;
+      return acc;
+    }, {});
+  }
 }
