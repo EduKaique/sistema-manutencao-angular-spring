@@ -10,7 +10,7 @@
       <h1 class="heading_3">Crie sua conta</h1>
       <p class="body_medium">Preencha suas informações para criar um contra.</p>
     </div>
-    <mat-stepper #stepper>
+    <mat-stepper linear #stepper>
       <mat-step [stepControl]="firstFormGroup">
         <form class="form-content" [formGroup]="firstFormGroup">
           <ng-template matStepLabel>Informações Pessoais</ng-template>
@@ -20,7 +20,6 @@
             formControlName="nameUser"
             placeholder="Digite seu Nome Completo"
             style="width: inherit"
-            required
           ></app-input-primary>
           <div class="row-form-cpf-phone">
             <app-input-primary
@@ -32,9 +31,6 @@
               style="width: inherit"
               required
             ></app-input-primary>
-            <span class="body_small">{{
-              firstFormGroup.get("cpfUser")?.value | cpfPipes
-            }}</span>
             <app-input-primary
               label="Celular"
               type="text"
@@ -43,7 +39,6 @@
               mask="(00) 0 0000-0000"
               style="width: inherit"
             ></app-input-primary>
-            <!-- Caso queira, podemos criar um pipe de telefone semelhante ao CPF e usar aqui -->
           </div>
           <app-input-primary
             label="Email"
@@ -92,7 +87,6 @@
               label="Endereço"
               placeholder="Digite seu Endereço"
               style="width: inherit"
-              required
             />
             <app-input-primary
               formControlName="number"
@@ -100,7 +94,6 @@
               inputName="input-numero"
               label="Número"
               placeholder="Digite seu número"
-              required
             />
           </div>
           <div class="div-row">
@@ -117,7 +110,6 @@
               formControlName="neighborhood"
               placeholder=""
               style="width: inherit"
-              required
             />
           </div>
           <div class="div-row">
@@ -127,7 +119,6 @@
               formControlName="city"
               placeholder=""
               style="width: inherit"
-              required
             />
             <app-input-primary
               label="Estado"
@@ -135,7 +126,6 @@
               formControlName="state"
               placeholder="Selecione seu Estado"
               style="width: inherit"
-              required
             />
           </div>
           <div class="div-row row-button">
