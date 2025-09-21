@@ -14,6 +14,7 @@ import { RoleGuard } from './core/auth/guards/role.guard';
 import { UnauthorizedPageComponent } from './core/layout/unauthorized-page/unauthorized-page.component';
 import { PageNotFoundComponent } from './core/layout/page-not-found/page-not-found.component';
 import { ViewRequestsPageComponent } from './features/employee/view-requets-page/view-requests-page.component';
+import { ReportsPageComponent } from './features/employee/reports-page/reports-page.component';
 
 export const routes: Routes = [
   {
@@ -84,6 +85,12 @@ export const routes: Routes = [
   {
     path: 'manage-categories-page',
     component: ManageCategoriesPageComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { expectedRole: 'employee' },
+  },
+  {
+    path: 'reports-page',
+    component: ReportsPageComponent,
     canActivate: [AuthGuard, RoleGuard],
     data: { expectedRole: 'employee' },
   },
