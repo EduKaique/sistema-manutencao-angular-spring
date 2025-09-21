@@ -62,6 +62,16 @@
     --color-red-50: #9f0a00;
     --color-red-60: #630400;
     --color-red-70: #2c0100;
+
+    /* ** PALETTE Green ** */
+    --color-green-5: #eefbf3;
+    --color-green-10: #c7f5e3;
+    --color-green-30: #7dd8a9;
+    --color-green-40: #48bf86;
+    --color-green-50: #25a46b;
+    --color-green-60: #178455;
+    --color-green-70: #136947;
+
     
     /* ***** PRIMITIVE SIZES ***** */
     
