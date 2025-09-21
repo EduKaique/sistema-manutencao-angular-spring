@@ -1,37 +1,75 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import { BudgetService } from '../../../../../services/budget.service';
-import { RequestData } from '../../../../../shared/models/request-data';
+import { Request } from '../../../../../shared/models/request';
+import { RejectModalComponent } from '../../../../../shared/components/reject-modal/reject-modal.component';
 
 @Component({
   selector: 'app-approve-reject-panel',
   templateUrl: './approve-reject-panel.component.html',
   styleUrls: ['./approve-reject-panel.component.css'],
-  imports: [CommonModule, RouterModule],
-  standalone: true
+  standalone: true,
+  imports: [CommonModule, RejectModalComponent]
 })
 export class ApproveRejectPanelComponent implements OnInit {
-  budget?: RequestData | null;
+  @Input() request?: Request;
+  showRejectModal = false;
 
-  constructor(private budgetService: BudgetService,
-              private router: Router) {}
+  constructor(
+    private budgetService: BudgetService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.budget = this.budgetService.getBudget();
+    if (this.request) {
+      console.log('Initial request state:', this.request);
+      this.budgetService.getCurrentBudget(this.request.id).subscribe(budget => {
+        console.log('Budget updated:', budget);
+        if (budget && this.request) {
+          this.request.status = budget.status;
+          this.request.rejectionReason = budget.rejectionReason;
+          console.log('Request after update:', this.request);
+        }
+      });
+    }
+  }
+
+  resgatarServico() {
+    if (!this.request) return;
+    this.budgetService.updateStatus(this.request.id, 'APROVADA');
+    alert('Serviço foi resgatado e aprovado!');
   }
 
   aprovar() {
-    if (!this.budget) return;
-    this.budgetService.updateStatus('APROVADA');
-    alert(`Serviço Aprovado no Valor R$ ${this.budget.valor}`);
+    if (!this.request) return;
+    this.budgetService.updateStatus(this.request.id, 'APROVADA');
+    alert('Serviço foi aprovado!');
   }
 
-  reprovar() {
-    const motivo = prompt('Informe o motivo da rejeição:');
-    if (motivo) {
-      this.budgetService.updateStatus('REJEITADA');
-      alert('Serviço Rejeitado');
+  onRejectConfirm(reason: string) {
+    if (!this.request) return;
+    console.log('Rejecting request with reason:', reason);
+    this.budgetService.updateStatus(this.request.id, 'REJEITADA', reason);
+    console.log('Request after rejection:', this.request);
+    this.showRejectModal = false;
+    alert('Serviço Rejeitado');
+  }
+
+  onRejectCancel() {
+    this.showRejectModal = false;
+  }
+
+  getStatusText(): string {
+    if (!this.request) return '';
+    
+    switch (this.request.status) {
+      case 'REJEITADA':
+        return 'REJEITADA';
+      case 'APROVADA':
+        return 'APROVADA';
+      default:
+        return 'Orçamento aguardando sua aprovação';
     }
   }
 }

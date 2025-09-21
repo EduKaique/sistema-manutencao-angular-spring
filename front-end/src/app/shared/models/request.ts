@@ -7,7 +7,9 @@ export interface Request {
   category: string;
   //lastAtualization: Date;
   statusId: number;
+  status?: 'APROVADA' | 'REJEITADA' | string;
   categoryId: number;
   clientId: number;
   employeeId: number;
+  rejectionReason?: string;
 }
