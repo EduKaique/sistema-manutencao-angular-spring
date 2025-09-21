@@ -1,62 +1,107 @@
-<h2 mat-dialog-title>{{ isEdit ? 'Editar' : 'Novo' }} Funcionário</h2>
-
 <mat-dialog-content>
-  <form [formGroup]="employeeForm">
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Nome</mat-label>
-      <input matInput formControlName="nome" required>
-      <mat-error *ngIf="employeeForm.get('name')?.hasError('required')">
-        Nome é obrigatório
-      </mat-error>
-    </mat-form-field>
+  <div class="form-header">
+    <h2 mat-dialog-title>{{ isEdit ? 'Editar' : 'Cadastrar' }} Funcionário</h2>
+    <p>Preencha as informações abaixo para continuar.</p>
+  </div>
 
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Cargo</mat-label>
-      <mat-select formControlName="role" required>
-        <mat-option *ngFor="let role of roles" [value]="role">
-          {{ role }}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="employeeForm.get('role')?.hasError('required')">
-        Cargo é obrigatório
-      </mat-error>
-    </mat-form-field>
+  <mat-stepper [linear]="true" #stepper>
 
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Email</mat-label>
-      <input matInput formControlName="email" required>
-      <mat-error *ngIf="employeeForm.get('email')?.hasError('required')">
-        Email é obrigatório
-      </mat-error>
-      <mat-error *ngIf="employeeForm.get('email')?.hasError('email')">
-        Email inválido
-      </mat-error>
-    </mat-form-field>
+    <mat-step [stepControl]="personalInfoForm">
+      <form [formGroup]="personalInfoForm">
+        <ng-template matStepLabel>Informações Pessoais</ng-template>
 
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Celular</mat-label>
-      <input matInput formControlName="phoneNumber" required>
-      <mat-error *ngIf="employeeForm.get('phoneNumber')?.hasError('required')">
-        Celular é obrigatório
-      </mat-error>
-    </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nome Completo</mat-label>
+          <input matInput formControlName="nome" required>
+          <mat-error *ngIf="personalInfoForm.get('nome')?.hasError('required')">
+            O nome é obrigatório.
+          </mat-error>
+        </mat-form-field>
 
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Salário</mat-label>
-      <input matInput type="number" formControlName="salary" required>
-      <mat-error *ngIf="employeeForm.get('salary')?.hasError('required')">
-        Salário é obrigatório
-      </mat-error>
-      <mat-error *ngIf="employeeForm.get('salary')?.hasError('min')">
-        Salário deve ser maior que zero
-      </mat-error>
-    </mat-form-field>
-  </form>
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>CPF</mat-label>
+            <input matInput formControlName="cpf" placeholder="000.000.000-00" required>
+            <mat-error *ngIf="personalInfoForm.get('cpf')?.hasError('required')">
+              O CPF é obrigatório.
+            </mat-error>
+            <mat-error *ngIf="personalInfoForm.get('cpf')?.hasError('cpfInvalido')">
+              CPF inválido.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Data de Nascimento</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="dataNascimento" required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="personalInfoForm.get('dataNascimento')?.hasError('required')">
+              Data de nascimento é obrigatória.
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email" required>
+          <mat-error *ngIf="personalInfoForm.get('email')?.hasError('required')">
+            O e-mail é obrigatório.
+          </mat-error>
+          <mat-error *ngIf="personalInfoForm.get('email')?.hasError('email')">
+            Formato de e-mail inválido.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Celular</mat-label>
+          <input matInput formControlName="celular" placeholder="(00) 00000-0000" required>
+          <mat-error *ngIf="personalInfoForm.get('celular')?.hasError('required')">
+            O celular é obrigatório.
+          </mat-error>
+        </mat-form-field>
+
+        <div class="form-actions first-step">
+          <button mat-raised-button color="primary" matStepperNext>Próximo</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="professionalInfoForm">
+      <form [formGroup]="professionalInfoForm">
+        <ng-template matStepLabel>Informações Profissionais</ng-template>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Cargo</mat-label>
+          <mat-select formControlName="cargo" required>
+            <mat-option *ngFor="let role of roles" [value]="role">{{ role }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="professionalInfoForm.get('cargo')?.hasError('required')">
+            O cargo é obrigatório.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Salário</mat-label>
+          <input matInput type="number" formControlName="salario" placeholder="Ex: 3500.50" required>
+          <mat-error *ngIf="professionalInfoForm.get('salario')?.hasError('required')">
+            O salário é obrigatório.
+          </mat-error>
+          <mat-error *ngIf="professionalInfoForm.get('salario')?.hasError('min')">
+            O salário deve ser maior que zero.
+          </mat-error>
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button mat-button matStepperPrevious>Voltar</button>
+          <button mat-raised-button color="primary" (click)="onSubmit()">
+            {{ isEdit ? 'Atualizar' : 'Salvar' }}
+          </button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-stepper>
 </mat-dialog-content>
 
-<mat-dialog-actions>
+<mat-dialog-actions align="end">
   <button mat-button (click)="onCancel()">Cancelar</button>
-  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!employeeForm.valid">
-    {{ isEdit ? 'Atualizar' : 'Salvar' }}
-  </button>
 </mat-dialog-actions>
