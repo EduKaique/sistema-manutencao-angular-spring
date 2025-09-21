@@ -1,4 +1,11 @@
 <app-header></app-header>
+
+<!-- Botão Voltar para Página Inicial -->
+<a class="voltar-pagina-inicial" (click)="onVoltarPaginaInicial()">
+  <mat-icon class="voltar-icon">arrow_back</mat-icon>
+  <span>Voltar para Página Inicial</span>
+</a>
+
 <div class="main-content">
   <!-- Card Detalhes da Solicitação -->
   <mat-card class="detalhes-card">
@@ -39,7 +46,6 @@
     </div>
   </mat-card>
 
-  <!-- Cards inferiores -->
   <div class="cards-row">
     <!-- Card Técnico Responsável -->
     <mat-card class="tecnico-card">
@@ -47,68 +53,96 @@
         <mat-icon class="tecnico-icon" color="primary">groups</mat-icon>
         <span class="tecnico-title">Técnico Responsável</span>
       </div>
-      <div class="tecnico-content">
-        Nenhum Técnico Atribuído
-      </div>
-      <button mat-stroked-button color="primary" class="atribuir-btn">
-        Atribuir Responsável
-      </button>
+      <ng-container *ngIf="!responsavel; else responsavelPreenchido">
+        <div class="tecnico-content">
+          Nenhum Técnico Atribuído
+        </div>
+        <button mat-stroked-button color="primary" class="atribuir-btn" (click)="abrirDialog(dialogTemplate)">
+          Atribuir Responsável
+        </button>
+      </ng-container>
+      <ng-template #responsavelPreenchido>
+        <div class="tecnico-content">
+          <div><b>Nome:</b> {{ responsavel.nome }}</div>
+          <div><b>Cargo:</b> {{ responsavel.cargo }}</div>
+          <div><b>Atribuído em:</b> {{ dataAtribuicao }}</div>
+        </div>
+        <button mat-stroked-button color="primary" class="atribuir-btn" (click)="abrirDialog(dialogTemplate)">
+          <mat-icon>sync_alt</mat-icon>
+          Trocar Responsável
+        </button>
+      </ng-template>
     </mat-card>
 
     <!-- Card Orçamento/Manutenção com abas -->
     <mat-card class="orcamento-manutencao-card">
-  <mat-tab-group class="orcamento-tabs" [(selectedIndex)]="selectedTab">
-    <!-- Aba Orçamentos -->
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon class="tab-icon" color="primary">attach_money</mat-icon>
-        Orçamentos
-      </ng-template>
-      <div class="orcamento-content">
-        <ng-container *ngIf="temOrcamento; else orcamentoVazio">
-          <div class="orcamento-total-label">Valor Total do Orçamento</div>
-          <div class="orcamento-total">R$ {{ valorOrcamento | number:'1.2-2' }}</div>
-          <div class="orcamento-servicos-label">Serviços Inclusos</div>
-          <div class="orcamento-servicos">
-            {{ servicosInclusos }}
+      <mat-tab-group class="orcamento-tabs" [(selectedIndex)]="selectedTab">
+        <!-- Aba Orçamentos -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="tab-icon" color="primary">attach_money</mat-icon>
+            Orçamentos
+          </ng-template>
+          <div class="orcamento-content">
+            <ng-container *ngIf="temOrcamento; else orcamentoVazio">
+              <div class="orcamento-total-label">Valor Total do Orçamento</div>
+              <div class="orcamento-total">R$ {{ valorOrcamento | number:'1.2-2' }}</div>
+              <div class="orcamento-servicos-label">Serviços Inclusos</div>
+              <div class="orcamento-servicos">
+                {{ servicosInclusos }}
+              </div>
+            </ng-container>
+            <ng-template #orcamentoVazio>
+              <div class="orcamento-empty">Nenhum Orçamento Efetuado</div>
+              <button mat-flat-button color="primary" class="orcamento-btn" [disabled]="false">
+                Efetuar Orçamento
+              </button>
+            </ng-template>
           </div>
-        </ng-container>
-        <ng-template #orcamentoVazio>
-          <div class="orcamento-empty">Nenhum Orçamento Efetuado</div>
-          <button mat-flat-button color="primary" class="orcamento-btn" [disabled]="false">
-            Efetuar Orçamento
-          </button>
-        </ng-template>
-      </div>
-    </mat-tab>
-
-    <!-- Aba Manutenção -->
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon class="tab-icon" color="primary">groups</mat-icon>
-        Manutenção
-      </ng-template>
-      <div class="manutencao-content">
-        <ng-container *ngIf="temManutencao; else manutencaoVazio">
-          <div class="manutencao-descricao">
-            <b>Descrição da Manutenção:</b>
-            <span>{{ descricaoManutencao }}</span>
+        </mat-tab>
+        <!-- Aba Manutenção -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="tab-icon" color="primary">groups</mat-icon>
+            Manutenção
+          </ng-template>
+          <div class="manutencao-content">
+            <ng-container *ngIf="temManutencao; else manutencaoVazio">
+              <div class="manutencao-descricao">
+                <b>Descrição da Manutenção:</b>
+                <span>{{ descricaoManutencao }}</span>
+              </div>
+              <div class="manutencao-orientacao">
+                <b>Orientações para o Cliente:</b>
+                <span>{{ orientacaoCliente }}</span>
+              </div>
+            </ng-container>
+            <ng-template #manutencaoVazio>
+              <div class="orcamento-empty">Nenhuma Manutenção Efetuada</div>
+              <button mat-flat-button color="primary" class="manutencao-btn" [disabled]="false">
+                <mat-icon>build</mat-icon>
+                Efetuar Manutenção
+              </button>
+            </ng-template>
           </div>
-          <div class="manutencao-orientacao">
-            <b>Orientações para o Cliente:</b>
-            <span>{{ orientacaoCliente }}</span>
-          </div>
-        </ng-container>
-        <ng-template #manutencaoVazio>
-          <div class="orcamento-empty">Nenhuma Manutenção Efetuada</div>
-          <button mat-flat-button color="primary" class="manutencao-btn" [disabled]="false">
-            <mat-icon>build</mat-icon>
-            Efetuar Manutenção
-          </button>
-        </ng-template>
-      </div>
-    </mat-tab>
-  </mat-tab-group>
-</mat-card>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card>
   </div>
 </div>
+
+<!-- Dialog Template (fora de qualquer <div>) -->
+<ng-template #dialogTemplate>
+  <div class="dialog-container">
+    <h2 class="dialog-title">Atribuição de Responsável</h2>
+    <mat-form-field appearance="outline" class="dialog-field">
+      <mat-label>Atribuir Solicitação Para:</mat-label>
+      <mat-select [(ngModel)]="selectedFuncionario" placeholder="Pesquise/Selecione um Funcionário">
+        <mat-option *ngFor="let f of funcionarios" [value]="f">{{ f.nome }} - {{ f.cargo }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-flat-button color="primary" class="dialog-btn" [disabled]="!selectedFuncionario" (click)="atribuirResponsavel()">
+      Atribuir
+    </button>
+  </div>
+</ng-template>

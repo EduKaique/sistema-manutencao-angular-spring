@@ -1,10 +1,14 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, TemplateRef, ViewChild } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
 import { HeaderComponent } from '../../../core/layout/header/header.component';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-budget-delivery',
@@ -19,9 +23,47 @@ import { CommonModule } from '@angular/common';
     MatTabsModule,
     HeaderComponent,
     CommonModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    FormsModule
   ]
 })
 export class BudgetDeliveryComponent {
+  dialog: any;
+
+constructor(private router: Router) {}
+onVoltarPaginaInicial() {
+  this.router.navigate(['/client-dashboard']);
+}
+
+  // Responsável
+  responsavel: any = null;
+  dataAtribuicao: string = '';
+  funcionarios = [
+    { nome: 'Carlos Mendel', cargo: 'Técnico em Informática' },
+    { nome: 'Maria Souza', cargo: 'Técnica em Redes' },
+    { nome: 'João Silva', cargo: 'Técnico em Suporte' }
+  ];
+  selectedFuncionario: any = null;
+  dialogRef: any;
+
+  abrirDialog(template: TemplateRef<any>) {
+    this.selectedFuncionario = null;
+    this.dialogRef = this.dialog.open(template, {
+      disableClose: true,
+      panelClass: 'custom-dialog'
+    });
+  }
+
+  atribuirResponsavel() {
+    this.responsavel = this.selectedFuncionario;
+    this.dataAtribuicao = new Date().toLocaleString('pt-BR', {
+      day: '2-digit', month: '2-digit', year: 'numeric',
+      hour: '2-digit', minute: '2-digit', second: '2-digit'
+    });
+    this.dialogRef.close();
+  }
+
   detalhes = {
     id: '001',
     data: new Date('2025-08-27T12:18:54'),
