@@ -49,8 +49,8 @@ export class CustomValidators {
         return null;
       }
       
-      const ehValido = validarCPF(control.value);
-      return ehValido ? null : { cpfInvalido: true };
+      const isValid = validarCPF(control.value);
+      return isValid ? null : { cpfInvalido: true };
     };
   }
 }
