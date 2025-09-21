@@ -11,7 +11,6 @@ import { CurrencyPipe, CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
-import { HeaderComponent } from '../../../../core/layout/header/header.component';
 
 @Component({
   selector: 'app-employee-list',
@@ -26,7 +25,6 @@ import { HeaderComponent } from '../../../../core/layout/header/header.component
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
-    HeaderComponent
   ]
 })
 export class EmployeeListComponent implements OnInit {

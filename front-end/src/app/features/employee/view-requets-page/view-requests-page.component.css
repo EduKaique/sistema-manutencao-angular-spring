@@ -1,8 +1,4 @@
-@import '../../../../styles/variables.css';
 
-main {
-  padding: 0 var(--spacing-xl);
-}
 
 .title-section {
     display: flex;

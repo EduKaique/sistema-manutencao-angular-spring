@@ -11,6 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ChangeDetectorRef } from '@angular/core';
+import { SideBarComponent } from '../../../core/layout/side-bar/side-bar.component';
 
 @Component({
   selector: 'app-budget-delivery',
@@ -28,7 +29,8 @@ import { ChangeDetectorRef } from '@angular/core';
     MatFormFieldModule,
     MatSelectModule,
     FormsModule, 
-    MatDialogModule
+    MatDialogModule,
+    SideBarComponent,
   ]
 })
 export class BudgetDeliveryComponent {
@@ -39,7 +41,7 @@ export class BudgetDeliveryComponent {
     private cdr: ChangeDetectorRef
   ) {}
 onVoltarPaginaInicial() {
-  this.router.navigate(['/client-dashboard']);
+  this.router.navigate(['/employee-dashboard']);
 }
 
   // Responsável

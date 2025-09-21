@@ -83,13 +83,13 @@ export const routes: Routes = [
     data: { expectedRole: 'employee' },
   },
   {
-    path: 'manage-categories-page',
+    path: 'categories',
     component: ManageCategoriesPageComponent,
     canActivate: [AuthGuard, RoleGuard],
     data: { expectedRole: 'employee' },
   },
   {
-    path: 'reports-page',
+    path: 'reports',
     component: ReportsPageComponent,
     canActivate: [AuthGuard, RoleGuard],
     data: { expectedRole: 'employee' },

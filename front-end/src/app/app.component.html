@@ -1,1 +1,12 @@
+@if (isEmployee$ | async) {
+<app-header></app-header>
+<div class="main-layout">
+  <app-side-bar></app-side-bar>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+</div>
+} @else {
 <router-outlet></router-outlet>
+}

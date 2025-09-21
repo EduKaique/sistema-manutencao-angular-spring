@@ -9,6 +9,7 @@ import { StatusService } from '../../../shared/services/status.service';
 import { Status } from '../../../shared/models/status';
 import { Request as RequestModel } from '../../../shared/models/request';
 import { StatusColumnComponent } from './components/status-column/status-column.component';
+import { SideBarComponent } from '../../../core/layout/side-bar/side-bar.component';
 
 interface GroupedRequests {
   status: Status;
@@ -18,7 +19,7 @@ interface GroupedRequests {
 
 @Component({
   selector: 'app-view-requests-page',
-  imports: [HeaderComponent, InputPrimaryComponent, MatIcon, CommonModule, StatusColumnComponent],
+  imports: [InputPrimaryComponent, MatIcon, CommonModule, StatusColumnComponent],
   templateUrl: './view-requests-page.component.html',
   styleUrl: './view-requests-page.component.css'
 })

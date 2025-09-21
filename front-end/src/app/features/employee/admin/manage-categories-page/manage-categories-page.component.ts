@@ -3,13 +3,11 @@ import { CommonModule } from '@angular/common';
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../../../shared/models/category';
 import { NewCategoryModalComponent } from "../new-category-modal/new-category-modal.component";
-import { HeaderComponent } from "../../../../core/layout/header/header.component";
-
 
 @Component({
   selector: 'app-manage-categories-page',
   standalone: true,
-  imports: [CommonModule, NewCategoryModalComponent, HeaderComponent],
+  imports: [CommonModule, NewCategoryModalComponent],
   templateUrl: './manage-categories-page.component.html',
   styleUrl: './manage-categories-page.component.css'
 })
