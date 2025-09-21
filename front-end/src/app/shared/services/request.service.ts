@@ -3,6 +3,7 @@ import { Request } from '../../shared/models/request';
 import { RequestHistory } from '../../shared/models/request-history';
 import { RequestHistoryService } from './request-history.service';
 import { StatusService } from './status.service';
+import { REQUESTS } from '../mocks/request.mock';
 
 const LS_CHAVE = "requests";
 
@@ -15,7 +16,7 @@ export class RequestService {
 
   listarTodos(): Request[] {
     const requests = localStorage.getItem(LS_CHAVE);
-    return requests ? JSON.parse(requests) : [];
+    return requests ? JSON.parse(requests) : REQUESTS;
   }
 
   inserir(request: Request): void {
@@ -52,7 +53,7 @@ export class RequestService {
         if (oldStatusId !== newStatusId) {
           const oldStatus =  this.statusService.getById(oldStatusId);
           const newStatus =  this.statusService.getById(newStatusId);
-        
+
           const description = `Status atualizado de ${oldStatus?.nome} para ${newStatus?.nome}`;
           const employee = 1;
           const entry: RequestHistory = {

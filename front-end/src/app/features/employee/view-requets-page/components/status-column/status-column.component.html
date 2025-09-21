@@ -1,0 +1,15 @@
+<div class="column-container" [style]="{
+    'border-top': '3px solid ' + headerColor,
+  }">
+  <div class="column-header" >
+    <h3 class="label-large" [style]="{ color: headerColor }">{{ title }}</h3>
+    <span class="count">{{ requests.length }}</span>
+  </div>
+  <div class="card-list">
+    @for (req of requests; track req.id) {
+      <app-request-card [request]="req"></app-request-card>
+    } @empty {
+      <p class="empty-state">Nenhuma solicitação neste status.</p>
+    }
+  </div>
+</div>

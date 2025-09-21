@@ -1,0 +1,67 @@
+@import url("../../../../../../styles/variables.css");
+
+.card-container {
+  position: relative;
+  background-color: var(--color-background-card);
+  border-radius: 8px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: box-shadow 0.2s ease-in-out;
+  border: 1px solid var(--color-border-default);
+  cursor: pointer;
+}
+
+.card-container:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.card-content {
+  padding: 24px;
+}
+
+.equipment-name {
+  margin: 0 0 12px 0;
+  color: var(--color-text-default);
+}
+
+.card-infos {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.category-label, .client-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 4px;
+  color: var(--color-text-label);
+}
+
+.category-label mat-icon, .client-label mat-icon {
+  font-size: 20px;
+}
+
+
+.card-footer {
+  border-top: 2px solid var(--color-border-default);
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+}
+
+.employee-image {
+  width: 32px;
+  height: 32px;
+  border-radius: 100%;
+  object-fit: cover;
+  margin-right: 8px;
+}
+
+.date {
+  color: var(--color-text-label);
+}
