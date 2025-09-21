@@ -33,6 +33,16 @@ a {
     cursor: pointer;
 }
 
+button:disabled, .button-primary:disabled {
+    background: var(--color-primary-dark);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.button-primary:hover {
+    background: var(--color-primary-dark);
+}
+
 .button-secondary {
     width: 200px;
     height: 48px;

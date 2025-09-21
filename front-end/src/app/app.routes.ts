@@ -13,6 +13,7 @@ import { AuthGuard } from './core/auth/guards/auth.guard';
 import { RoleGuard } from './core/auth/guards/role.guard';
 import { UnauthorizedPageComponent } from './core/layout/unauthorized-page/unauthorized-page.component';
 import { PageNotFoundComponent } from './core/layout/page-not-found/page-not-found.component';
+import { ViewRequetsPageComponent } from './features/employee/view-requets-page/view-requets-page.component';
 
 export const routes: Routes = [
   {
@@ -71,6 +72,12 @@ export const routes: Routes = [
   {
     path: 'employee-list',
     component: EmployeeListComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { expectedRole: 'employee' },
+  },
+  {
+    path: 'view-requests',
+    component: ViewRequetsPageComponent,
     canActivate: [AuthGuard, RoleGuard],
     data: { expectedRole: 'employee' },
   },
