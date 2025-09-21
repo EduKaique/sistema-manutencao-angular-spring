@@ -22,7 +22,7 @@ interface GroupedRequests {
   templateUrl: './view-requets-page.component.html',
   styleUrl: './view-requets-page.component.css'
 })
-export class ViewRequetsPageComponent {
+export class ViewRequestsPageComponent {
 
   isKanbanView: boolean = true;
   private statusService = inject(StatusService);
