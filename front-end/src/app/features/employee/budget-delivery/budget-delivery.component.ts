@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-budget-delivery',
@@ -25,13 +27,17 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     MatFormFieldModule,
     MatSelectModule,
-    FormsModule
+    FormsModule, 
+    MatDialogModule
   ]
 })
 export class BudgetDeliveryComponent {
-  dialog: any;
 
-constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private dialog: MatDialog,
+    private cdr: ChangeDetectorRef
+  ) {}
 onVoltarPaginaInicial() {
   this.router.navigate(['/client-dashboard']);
 }
@@ -48,7 +54,7 @@ onVoltarPaginaInicial() {
   dialogRef: any;
 
   abrirDialog(template: TemplateRef<any>) {
-    this.selectedFuncionario = null;
+    this.selectedFuncionario = this.responsavel ?? undefined;
     this.dialogRef = this.dialog.open(template, {
       disableClose: true,
       panelClass: 'custom-dialog'
@@ -57,12 +63,20 @@ onVoltarPaginaInicial() {
 
   atribuirResponsavel() {
     this.responsavel = this.selectedFuncionario;
-    this.dataAtribuicao = new Date().toLocaleString('pt-BR', {
-      day: '2-digit', month: '2-digit', year: 'numeric',
-      hour: '2-digit', minute: '2-digit', second: '2-digit'
-    });
+    this.dataAtribuicao = this.selectedFuncionario
+      ? new Date().toLocaleString('pt-BR', {
+          day: '2-digit', month: '2-digit', year: 'numeric',
+          hour: '2-digit', minute: '2-digit', second: '2-digit'
+        })
+      : '';
+    this.dialogRef.close();
+    this.cdr.markForCheck();
+  }
+
+  cancelarDialog() {
     this.dialogRef.close();
   }
+
 
   detalhes = {
     id: '001',
@@ -74,13 +88,13 @@ onVoltarPaginaInicial() {
     defeito: 'O equipamento liga, mas a tela permanece preta (sem imagem). O LED indicador de energia acende e é possível ouvir o som da ventoinha em funcionamento, mas não há qualquer sinal de vídeo. O problema persiste mesmo após reiniciar o dispositivo várias vezes.'
   };
 
-  // Para o card de orçamento/manutenção
+
   selectedTab = 0;
   temOrcamento = false;
   valorOrcamento = 520.00;
   servicosInclusos = 'Diagnóstico técnico, Substituição do cabo flat da tela, Mão de obra, Limpeza interna + pasta térmica';
 
-    // Manutenção
+
   temManutencao = false;
   descricaoManutencao = 'Identifiquei que o problema estava em um dos módulos de memória RAM, que impedia a exibição de vídeo. Após substituir o módulo com defeito, o equipamento voltou a funcionar normalmente.';
   orientacaoCliente = 'N/A';

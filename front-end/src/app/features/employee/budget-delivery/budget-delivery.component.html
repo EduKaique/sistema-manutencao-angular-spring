@@ -138,11 +138,19 @@
     <mat-form-field appearance="outline" class="dialog-field">
       <mat-label>Atribuir Solicitação Para:</mat-label>
       <mat-select [(ngModel)]="selectedFuncionario" placeholder="Pesquise/Selecione um Funcionário">
+        <mat-option [value]="null">Nenhum</mat-option>
         <mat-option *ngFor="let f of funcionarios" [value]="f">{{ f.nome }} - {{ f.cargo }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <button mat-flat-button color="primary" class="dialog-btn" [disabled]="!selectedFuncionario" (click)="atribuirResponsavel()">
-      Atribuir
-    </button>
+    <div style="display: flex; gap: 8px;">
+      <button mat-stroked-button color="primary" class="dialog-btn" (click)="cancelarDialog()">
+        Cancelar
+      </button>
+      <button mat-flat-button color="primary" class="dialog-btn"
+        [disabled]="selectedFuncionario === undefined"
+        (click)="atribuirResponsavel()">
+        Atribuir
+      </button>
+    </div>
   </div>
 </ng-template>
