@@ -1,0 +1,26 @@
+<div class="modal-backdrop">
+  <div class="modal-content">
+    <div class="modal-header">
+      <img src="assets/icons/warning.svg" alt="Ícone de aviso" />
+      <h2>Reprovar Orçamento</h2>
+    </div>
+    
+    <div class="modal-body">
+      <p>Tem certeza que quer reprovar esse orçamento?</p>
+      <div class="form-group">
+        <label for="rejectionReason">Motivo da rejeição:</label>
+        <textarea 
+          id="rejectionReason"
+          [(ngModel)]="rejectionReason"
+          placeholder="Digite o motivo da rejeição"
+          rows="4"
+          required></textarea>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="cancel-button" (click)="cancel.emit()">Cancelar</button>
+      <button class="reject-button" [disabled]="!rejectionReason.trim()" (click)="onConfirm()">Reprovar</button>
+    </div>
+  </div>
+</div>

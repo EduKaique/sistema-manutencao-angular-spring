@@ -1,17 +1,28 @@
 <header class="header">
-  <div class="logo">Remont</div>
-  <nav class="user-nav">
-    <span>Olá, Nilton Nativas</span>
-    <button class="btn-icon" aria-label="Notificações">🔔</button>
-    <button class="btn-logout" aria-label="Sair">Sair ➔</button>
-  </nav>
+    <div class="logo">Remont</div>
+    <nav class="user-nav">
+        <span>Olá, Nilton Nativas</span>
+        <button class="btn-icon" aria-label="Notificações">
+            Notificações 🔔
+        </button>
+        <button class="btn-logout">
+            Sair ➔
+        </button>
+    </nav>
 </header>
 
-<a routerLink="/client-dashboard"> ← Voltar para Página Inicial </a>
+<a routerLink="/client-dashboard" class="back-link">
+    ← Voltar para Página Inicial
+</a>
 
-<div *ngIf="request">
-    <app-request-description [request]="request"></app-request-description>
-    <app-request-history [requestId]="currentRequestId"></app-request-history>
+<div class="main-content" *ngIf="request">
+    <div class="content-wrapper">
+        <div class="details-section">
+            <app-request-description [request]="request"></app-request-description>
+            <app-approve-reject-panel [request]="request"></app-approve-reject-panel>
+        </div>
+        <app-request-history [requestId]="currentRequestId"></app-request-history>
+    </div>
 </div>
 
 <div *ngIf="!request">
