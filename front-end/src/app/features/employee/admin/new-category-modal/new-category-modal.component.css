@@ -1,0 +1,147 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.category-modal-container {
+    display: flex;
+    width: 100%;
+    max-width: 565px;
+    position:relative;
+    padding: var(--spacing-md);
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    background: var(--color-background-card);
+}
+
+.category-modal-container h2 {
+    color: var(--color-heading-default);
+    font-family: var(--heading-h5-font-family);
+    font-size: var(--heading-h5-font-size);
+    font-style: normal;
+    font-weight: var(--heading-h5-font-weight);
+    line-height: var(--heading-h5-line-height);
+    letter-spacing: var(--heading-h5-letter-spacing);
+    align-self: flex-start;
+}
+
+.category-form-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    width: 100%;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-self: stretch;
+}
+
+.form-group label {
+    align-self: stretch;
+    color: var(--color-text-label);
+    font-family: var(--label-default-font-family);
+    font-size: var(--label-default-font-size);
+    font-style: normal;
+    font-weight: var(--label-default-font-weight);
+    line-height: var(--label-default-line-height);
+    letter-spacing: 0;
+}
+
+.form-group input,
+.form-group select {
+    height: 48px;
+    padding: var(--spacing-3xs) var(--spacing-xs);
+    align-items: center;
+    align-self: stretch;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border-dark);
+    background: var(--color-background-inputs);
+    color: var(--color-text-placeholder);
+    font-family: var(--body-default-font-family);
+    font-size: var(--body-default-font-size);
+    font-style: normal;
+    font-weight: var(--body-default-font-weight);
+    line-height: var(--body-default-line-height);
+    letter-spacing: var(--body-default-letter-spacing);
+    outline: none;
+}
+
+#effectDescription {
+    height: 168px;
+    resize: none;
+}
+
+.required-field {
+    color: var(--color-text-placeholder);
+    font-family: var(--body-default-font-family);
+    font-size: var(--body-default-font-size);
+    font-style: normal;
+    font-weight: var(--body-default-font-weight);
+    line-height: var(--body-default-line-height);
+    letter-spacing: var(--body-default-letter-spacing);
+}
+
+.submit-button {
+    display: inline-flex;
+    width: 245px;
+    height: 48px;
+    padding: var(--spacing-2xs);
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    border-radius: var(--radius-sm);
+    background: var(--color-primary-default);
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    margin: 0 auto;
+    }
+
+.submit-button:hover {
+    background-color: #0000007a;
+    color: white;
+    cursor: pointer;
+}
+
+.submit-button svg {
+    width: 16.3px;
+    height: 12.025px;
+    flex-shrink: 0;
+    aspect-ratio: 61 / 45;
+    fill: var(--color-primary-lightest, #F3FAFA);
+}
+
+.close-button {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 24px;
+    height: 24px;
+    aspect-ratio: 1 / 1;
+    background-color: transparent;  
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.close-button svg {
+    width: 100%;
+    height: 100%;
+}

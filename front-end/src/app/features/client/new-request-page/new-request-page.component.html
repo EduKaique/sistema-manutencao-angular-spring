@@ -25,12 +25,8 @@
                 <label for="equipmentCategory">Categoria </label>
                 <select id="equipmentCategory" name="equipmentCategory" 
                 [(ngModel)]="request.categoryId" #categoria="ngModel" required> 
-                    <option value="" disabled selected>Selecione a categoria</option>
-                    <option value="notebook">Notebook</option>
-                    <option value="desktop">Desktop</option>
-                    <option value="impressora">Impressora</option>
-                    <option value="mouse">Mouse</option>
-                    <option value="teclado">Teclado</option>
+                    <option [ngValue]="undefined" disabled selected>Selecione a categoria</option>
+                    <option *ngFor="let category of categories" [ngValue]="category.id">{{ category.nome }}</option>
                 </select>
             </div>
                 
