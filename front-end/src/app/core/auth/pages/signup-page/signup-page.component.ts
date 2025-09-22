@@ -9,7 +9,6 @@ import {
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
-import { CpfPipesPipe } from '../../../../shared/pipes/cpf.pipes.pipe';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { SuccessfulSignupComponent } from './successful-signup/successful-signup.component';
 import { ViaCepService, Endereco } from '../../../services/viacep.service';
@@ -17,7 +16,6 @@ import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-signup-page',
-  standalone: true,
   imports: [
     InputPrimaryComponent,
     ReactiveFormsModule,

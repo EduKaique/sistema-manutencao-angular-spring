@@ -9,7 +9,6 @@ import { RejectModalComponent } from '../../../../../shared/components/reject-mo
   selector: 'app-approve-reject-panel',
   templateUrl: './approve-reject-panel.component.html',
   styleUrls: ['./approve-reject-panel.component.css'],
-  standalone: true,
   imports: [CommonModule, RejectModalComponent]
 })
 export class ApproveRejectPanelComponent implements OnInit {

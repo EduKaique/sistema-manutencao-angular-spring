@@ -21,7 +21,6 @@ import { Employee, Role } from '../../../../shared/models/employee';
 
 @Component({
   selector: 'app-employee-form',
-  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,

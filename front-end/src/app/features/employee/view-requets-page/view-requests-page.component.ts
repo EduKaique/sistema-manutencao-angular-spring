@@ -9,14 +9,11 @@ import { StatusService } from '../../../shared/services/status.service';
 import { Status } from '../../../shared/models/status';
 import { Request as RequestModel } from '../../../shared/models/request';
 import { StatusColumnComponent } from './components/status-column/status-column.component';
-import { SideBarComponent } from '../../../core/layout/side-bar/side-bar.component';
 
 interface GroupedRequests {
   status: Status;
   requests: RequestModel[];
 }
-
-
 @Component({
   selector: 'app-view-requests-page',
   imports: [InputPrimaryComponent, MatIcon, CommonModule, StatusColumnComponent],

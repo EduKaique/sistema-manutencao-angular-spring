@@ -6,7 +6,6 @@ type InputTypes = 'text' | 'email' | 'password' | 'number';
 
 @Component({
   selector: 'app-input-primary',
-  standalone: true,
   imports: [ReactiveFormsModule, NgxMaskDirective],
   providers: [
     {

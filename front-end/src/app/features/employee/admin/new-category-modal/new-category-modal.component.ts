@@ -5,7 +5,6 @@ import { Category } from '../../../../shared/models/category';
 
 @Component({
   selector: 'app-new-category-modal',
-  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './new-category-modal.component.html',
   styleUrl: './new-category-modal.component.css'

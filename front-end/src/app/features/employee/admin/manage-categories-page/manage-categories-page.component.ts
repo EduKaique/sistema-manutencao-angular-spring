@@ -6,7 +6,6 @@ import { NewCategoryModalComponent } from "../new-category-modal/new-category-mo
 
 @Component({
   selector: 'app-manage-categories-page',
-  standalone: true,
   imports: [CommonModule, NewCategoryModalComponent],
   templateUrl: './manage-categories-page.component.html',
   styleUrl: './manage-categories-page.component.css'

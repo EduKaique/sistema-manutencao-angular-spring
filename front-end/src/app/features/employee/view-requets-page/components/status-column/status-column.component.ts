@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Request } from '../../../../../shared/models/request';
 import { RequestCardComponent } from '../request-card/request-card.component';
-import { StatusService } from '../../../../../shared/services/status.service'
+import { StatusService } from '../../../../../shared/services/status.service';
 import { Status } from '../../../../../shared/models/status';
 
 @Component({
@@ -10,7 +10,7 @@ import { Status } from '../../../../../shared/models/status';
   standalone: true,
   imports: [CommonModule, RequestCardComponent],
   templateUrl: './status-column.component.html',
-  styleUrls: ['./status-column.component.css']
+  styleUrls: ['./status-column.component.css'],
 })
 export class StatusColumnComponent {
   @Input({ required: true }) title!: string;
@@ -25,8 +25,7 @@ export class StatusColumnComponent {
   get headerColor(): string {
     const status = this.statusService
       .getAll()
-      .find(s => s.nome?.toUpperCase() === this.title?.toUpperCase());
+      .find((s) => s.nome?.toUpperCase() === this.title?.toUpperCase());
     return status?.cor ?? this.fallbackHeaderColor;
   }
-  
 }

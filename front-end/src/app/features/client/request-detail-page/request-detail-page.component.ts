@@ -11,7 +11,6 @@ import { ApproveRejectPanelComponent } from "./components/approve-reject-panel/a
 
 @Component({
   selector: 'app-request-detail-page',
-  standalone: true,
   imports: [RequestDescriptionComponent, RequestHistoryComponent, CommonModule, MatIconModule, RouterModule, ApproveRejectPanelComponent],
   templateUrl: './request-detail-page.component.html',
   styleUrl: './request-detail-page.component.css'
@@ -37,6 +36,6 @@ export class RequestDetailPageComponent implements OnInit{
   }
 
   backToDashboard() : void {
-    this.router.navigate(['/client-dashboard']);
+    this.router.navigate(['/client/dashboard']);
   }
 }

@@ -14,7 +14,7 @@ import { HeaderComponent } from '../../../core/layout/header/header.component';
 
 @Component({
   selector: 'app-client-dashboard-page',
-  standalone: true,
+  
   imports: [
     MatDialogModule,
     MatFormFieldModule,
@@ -92,9 +92,9 @@ export class ClientDashboardPageComponent implements OnInit {
     }
 
     verServico(id: number) {
-      console.log('Tentando navegar para:', `/request-detail/${id}`);
+      console.log('Tentando navegar para:', `/client/request-detail/${id}`);
 
-      this.router.navigate(['/request-detail', id]);
+      this.router.navigate(['/client/request-detail', id]);
     }
 }
 

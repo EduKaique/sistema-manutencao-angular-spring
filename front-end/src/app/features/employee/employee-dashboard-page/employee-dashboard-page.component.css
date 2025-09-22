@@ -1,13 +1,10 @@
 .dashboard {
-  padding: 30px;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f4f6fb;
-  
+  margin-top: 24px;  
 }
 
 .summary-cards {
   display: flex;
-  gap: 20px;
+  gap: 24px;
   margin-bottom: 30px;
   flex-wrap: wrap;
   justify-content: center; 
@@ -71,19 +68,16 @@
 }
 
 
-.request-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 25px;
+.request-list {
+  display: flex;
+  gap: 24px;
 }
 
 .request-card {
-  background-color: #ffffff;
-  border: 1px solid #e0e0e0;
-  padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   transition: transform 0.2s ease;
+  width: 100%;
+  max-width: 25%;
 }
 
 .request-card:hover {

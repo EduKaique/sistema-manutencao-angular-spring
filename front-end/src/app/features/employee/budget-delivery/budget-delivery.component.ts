@@ -3,7 +3,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
-import { HeaderComponent } from '../../../core/layout/header/header.component';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -11,26 +10,22 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ChangeDetectorRef } from '@angular/core';
-import { SideBarComponent } from '../../../core/layout/side-bar/side-bar.component';
 
 @Component({
   selector: 'app-budget-delivery',
   templateUrl: './budget-delivery.component.html',
   styleUrls: ['./budget-delivery.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     MatCardModule,
     MatIconModule,
     MatButtonModule,
     MatTabsModule,
-    HeaderComponent,
     CommonModule,
     MatFormFieldModule,
     MatSelectModule,
     FormsModule, 
     MatDialogModule,
-    SideBarComponent,
   ]
 })
 export class BudgetDeliveryComponent {
@@ -41,7 +36,7 @@ export class BudgetDeliveryComponent {
     private cdr: ChangeDetectorRef
   ) {}
 onVoltarPaginaInicial() {
-  this.router.navigate(['/employee-dashboard']);
+  this.router.navigate(['/employee/dashboard']);
 }
 
   // Responsável
