@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Request } from '../../../../../shared/models/request';
+import { Request } from '../../../../../../shared/models/request';
 import { DatePipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
-import { CategoryService } from '../../../services/category.service';
-import { CLIENT_MOCKS } from '../../../../../shared/mocks/user.mock';
+import { CategoryService } from '../../../../services/category.service';
+import { CLIENT_MOCKS } from '../../../../../../shared/mocks/user.mock';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-request-card',
@@ -16,7 +17,10 @@ export class RequestCardComponent implements OnInit {
   categoryMap: Record<number, string> = {};
   clientMap: Record<number, string> = {};
 
-  constructor(private categoryService: CategoryService) {}
+  constructor(
+    private categoryService: CategoryService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     const categories = this.categoryService.getAllCategories();
@@ -29,5 +33,11 @@ export class RequestCardComponent implements OnInit {
       acc[c.clientid] = c.name;
       return acc;
     }, {});
+  }
+
+  verServico(id: number) {
+    console.log('Tentando navegar para:', `/employee/budget-delivery/${id}`);
+
+    this.router.navigate(['/employee/budget-delivery', id]);
   }
 }

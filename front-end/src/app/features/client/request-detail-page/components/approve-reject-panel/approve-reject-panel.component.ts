@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { BudgetService } from '../../../../../services/budget.service';
+import { BudgetService } from '../../../../employee/services/budget.service';
 import { Request } from '../../../../../shared/models/request';
 import { RejectModalComponent } from '../../../../../shared/components/reject-modal/reject-modal.component';
 
@@ -9,28 +9,27 @@ import { RejectModalComponent } from '../../../../../shared/components/reject-mo
   selector: 'app-approve-reject-panel',
   templateUrl: './approve-reject-panel.component.html',
   styleUrls: ['./approve-reject-panel.component.css'],
-  imports: [CommonModule, RejectModalComponent]
+  imports: [CommonModule, RejectModalComponent],
 })
 export class ApproveRejectPanelComponent implements OnInit {
   @Input() request?: Request;
   showRejectModal = false;
 
-  constructor(
-    private budgetService: BudgetService,
-    private router: Router
-  ) {}
+  constructor(private budgetService: BudgetService, private router: Router) {}
 
   ngOnInit(): void {
     if (this.request) {
       console.log('Initial request state:', this.request);
-      this.budgetService.getCurrentBudget(this.request.id).subscribe(budget => {
-        console.log('Budget updated:', budget);
-        if (budget && this.request) {
-          this.request.status = budget.status;
-          this.request.rejectionReason = budget.rejectionReason;
-          console.log('Request after update:', this.request);
-        }
-      });
+      this.budgetService
+        .getCurrentBudget(this.request.id)
+        .subscribe((budget) => {
+          console.log('Budget updated:', budget);
+          if (budget && this.request) {
+            this.request.status = budget.status;
+            this.request.rejectionReason = budget.rejectionReason;
+            console.log('Request after update:', this.request);
+          }
+        });
     }
   }
 
@@ -61,7 +60,7 @@ export class ApproveRejectPanelComponent implements OnInit {
 
   getStatusText(): string {
     if (!this.request) return '';
-    
+
     switch (this.request.status) {
       case 'REJEITADA':
         return 'REJEITADA';

@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AppSuccessModalComponent } from '../../../../../shared/components/modal-mensagem/app-success-modal';
+import { AppSuccessModalComponent } from '../../../shared/components/modal-mensagem/app-success-modal';
 
 interface Pagamento {
   titulo: string;
@@ -12,7 +12,7 @@ interface Pagamento {
   templateUrl: './payment-panel.component.html',
   imports: [CommonModule, AppSuccessModalComponent],
   styleUrls: ['./payment-panel.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaymentPanelComponent {
   backLink = '← Voltar para Página Inicial';
@@ -41,8 +41,7 @@ export class PaymentPanelComponent {
   modalTextoBotao = 'Voltar para Página Inicial';
   modalRotaDestino = '/';
 
-  constructor() {
-  }
+  constructor() {}
 
   selectMethod(method: 'cartao' | 'pix') {
     this.selectedMethod = method;
@@ -54,9 +53,9 @@ export class PaymentPanelComponent {
       alert('Selecione uma forma de pagamento antes de continuar.');
       return;
     }
-    
+
     this.atualizarDataConfirmacao();
-    
+
     this.mostrarModal = true;
   }
 
@@ -66,6 +65,8 @@ export class PaymentPanelComponent {
 
   private atualizarDataConfirmacao(): void {
     const now = new Date();
-    this.modalDadosAdicionais = `Data: ${now.toLocaleDateString('pt-BR')} às ${now.toLocaleTimeString('pt-BR')}`;
+    this.modalDadosAdicionais = `Data: ${now.toLocaleDateString(
+      'pt-BR'
+    )} às ${now.toLocaleTimeString('pt-BR')}`;
   }
 }

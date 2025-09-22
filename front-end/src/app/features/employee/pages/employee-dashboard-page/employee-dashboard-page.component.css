@@ -2,6 +2,11 @@
   margin-top: 24px;  
 }
 
+h1 {
+  color: var(--color-heading-default);
+  margin-bottom: 24px;
+}
+
 .summary-cards {
   display: flex;
   gap: 24px;
@@ -12,26 +17,50 @@
 }
 
 .card {
-  padding: 20px;
+  padding: 24px;
   border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  min-width: 250px;
+  width: 100%;
   flex: 1;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  color: #000000;
+  color: var(--color-secondary-dark);
+}
+
+.card-open {
+  color: var(--color-secondary-lightest)
 }
 
 .card-content {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 16px;
+  width: 100%;
 }
 
-.icon-area svg {
-  width: 28px;
-  height: 28px;
+.icon-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  background-color: var(--color-secondary-lighter);
+  border-radius: 8px;
+}
+
+.icon-area#open {
+  background-color: var(--color-secondary-light);
+}
+
+mat-icon {
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+  color: var(--color-secondary-default);
+}
+
+mat-icon#open {
+  color: var(--color-secondary-lightest);
 }
 
 .text-area {
@@ -52,19 +81,19 @@
 }
 
 .card-open {
-  background-color: #ffffff;
+  background-color: var(--color-secondary-default);
 }
 
 .card-late {
-  background-color: #ffffff;
+  background-color: var(--color-background-card);
 }
 
 .card-neutral {
-  background-color: #ffffff;
+  background-color: var(--color-background-card);
 }
 
 .card-today {
-  background-color: #ffffff;
+  background-color: var(--color-background-card);
 }
 
 

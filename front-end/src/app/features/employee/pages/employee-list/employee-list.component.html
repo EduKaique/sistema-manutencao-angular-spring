@@ -1,7 +1,7 @@
 <div class="container">
 
-  <header class="main-header">
-    <h1>Funcionários</h1>
+  <div class="main-header">
+    <h1 class="heading_1">Funcionários</h1>
     <div class="header-actions">
       
       <mat-form-field appearance="outline" class="search-field">
@@ -9,13 +9,13 @@
         <input matInput (keyup)="applyFilter($event)" placeholder="Pesquisar Funcionário">
       </mat-form-field>
       
-      <button mat-flat-button class="add-button" (click)="openForm()">
+      <button class="button-primary label_large add-button" (click)="openForm()">
         <mat-icon>add</mat-icon>
         Novo Funcionário
       </button>
 
     </div>
-  </header>
+  </div>
 
   <div class="table-card mat-elevation-z4">
     

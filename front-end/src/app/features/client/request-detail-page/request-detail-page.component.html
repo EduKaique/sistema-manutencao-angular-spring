@@ -1,30 +1,20 @@
-<header class="header">
-    <div class="logo">Remont</div>
-    <nav class="user-nav">
-        <span>Olá, Nilton Nativas</span>
-        <button class="btn-icon" aria-label="Notificações">
-            Notificações 🔔
-        </button>
-        <button class="btn-logout">
-            Sair ➔
-        </button>
-    </nav>
-</header>
+<app-header></app-header>
 
-<a routerLink="/client/dashboard" class="back-link">
-    ← Voltar para Página Inicial
-</a>
-
-<div class="main-content" *ngIf="request">
-    <div class="content-wrapper">
-        <div class="details-section">
-            <app-request-description [request]="request"></app-request-description>
-            <app-approve-reject-panel [request]="request"></app-approve-reject-panel>
-        </div>
-        <app-request-history [requestId]="currentRequestId"></app-request-history>
+@if (request) {
+<main>
+  <a routerLink="/client/dashboard" class="label_large back-link">
+    <mat-icon>arrow_back</mat-icon>Voltar para Página Inicial
+  </a>
+  <div class="content-wrapper">
+    <div class="details-section">
+      <app-request-description [request]="request"></app-request-description>
+      <app-approve-reject-panel [request]="request"></app-approve-reject-panel>
     </div>
-</div>
-
-<div *ngIf="!request">
+    <app-request-history style="height: 100%;" [requestId]="currentRequestId"></app-request-history>
+  </div>
+</main>
+} @else {
+    <div>
     <p>Solicitação não encontrada</p>
-</div>
+    </div>
+}

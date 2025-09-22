@@ -2,14 +2,14 @@
 
 <main class="container">
   <div class="requests">
-    <h2><span class="icon">🔧</span> Minhas Solicitações</h2>
+    <h1 class="heading_1"> Minhas Solicitações</h1>
 
     <div class="search-add">
       <mat-form-field>
         <mat-label>Pesquisar solicitação</mat-label>
         <input matInput (keyup)="applyFilter($event)" #input>
       </mat-form-field>
-      <button (click)="openNewRequest()" class="btn-new-request">Nova Solicitação +</button>
+      <button (click)="openNewRequest()" class="button-primary label_large">Nova Solicitação +</button>
     </div>
   </div>
 
@@ -19,31 +19,23 @@
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-    <!-- Equipamento -->
     <ng-container matColumnDef="equipmentName">
       <th mat-header-cell *matHeaderCellDef> Nome do Equipamento </th>
       <td mat-cell *matCellDef="let element"> {{ element.equipmentName }} </td>
     </ng-container>
-
-    <!-- Categoria -->
     <ng-container matColumnDef="categoryId">
       <th mat-header-cell *matHeaderCellDef> Categoria </th>
-      <td mat-cell *matCellDef="let element"> {{ element.categoryId }} </td>
+      <td mat-cell *matCellDef="let element"> {{ getCategoryName(element.categoryId) }} </td>
     </ng-container>
-
-    <!-- Data de Criação -->
     <ng-container matColumnDef="requestDate">
       <th mat-header-cell *matHeaderCellDef> Data de Criação </th>
       <td mat-cell *matCellDef="let element"> {{ element.requestDate | date:'dd/MM/yyyy' }} </td>
     </ng-container>
-
-    <!-- Última Atualização -->
     <ng-container matColumnDef="ultimaAtualizacao">
       <th mat-header-cell *matHeaderCellDef> Última Atualização </th>
       <td mat-cell *matCellDef="let element"> {{ element.ultimaAtualizacao | date:'dd/MM/yyyy HH:mm' }} </td>
     </ng-container>
 
-    <!-- Status -->
     <ng-container matColumnDef="statusId">
       <th mat-header-cell *matHeaderCellDef> Status Atual </th>
       <td mat-cell *matCellDef="let element"> 
@@ -53,13 +45,11 @@
       </td>
     </ng-container>
 
-    <!-- Descrição -->
     <ng-container matColumnDef="description">
       <th mat-header-cell *matHeaderCellDef> Descrição do Defeito </th>
       <td mat-cell *matCellDef="let element"> {{ element.equipmentDescription }} </td>
     </ng-container>
 
-    <!-- Ações -->
     <ng-container matColumnDef="acoes">
       <th mat-header-cell *matHeaderCellDef> Ações </th>
       <td mat-cell *matCellDef="let element">
@@ -67,12 +57,8 @@
         <button class="btn-custom2" (click)="remover(element)">Excluir</button>
       </td>
     </ng-container>
-
-    <!-- Header e Rows -->
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-    <!-- Nenhum resultado -->
     <tr class="mat-row" *matNoDataRow>
       <td class="mat-cell" colspan="7">Sem resultados</td>
     </tr>

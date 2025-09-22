@@ -2,10 +2,11 @@ import { Component, computed, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { RequestCardComponent } from '../view-requets-page/components/request-card/request-card.component';
-import { Request as RequestModel } from '../../../shared/models/request';
-import { StatusService } from '../../../shared/services/status.service';
-import { Status } from '../../../shared/models/status';
-import { RequestService } from '../../../shared/services/request.service';
+import { Request as RequestModel } from '../../../../shared/models/request';
+import { StatusService } from '../../../../shared/services/status.service';
+import { Status } from '../../../../shared/models/status';
+import { RequestService } from '../../../../shared/services/request.service';
+import { MatIconModule } from '@angular/material/icon';
 
 interface GroupedRequests {
   status: Status;
@@ -14,34 +15,31 @@ interface GroupedRequests {
 @Component({
   selector: 'app-employee-dashboard-page',
   standalone: true,
-  imports: [CommonModule, MatGridListModule, RequestCardComponent],
+  imports: [CommonModule, MatGridListModule, RequestCardComponent, MatIconModule],
   templateUrl: './employee-dashboard-page.component.html',
   styleUrl: './employee-dashboard-page.component.css',
 })
 export class EmployeeDashboardPageComponent {
+  private statusService = inject(StatusService);
+  private requestService = inject(RequestService);
 
-    private statusService = inject(StatusService);
-    private requestService = inject(RequestService);
+  statuses = this.statusService.getAll();
+  requests = this.requestService.listarTodos();
 
-    statuses = this.statusService.getAll();
-    requests = this.requestService.listarTodos();
-
-    groupedRequests = computed<GroupedRequests[]>(() => {
+  groupedRequests = computed<GroupedRequests[]>(() => {
     const statuses = this.statuses;
     const requests = this.requests;
 
-      return statuses.map(status => ({
-        status: status,
-        requests: requests.filter(req => req.statusId === status.id)
-      }));
-    });
-  
+    return statuses.map((status) => ({
+      status: status,
+      requests: requests.filter((req) => req.statusId === status.id),
+    }));
+  });
 
   openRequests = 4;
   overdueRequests = 1;
   noResponsible = 2;
   createdToday = 3;
-
 
   // requests = [
   //   {

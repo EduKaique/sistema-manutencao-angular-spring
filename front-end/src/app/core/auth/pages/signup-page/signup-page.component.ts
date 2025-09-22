@@ -10,9 +10,9 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { SuccessfulSignupComponent } from './successful-signup/successful-signup.component';
 import { ViaCepService, Endereco } from '../../../services/viacep.service';
 import { AuthService } from '../../services/auth.service';
+import { AppSuccessModalComponent } from '../../../../shared/components/modal-mensagem/app-success-modal';
 
 @Component({
   selector: 'app-signup-page',
@@ -22,6 +22,7 @@ import { AuthService } from '../../services/auth.service';
     MatStepperModule,
     MatIconModule,
     MatDialogModule,
+    AppSuccessModalComponent,
   ],
   templateUrl: './signup-page.component.html',
   styleUrls: ['./signup-page.component.css'],
@@ -30,6 +31,7 @@ export class SignupPageComponent {
   firstFormGroup!: FormGroup;
   secondFormGroup!: FormGroup;
   endereco?: Endereco;
+  showModal = false;
 
   constructor(
     private fb: FormBuilder,
@@ -65,6 +67,7 @@ export class SignupPageComponent {
         ...this.secondFormGroup.value,
       };
       console.log('Dados do formulário:', formData);
+      this.showModal = true;
     }
 
 

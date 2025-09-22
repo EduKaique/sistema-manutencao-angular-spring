@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { RequestData } from '../shared/models/request-data';
+import { RequestData } from '../../../shared/models/request-data';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BudgetService {
   private STORAGE_KEY = 'orcamentos';
-  private budgetSubjects = new Map<number, BehaviorSubject<RequestData | null>>();
+  private budgetSubjects = new Map<
+    number,
+    BehaviorSubject<RequestData | null>
+  >();
 
   getBudget(requestId: number): RequestData | null {
     const data = localStorage.getItem(this.getStorageKey(requestId));
@@ -27,34 +30,49 @@ export class BudgetService {
     return `${this.STORAGE_KEY}_${requestId}`;
   }
 
-  private getBudgetSubject(requestId: number): BehaviorSubject<RequestData | null> {
+  private getBudgetSubject(
+    requestId: number
+  ): BehaviorSubject<RequestData | null> {
     if (!this.budgetSubjects.has(requestId)) {
-      this.budgetSubjects.set(requestId, new BehaviorSubject<RequestData | null>(this.getBudget(requestId)));
+      this.budgetSubjects.set(
+        requestId,
+        new BehaviorSubject<RequestData | null>(this.getBudget(requestId))
+      );
     }
     return this.budgetSubjects.get(requestId)!;
   }
 
   private addToHistory(requestId: number, title: string) {
-    const history = localStorage.getItem('requestHistory') ? 
-      JSON.parse(localStorage.getItem('requestHistory')!) : [];
-    
+    const history = localStorage.getItem('requestHistory')
+      ? JSON.parse(localStorage.getItem('requestHistory')!)
+      : [];
+
     const newHistoryEntry = {
       id: history.length + 1,
       title: title,
       date: new Date(),
       requestId: requestId,
       userId: 1, // Should be replaced with actual logged user ID
-      statusId: 2 // 2 for APPROVED status
+      statusId: 2, // 2 for APPROVED status
     };
 
     history.push(newHistoryEntry);
     localStorage.setItem('requestHistory', JSON.stringify(history));
   }
 
-  updateStatus(requestId: number, status: 'APROVADA' | 'REJEITADA', rejectionReason?: string) {
-    console.log('Updating status for request:', requestId, status, rejectionReason);
+  updateStatus(
+    requestId: number,
+    status: 'APROVADA' | 'REJEITADA',
+    rejectionReason?: string
+  ) {
+    console.log(
+      'Updating status for request:',
+      requestId,
+      status,
+      rejectionReason
+    );
     let budget = this.getBudget(requestId);
-    
+
     // Se não existir um orçamento, cria um novo
     if (!budget) {
       budget = {
@@ -66,7 +84,7 @@ export class BudgetService {
       budget.status = status;
       budget.rejectionReason = rejectionReason;
     }
-    
+
     console.log('Saving budget:', budget);
     this.saveBudget(budget);
 
@@ -86,7 +104,10 @@ export class BudgetService {
 
     // Add to history if request is being rescued (changing from REJECTED to APPROVED)
     if (status === 'APROVADA' && budget.status === 'REJEITADA') {
-      this.addToHistory(requestId, 'Serviço resgatado: mudou de REJEITADA para APROVADA');
+      this.addToHistory(
+        requestId,
+        'Serviço resgatado: mudou de REJEITADA para APROVADA'
+      );
     }
   }
 }

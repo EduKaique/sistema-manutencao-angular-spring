@@ -4,7 +4,6 @@ import { Injectable, signal } from '@angular/core';
 export class SidebarStateService {
   private _isExpanded = signal<boolean>(true);
 
-  // Read-only signal for templates/components
   readonly isExpanded = this._isExpanded.asReadonly();
 
   toggle(): void {
@@ -15,7 +14,6 @@ export class SidebarStateService {
     this._isExpanded.set(value);
   }
 
-  // Convenience accessor for class methods needing boolean
   isExpandedValue(): boolean {
     return this._isExpanded();
   }

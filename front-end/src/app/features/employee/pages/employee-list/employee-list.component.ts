@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { EmployeeFormComponent } from '../employee-form/employee-form.component';
+import { EmployeeFormComponent } from '../../components/employee-form/employee-form.component';
 import { EmployeService } from '../../services/employe.service';
 import { Employee } from '../../../../shared/models/employee';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -16,7 +16,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-employee-list',
   templateUrl: './employee-list.component.html',
   styleUrl: './employee-list.component.css',
-    imports: [
+  imports: [
     MatTableModule,
     MatButtonModule,
     MatIconModule,
@@ -24,10 +24,17 @@ import { FormsModule } from '@angular/forms';
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
-  ]
+  ],
 })
 export class EmployeeListComponent implements OnInit {
-  displayedColumns: string[] = ['nome', 'cargo', 'email', 'celular', 'salario', 'actions'];
+  displayedColumns: string[] = [
+    'nome',
+    'cargo',
+    'email',
+    'celular',
+    'salario',
+    'actions',
+  ];
 
   dataSource = new MatTableDataSource<Employee>();
 
@@ -35,7 +42,7 @@ export class EmployeeListComponent implements OnInit {
     private employeeService: EmployeService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.loadEmployees();
@@ -51,28 +58,28 @@ export class EmployeeListComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-openForm(employee?: Employee): void {
-  const dialogRef = this.dialog.open(EmployeeFormComponent, {
-    width: '750px', 
-    data: employee
-  });
+  openForm(employee?: Employee): void {
+    const dialogRef = this.dialog.open(EmployeeFormComponent, {
+      width: '750px',
+      data: employee,
+    });
 
-  dialogRef.afterClosed().subscribe(result => {
-    if(result) {
-      this.loadEmployees();
-      this.snackBar.open('Funcionário salvo com sucesso!', 'Fechar', {
-        duration: 3000
-      });
-    }
-  });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadEmployees();
+        this.snackBar.open('Funcionário salvo com sucesso!', 'Fechar', {
+          duration: 3000,
+        });
+      }
+    });
   }
 
   deleteEmployee(id: number): void {
-    if(confirm('Tem certeza que deseja excluir este funcionário?')) {
+    if (confirm('Tem certeza que deseja excluir este funcionário?')) {
       this.employeeService.deleteEmployee(id);
       this.loadEmployees();
       this.snackBar.open('Funcionário excluído com sucesso!', 'Fechar', {
-        duration: 3000
+        duration: 3000,
       });
     }
   }

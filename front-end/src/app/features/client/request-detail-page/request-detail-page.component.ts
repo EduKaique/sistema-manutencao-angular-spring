@@ -7,11 +7,12 @@ import { RequestService } from '../../../shared/services/request.service';
 import { Request } from '../../../shared/models/request';
 import { MatIconModule } from '@angular/material/icon';
 import { ApproveRejectPanelComponent } from "./components/approve-reject-panel/approve-reject-panel.component";
+import { HeaderComponent } from '../../../core/layout/header/header.component';
 
 
 @Component({
   selector: 'app-request-detail-page',
-  imports: [RequestDescriptionComponent, RequestHistoryComponent, CommonModule, MatIconModule, RouterModule, ApproveRejectPanelComponent],
+  imports: [RequestDescriptionComponent, RequestHistoryComponent, CommonModule, MatIconModule, RouterModule, ApproveRejectPanelComponent, HeaderComponent],
   templateUrl: './request-detail-page.component.html',
   styleUrl: './request-detail-page.component.css'
 })   

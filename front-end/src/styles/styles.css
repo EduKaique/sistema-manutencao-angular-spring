@@ -46,6 +46,7 @@ a {
     border: 0;
     color: var(--color-primary-lightest);
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 button:disabled, .button-primary:disabled {

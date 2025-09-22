@@ -9,11 +9,9 @@
   margin-bottom: 24px;
 }
 
-.main-header h1 {
-  font-size: 28px;
-  font-weight: 500;
-  color: #333;
-  margin: 0;
+h1 {
+  margin: 24px 0;
+  color: var(--color-heading-default);
 }
 
 .header-actions {
@@ -37,10 +35,9 @@
 }
 
 .add-button {
-  background-color: #1abc9c !important;
-  color: white !important;
-  border-radius: 8px;
-  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .add-button mat-icon {

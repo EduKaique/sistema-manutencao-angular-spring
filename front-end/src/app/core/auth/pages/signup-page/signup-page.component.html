@@ -149,4 +149,12 @@
       </p>
     </div>
   </section>
+  <app-success-modal
+    [(mostrar)]="showModal"
+    titulo="Sua conta foi cadastrada com sucesso!"
+    subtitulo="Uma senha aleatória foi enviada para o seu e-mail."
+    textoBotao="Voltar para Página de Login"
+    rotaDestino="/login"
+  >
+  </app-success-modal>
 </main>
