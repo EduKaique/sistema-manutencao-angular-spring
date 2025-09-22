@@ -6,7 +6,6 @@ import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-request-history',
-  standalone: true,
   imports: [ CommonModule, DatePipe],
   templateUrl: './request-history.component.html',
   styleUrl: './request-history.component.css'

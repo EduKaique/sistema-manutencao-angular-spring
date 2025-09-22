@@ -21,7 +21,7 @@
         <div class="form-row">
           <mat-form-field appearance="outline">
             <mat-label>CPF</mat-label>
-            <input matInput formControlName="cpf" placeholder="000.000.000-00" required>
+            <input matInput formControlName="cpf" placeholder="000.000.000-00" mask="000.000.000-00" required>
             <mat-error *ngIf="personalInfoForm.get('cpf')?.hasError('required')">
               O CPF é obrigatório.
             </mat-error>
@@ -54,7 +54,7 @@
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Celular</mat-label>
-          <input matInput formControlName="celular" placeholder="(00) 00000-0000" required>
+          <input matInput formControlName="celular" placeholder="(00) 00000-0000" mask="(00) 00000-0000" required>
           <mat-error *ngIf="personalInfoForm.get('celular')?.hasError('required')">
             O celular é obrigatório.
           </mat-error>

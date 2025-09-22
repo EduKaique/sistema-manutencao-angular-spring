@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-reject-modal',
   templateUrl: './reject-modal.component.html',
   styleUrls: ['./reject-modal.component.css'],
-  standalone: true,
   imports: [CommonModule, FormsModule]
 })
 export class RejectModalComponent {

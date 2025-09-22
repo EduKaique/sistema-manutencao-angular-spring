@@ -10,7 +10,6 @@ import { Category } from '../../../shared/models/category';
 
 @Component({
   selector: 'app-new-request-page',
-  standalone: true,
   imports: [FormsModule, RouterModule, CommonModule],
   templateUrl: './new-request-page.component.html',
   styleUrl: './new-request-page.component.css',
@@ -52,7 +51,7 @@ export class NewRequestPageComponent implements OnInit{
       this.requestService.inserir(this.request as Request);
       console.log('Solicitação enviada', form.value);
       this.dialogRef.close(this.request);
-      this.router.navigate(['/client-dashboard']);
+      this.router.navigate(['/client/dashboard']);
     } else {
       alert('Preencha todos os campos');
     }

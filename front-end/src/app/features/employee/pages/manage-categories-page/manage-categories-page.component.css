@@ -1,0 +1,73 @@
+.header-category {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+}
+
+h1 {
+    color: var(--color-heading-subtle);
+}
+
+
+.categories-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+    margin: 48px 0;
+}
+
+.category-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: var(--color-background-card);
+    padding: 20px;
+    border-radius: var(--radius-md, 16px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
+}
+
+.category-card-icon svg {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 12px;
+}
+
+.category-card:hover {
+  transform: translateY(-3px);
+}
+
+.category-card h3 {
+    color: var(--color-text-default, #374343);
+}
+
+.card-actions{
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.editButton, .deleteButton {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.editButton svg,
+.deleteButton svg {
+    width: 24px;
+    height: 24px;
+}
+
+.editButton { color: #349896; }
+.deleteButton { color: #FF5E5B; }
+
+.no-categories {
+    text-align: center;
+    color: var(--color-text-subtle);
+    margin-top: 50px;
+}
