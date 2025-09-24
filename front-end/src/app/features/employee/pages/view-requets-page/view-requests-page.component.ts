@@ -4,8 +4,8 @@ import { InputPrimaryComponent } from '../../../../shared/components/input-prima
 import { MatIcon } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { RequestService } from '../../../../shared/services/request.service';
-import { StatusService } from '../../../../shared/services/status.service';
+import { RequestService } from '../../../../core/services/request.service';
+import { StatusService } from '../../../../core/services/status.service';
 import { Status } from '../../../../shared/models/status';
 import { Request as RequestModel } from '../../../../shared/models/request';
 import { StatusColumnComponent } from './components/status-column/status-column.component';

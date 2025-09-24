@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { RequestCardComponent } from '../view-requets-page/components/request-card/request-card.component';
 import { Request as RequestModel } from '../../../../shared/models/request';
-import { StatusService } from '../../../../shared/services/status.service';
+import { StatusService } from '../../../../core/services/status.service';
 import { Status } from '../../../../shared/models/status';
-import { RequestService } from '../../../../shared/services/request.service';
+import { RequestService } from '../../../../core/services/request.service';
 import { MatIconModule } from '@angular/material/icon';
 
 interface GroupedRequests {
@@ -15,7 +15,12 @@ interface GroupedRequests {
 @Component({
   selector: 'app-employee-dashboard-page',
   standalone: true,
-  imports: [CommonModule, MatGridListModule, RequestCardComponent, MatIconModule],
+  imports: [
+    CommonModule,
+    MatGridListModule,
+    RequestCardComponent,
+    MatIconModule,
+  ],
   templateUrl: './employee-dashboard-page.component.html',
   styleUrl: './employee-dashboard-page.component.css',
 })

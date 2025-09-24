@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { BudgetService } from '../../../../employee/services/budget.service';
+import { BudgetService } from '../../../../../core/services/budget.service';
 import { Request } from '../../../../../shared/models/request';
 import { RejectModalComponent } from '../../../../../shared/components/reject-modal/reject-modal.component';
 

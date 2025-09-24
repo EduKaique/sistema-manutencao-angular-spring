@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Request } from '../../../../../../shared/models/request';
 import { RequestCardComponent } from '../request-card/request-card.component';
-import { StatusService } from '../../../../../../shared/services/status.service';
+import { StatusService } from '../../../../../../core/services/status.service';
 import { Status } from '../../../../../../shared/models/status';
 
 @Component({

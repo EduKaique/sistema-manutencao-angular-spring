@@ -3,16 +3,18 @@ import { Request } from '../../shared/models/request';
 import { RequestHistory } from '../../shared/models/request-history';
 import { RequestHistoryService } from './request-history.service';
 import { StatusService } from './status.service';
-import { REQUESTS } from '../mocks/request.mock';
+import { REQUESTS } from '../../shared/mocks/request.mock';
 
-const LS_CHAVE = "requests";
+const LS_CHAVE = 'requests';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RequestService {
-
-  constructor(private requestHistoryService: RequestHistoryService, private statusService: StatusService) { }
+  constructor(
+    private requestHistoryService: RequestHistoryService,
+    private statusService: StatusService
+  ) {}
 
   listarTodos(): Request[] {
     const requests = localStorage.getItem(LS_CHAVE);
@@ -25,7 +27,7 @@ export class RequestService {
     request.statusId = 1;
     request.requestDate = new Date();
     //request.lastAtualization = new Date();
-    request.clientId = 1; 
+    request.clientId = 1;
     requests.push(request);
     localStorage[LS_CHAVE] = JSON.stringify(requests);
 
@@ -35,14 +37,14 @@ export class RequestService {
       date: request.requestDate,
       requestId: request.id,
       userId: 1, //usuario logado
-      statusId: request.statusId
+      statusId: request.statusId,
     };
     this.requestHistoryService.addHistory(inicialEntry);
   }
 
   buscarPorId(id: number): Request | undefined {
     const requests: Request[] = this.listarTodos();
-    return requests.find(request => request.id === id);
+    return requests.find((request) => request.id === id);
   }
 
   atualizar(request: Request): void {
@@ -52,8 +54,8 @@ export class RequestService {
         const oldStatusId = obj.statusId;
         const newStatusId = request.statusId;
         if (oldStatusId !== newStatusId) {
-          const oldStatus =  this.statusService.getById(oldStatusId);
-          const newStatus =  this.statusService.getById(newStatusId);
+          const oldStatus = this.statusService.getById(oldStatusId);
+          const newStatus = this.statusService.getById(newStatusId);
 
           const description = `Status atualizado de ${oldStatus?.nome} para ${newStatus?.nome}`;
           const employee = 1;
@@ -63,10 +65,9 @@ export class RequestService {
             date: new Date(),
             requestId: request.id,
             userId: employee,
-            statusId: request.statusId
+            statusId: request.statusId,
           };
           this.requestHistoryService.addHistory(entry);
-        
         }
         //request.lastAtualization = new Date();
         objs[index] = request;
@@ -77,7 +78,7 @@ export class RequestService {
 
   remover(id: number): void {
     let requests: Request[] = this.listarTodos();
-    requests = requests.filter(request => request.id !== id);
+    requests = requests.filter((request) => request.id !== id);
     localStorage[LS_CHAVE] = JSON.stringify(requests);
   }
 }

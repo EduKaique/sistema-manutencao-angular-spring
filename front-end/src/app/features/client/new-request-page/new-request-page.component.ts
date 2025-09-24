@@ -4,7 +4,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Request } from '../../../shared/models/request';
-import { RequestService } from '../../../shared/services/request.service';
+import { RequestService } from '../../../core/services/request.service';
 import { CategoryService } from '../../employee/services/category.service';
 import { Category } from '../../../shared/models/category';
 
@@ -14,17 +14,15 @@ import { Category } from '../../../shared/models/category';
   templateUrl: './new-request-page.component.html',
   styleUrl: './new-request-page.component.css',
 })
-export class NewRequestPageComponent implements OnInit{
-
+export class NewRequestPageComponent implements OnInit {
   @ViewChild('formRequest') formRequest!: NgForm;
   categories: Category[] = [];
   request: Partial<Request> = {
-    categoryId: undefined
+    categoryId: undefined,
   };
 
-
   ngOnInit(): void {
-      this.getAllCategories();
+    this.getAllCategories();
   }
 
   getAllCategories(): void {

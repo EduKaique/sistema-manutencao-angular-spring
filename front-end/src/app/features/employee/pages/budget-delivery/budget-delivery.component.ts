@@ -16,7 +16,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ChangeDetectorRef } from '@angular/core';
-import { RequestService } from '../../../../shared/services/request.service';
+import { RequestService } from '../../../../core/services/request.service';
 import { Request } from '../../../../shared/models/request';
 
 @Component({

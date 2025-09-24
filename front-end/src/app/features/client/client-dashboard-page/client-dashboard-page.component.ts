@@ -5,10 +5,10 @@ import { NewRequestPageComponent } from '../new-request-page/new-request-page.co
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { RequestService } from '../../../shared/services/request.service';
+import { RequestService } from '../../../core/services/request.service';
 import { Request } from '../../../shared/models/request';
 import { CommonModule } from '@angular/common';
-import { StatusService } from '../../../shared/services/status.service';
+import { StatusService } from '../../../core/services/status.service';
 import { HeaderComponent } from '../../../core/layout/header/header.component';
 import { CategoryService } from '../../employee/services/category.service';
 
@@ -49,7 +49,6 @@ export class ClientDashboardPageComponent implements OnInit {
   ngOnInit(): void {
     this.requests = this.requestService.listarTodos();
     this.dataSource.data = this.requests;
-
   }
 
   getCategoryName(id: number): string {
