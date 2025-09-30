@@ -14,6 +14,8 @@ import { RejectModalComponent } from '../../../../../shared/components/reject-mo
 export class ApproveRejectPanelComponent implements OnInit {
   @Input() request?: Request;
   showRejectModal = false;
+  budget?: any = null;
+  hasBudget = false;
 
   constructor(private budgetService: BudgetService, private router: Router) {}
 
@@ -24,6 +26,9 @@ export class ApproveRejectPanelComponent implements OnInit {
         .getCurrentBudget(this.request.id)
         .subscribe((budget) => {
           console.log('Budget updated:', budget);
+          this.budget = budget;
+          this.hasBudget = !!budget && !!budget.valor;
+          
           if (budget && this.request) {
             this.request.status = budget.status;
             this.request.rejectionReason = budget.rejectionReason;
@@ -67,7 +72,11 @@ export class ApproveRejectPanelComponent implements OnInit {
       case 'APROVADA':
         return 'APROVADA';
       default:
-        return 'Orçamento aguardando sua aprovação';
+        if (this.hasBudget) {
+          return 'ORÇADA - Aguardando aprovação';
+        } else {
+          return 'ABERTA - Aguardando orçamento';
+        }
     }
   }
 }
