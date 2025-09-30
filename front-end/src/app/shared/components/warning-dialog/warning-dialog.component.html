@@ -1,0 +1,13 @@
+<div class="header">
+  <mat-icon color="warn">warning</mat-icon>
+  <h1 mat-dialog-title>{{ data.title }}</h1>
+</div>
+
+<div mat-dialog-content>
+  <p>{{ data.message }}</p>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="onCancelClick()">Cancelar</button>
+  <button mat-raised-button color="warn" (click)="onConfirmClick()" cdkFocusInitial>Sim, Excluir</button>
+</div>

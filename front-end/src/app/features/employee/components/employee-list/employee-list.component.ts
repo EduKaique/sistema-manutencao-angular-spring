@@ -12,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../../../../core/layout/header/header.component';
+import { WarningDialogComponent } from '../../../../shared/components/warning-dialog/warning-dialog.component';
 
 @Component({
   selector: 'app-employee-list',
@@ -26,7 +27,7 @@ import { HeaderComponent } from '../../../../core/layout/header/header.component
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
-    HeaderComponent
+    HeaderComponent,
   ]
 })
 export class EmployeeListComponent implements OnInit {
@@ -70,13 +71,23 @@ openForm(employee?: Employee): void {
   });
   }
 
-  deleteEmployee(id: number): void {
-    if(confirm('Tem certeza que deseja excluir este funcionário?')) {
-      this.employeeService.deleteEmployee(id);
-      this.loadEmployees();
-      this.snackBar.open('Funcionário excluído com sucesso!', 'Fechar', {
-        duration: 3000
-      });
-    }
+  deleteEmployee(employee: Employee): void {
+    const dialogRef = this.dialog.open(WarningDialogComponent, {
+      width: '450px',
+      data: { 
+        title: 'Atenção!', 
+        message: `Você tem certeza que deseja excluir o funcionário ${employee.name}? Esta ação não pode ser desfeita.` 
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.employeeService.deleteEmployee(employee.id!);
+        this.loadEmployees();
+        this.snackBar.open('Funcionário excluído com sucesso!', 'Fechar', {
+          duration: 3000
+        });
+      }
+    });
   }
 }
