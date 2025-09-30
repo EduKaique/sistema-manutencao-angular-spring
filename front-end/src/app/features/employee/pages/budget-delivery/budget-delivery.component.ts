@@ -1,47 +1,27 @@
-<<<<<<< HEAD:front-end/src/app/features/employee/budget-delivery/budget-delivery.component.ts
 import { ChangeDetectionStrategy, Component, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 
-=======
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnInit,
-  TemplateRef,
-  ViewChild,
-} from '@angular/core';
->>>>>>> 5bf62ced9a4dfde283f2724b78f8fe9a639a17e1:front-end/src/app/features/employee/pages/budget-delivery/budget-delivery.component.ts
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
-<<<<<<< HEAD:front-end/src/app/features/employee/budget-delivery/budget-delivery.component.ts
-=======
-import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
->>>>>>> 5bf62ced9a4dfde283f2724b78f8fe9a639a17e1:front-end/src/app/features/employee/pages/budget-delivery/budget-delivery.component.ts
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-<<<<<<< HEAD:front-end/src/app/features/employee/budget-delivery/budget-delivery.component.ts
 import { FormsModule } from '@angular/forms';
 
 import { HeaderComponent } from '../../../core/layout/header/header.component';
-=======
-import { ChangeDetectorRef } from '@angular/core';
-import { RequestService } from '../../../../core/services/request.service';
-import { Request } from '../../../../shared/models/request';
->>>>>>> 5bf62ced9a4dfde283f2724b78f8fe9a639a17e1:front-end/src/app/features/employee/pages/budget-delivery/budget-delivery.component.ts
 
 @Component({
   selector: 'app-budget-delivery',
   templateUrl: './budget-delivery.component.html',
   styleUrls: ['./budget-delivery.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
@@ -49,7 +29,6 @@ import { Request } from '../../../../shared/models/request';
     MatIconModule,
     MatButtonModule,
     MatTabsModule,
-<<<<<<< HEAD:front-end/src/app/features/employee/budget-delivery/budget-delivery.component.ts
     MatFormFieldModule,
     MatSelectModule,
     MatOptionModule,
@@ -59,42 +38,14 @@ import { Request } from '../../../../shared/models/request';
   ]
 })
 export class BudgetDeliveryComponent {
-=======
-    CommonModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    FormsModule,
-    MatDialogModule,
-  ],
-})
-export class BudgetDeliveryComponent implements OnInit {
-  request: Request | undefined;
-  currentRequestId!: number;
-
->>>>>>> 5bf62ced9a4dfde283f2724b78f8fe9a639a17e1:front-end/src/app/features/employee/pages/budget-delivery/budget-delivery.component.ts
   constructor(
     private router: Router,
     private dialog: MatDialog,
-    private cdr: ChangeDetectorRef,
-    private requestService: RequestService,
-    private route: ActivatedRoute
+    private cdr: ChangeDetectorRef
   ) {}
 
-<<<<<<< HEAD:front-end/src/app/features/employee/budget-delivery/budget-delivery.component.ts
   onVoltarPaginaInicial() {
     this.router.navigate(['/client-dashboard']);
-=======
-  ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.currentRequestId = Number(id);
-      this.request = this.requestService.buscarPorId(Number(id));
-    }
-  }
-
-  onVoltarPaginaInicial() {
-    this.router.navigate(['/employee/dashboard']);
->>>>>>> 5bf62ced9a4dfde283f2724b78f8fe9a639a17e1:front-end/src/app/features/employee/pages/budget-delivery/budget-delivery.component.ts
   }
 
   // Responsável
@@ -103,7 +54,7 @@ export class BudgetDeliveryComponent implements OnInit {
   funcionarios = [
     { nome: 'Carlos Mendel', cargo: 'Técnico em Informática' },
     { nome: 'Maria Souza', cargo: 'Técnica em Redes' },
-    { nome: 'João Silva', cargo: 'Técnico em Suporte' },
+    { nome: 'João Silva', cargo: 'Técnico em Suporte' }
   ];
   selectedFuncionario: any = null;
   dialogRef: any;
@@ -112,7 +63,7 @@ export class BudgetDeliveryComponent implements OnInit {
     this.selectedFuncionario = this.responsavel ?? undefined;
     this.dialogRef = this.dialog.open(template, {
       disableClose: true,
-      panelClass: 'custom-dialog',
+      panelClass: 'custom-dialog'
     });
   }
 
@@ -120,12 +71,8 @@ export class BudgetDeliveryComponent implements OnInit {
     this.responsavel = this.selectedFuncionario;
     this.dataAtribuicao = this.selectedFuncionario
       ? new Date().toLocaleString('pt-BR', {
-          day: '2-digit',
-          month: '2-digit',
-          year: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit',
+          day: '2-digit', month: '2-digit', year: 'numeric',
+          hour: '2-digit', minute: '2-digit', second: '2-digit'
         })
       : '';
     this.dialogRef.close();
@@ -136,10 +83,7 @@ export class BudgetDeliveryComponent implements OnInit {
     this.dialogRef.close();
   }
 
-<<<<<<< HEAD:front-end/src/app/features/employee/budget-delivery/budget-delivery.component.ts
   // Detalhes
-=======
->>>>>>> 5bf62ced9a4dfde283f2724b78f8fe9a639a17e1:front-end/src/app/features/employee/pages/budget-delivery/budget-delivery.component.ts
   detalhes = {
     id: '001',
     data: new Date('2025-08-27T12:18:54'),
@@ -147,19 +91,14 @@ export class BudgetDeliveryComponent implements OnInit {
     item: 'Notebook Dell Inspiron 15',
     categoria: 'Notebook',
     autor: 'Nilson Nativas',
-    defeito:
-      'O equipamento liga, mas a tela permanece preta (sem imagem). O LED indicador de energia acende e é possível ouvir o som da ventoinha em funcionamento, mas não há qualquer sinal de vídeo. O problema persiste mesmo após reiniciar o dispositivo várias vezes.',
+    defeito: 'O equipamento liga, mas a tela permanece preta (sem imagem). O LED indicador de energia acende e é possível ouvir o som da ventoinha em funcionamento, mas não há qualquer sinal de vídeo. O problema persiste mesmo após reiniciar o dispositivo várias vezes.'
   };
 
-<<<<<<< HEAD:front-end/src/app/features/employee/budget-delivery/budget-delivery.component.ts
   // Abas
-=======
->>>>>>> 5bf62ced9a4dfde283f2724b78f8fe9a639a17e1:front-end/src/app/features/employee/pages/budget-delivery/budget-delivery.component.ts
   selectedTab = 0;
 
   // Orçamento
   temOrcamento = false;
-<<<<<<< HEAD:front-end/src/app/features/employee/budget-delivery/budget-delivery.component.ts
   valorOrcamento = 520.00;
   servicosInclusos = 'Diagnóstico técnico, Substituição do cabo flat da tela, Mão de obra, Limpeza interna + pasta térmica';
 
@@ -209,14 +148,3 @@ export class BudgetDeliveryComponent implements OnInit {
     this.cdr.markForCheck();
   }
 }
-=======
-  valorOrcamento = 520.0;
-  servicosInclusos =
-    'Diagnóstico técnico, Substituição do cabo flat da tela, Mão de obra, Limpeza interna + pasta térmica';
-
-  temManutencao = false;
-  descricaoManutencao =
-    'Identifiquei que o problema estava em um dos módulos de memória RAM, que impedia a exibição de vídeo. Após substituir o módulo com defeito, o equipamento voltou a funcionar normalmente.';
-  orientacaoCliente = 'N/A';
-}
->>>>>>> 5bf62ced9a4dfde283f2724b78f8fe9a639a17e1:front-end/src/app/features/employee/pages/budget-delivery/budget-delivery.component.ts
