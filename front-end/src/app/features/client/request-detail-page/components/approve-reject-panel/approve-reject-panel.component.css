@@ -61,6 +61,20 @@
   padding: 6px 16px;
 }
 
+.status.pending {
+  background-color: #FFF3CD;
+  color: #856404;
+  font-weight: 600;
+  padding: 6px 16px;
+}
+
+.status.no-budget {
+  background-color: #E2E3E5;
+  color: #383D41;
+  font-weight: 600;
+  padding: 6px 16px;
+}
+
 .rescue-button {
   background: none;
   border: none;
@@ -253,4 +267,32 @@
 
 .approve-button {
   background-color: #25A46B;
+}
+
+.no-budget {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+
+.no-budget-message {
+  text-align: center;
+  color: var(--color-text-secondary, #627877);
+}
+
+.no-budget-message h3 {
+  color: var(--color-heading-default, #293535);
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+}
+
+.no-budget-message p {
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.5;
 }

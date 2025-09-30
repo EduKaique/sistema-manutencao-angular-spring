@@ -5,7 +5,9 @@
       <div class="status-section">
         <span class="status" 
           [class.rejected]="request.status === 'REJEITADA'"
-          [class.approved]="request.status === 'APROVADA'">
+          [class.approved]="request.status === 'APROVADA'"
+          [class.pending]="!request.status && hasBudget"
+          [class.no-budget]="!request.status && !hasBudget">
           {{getStatusText()}}
         </span>
         <button *ngIf="request.status === 'REJEITADA'" class="rescue-button" (click)="resgatarServico()">
@@ -15,36 +17,23 @@
     </div>
   </div>
 
-  <section class="request-details">
-    <div class="info-grid">
-      <div class="info-block">
-        <h3 class="heading_5">Equipamento</h3>
-        <p>{{request.equipmentName}}</p>
-      </div>
-      <div class="info-block">
-        <h3 class="heading_5">Data da Solicitação</h3>
-        <p>{{request.requestDate | date:'dd/MM/yyyy HH:mm'}}</p>
-      </div>
-    </div>
-
-    <div class="description-block">
-      <h3 class="heading_5">Descrição do Defeito</h3>
-      <p>{{request.equipmentDescription}}</p>
-    </div>
-  </section>
-
-  <section class="budget-details">
+  <section class="budget-details" *ngIf="hasBudget">
     <div class="price-highlight">
-      <h3> Valor do Serviço</h3>
-      <p class="heading_3 price">R$ 520,00</p>
+      <h3>Valor do Serviço</h3>
+      <p class="heading_3 price">R$ {{budget?.valor | number:'1.2-2'}}</p>
     </div>
 
-    <!-- <div class="info-row">
+    <div class="info-row" *ngIf="budget?.prazo">
       <div class="info-block">
         <h3>Prazo de Execução</h3>
-        <p class="deadline">2-5 dias úteis</p>
+        <p class="deadline">{{budget.prazo}}</p>
       </div>
-    </div> -->
+    </div>
+
+    <div class="services-section" *ngIf="budget?.servicos">
+      <h3>Serviços Inclusos</h3>
+      <p>{{budget.servicos}}</p>
+    </div>
 
     <div *ngIf="request.status === 'REJEITADA'" class="rejection-info">
       <p class="rejection-status">Orçamento Reprovado</p>
@@ -55,19 +44,16 @@
       <p class="approval-status">Orçamento Aprovado</p>
       <p class="approval-message">O serviço foi aprovado e será iniciado em breve.</p>
     </div>
-
-    <!-- <div class="services-section">
-      <h3>Serviços a serem realizados</h3>
-      <ul class="services-list">
-        <li>Diagnóstico técnico completo</li>
-        <li>Substituição do cabo flat da tela</li>
-        <li>Mão de obra especializada</li>
-        <li>Limpeza interna + aplicação de pasta térmica</li>
-      </ul>
-    </div> -->
   </section>
 
-  <div class="action-buttons" *ngIf="!request.status">
+  <section class="no-budget" *ngIf="!hasBudget">
+    <div class="no-budget-message">
+      <h3>Aguardando Orçamento</h3>
+      <p>Esta solicitação ainda não possui orçamento cadastrado.</p>
+    </div>
+  </section>
+
+  <div class="action-buttons" *ngIf="!request.status && hasBudget">
     <button class="reject-button" (click)="showRejectModal = true">
       Rejeitar Serviço
     </button>

@@ -14,8 +14,53 @@ export class BudgetService {
 
   getBudget(requestId: number): RequestData | null {
     const data = localStorage.getItem(this.getStorageKey(requestId));
-    return data ? JSON.parse(data) : null;
+    if (data) {
+      return JSON.parse(data);
+    }
+    
+    // Auto-gerar orçamento para demonstração se habilitado
+    if (this.shouldAutoGenerate()) {
+      return this.generateMockBudget(requestId);
+    }
+    
+    return null;
   }
+
+  private generateMockBudget(requestId: number): RequestData {
+    // Gerar valores baseados no ID para ter consistência
+    const seed = requestId % 1000;
+    const valores = [320.00, 450.00, 520.00, 680.00, 750.00, 890.00, 1200.00];
+    const prazos = ['1-2 dias úteis', '2-3 dias úteis', '2-5 dias úteis', '3-7 dias úteis', '5-10 dias úteis'];
+    const servicos = [
+      'Diagnóstico técnico completo, Limpeza interna',
+      'Substituição de componente, Mão de obra especializada',
+      'Diagnóstico técnico completo, Substituição do cabo flat da tela, Mão de obra especializada, Limpeza interna + aplicação de pasta térmica',
+      'Reparo de placa-mãe, Substituição de capacitores, Testes completos',
+      'Troca de tela, Calibração, Proteção adicional',
+      'Formatação completa, Instalação de sistema, Configuração de software'
+    ];
+
+    const budget: RequestData = {
+      id: requestId,
+      equipmentName: '',
+      equipmentDescription: '',
+      requestDate: new Date(),
+      statusId: 1,
+      categoryId: 1,
+      clientId: 1,
+      employeeId: 1,
+      valor: valores[seed % valores.length],
+      status: '',
+      prazo: prazos[seed % prazos.length],
+      servicos: servicos[seed % servicos.length]
+    };
+
+    // Salvar automaticamente para não gerar novamente
+    this.saveBudget(budget);
+    return budget;
+  }
+
+
 
   saveBudget(budget: RequestData) {
     localStorage.setItem(this.getStorageKey(budget.id), JSON.stringify(budget));
@@ -58,6 +103,45 @@ export class BudgetService {
 
     history.push(newHistoryEntry);
     localStorage.setItem('requestHistory', JSON.stringify(history));
+  }
+
+  // Método para criar/cadastrar um novo orçamento
+  createBudget(requestId: number, budgetData: {
+    valor: number;
+    prazo?: string;
+    servicos?: string;
+  }): void {
+    const budget: RequestData = {
+      id: requestId,
+      equipmentName: '',
+      equipmentDescription: '',
+      requestDate: new Date(),
+      statusId: 1,
+      categoryId: 1,
+      clientId: 1,
+      employeeId: 1,
+      valor: budgetData.valor,
+      status: '',
+      prazo: budgetData.prazo,
+      servicos: budgetData.servicos
+    };
+    
+    this.saveBudget(budget);
+    console.log('Budget created for request:', requestId, budget);
+  }
+
+  // Método para controlar se deve gerar orçamentos automáticos
+  enableAutoGenerateBudgets(): void {
+    localStorage.setItem('autoGenerateBudgets', 'true');
+  }
+
+  disableAutoGenerateBudgets(): void {
+    localStorage.setItem('autoGenerateBudgets', 'false');
+  }
+
+  private shouldAutoGenerate(): boolean {
+    const setting = localStorage.getItem('autoGenerateBudgets');
+    return setting !== 'false'; // Por padrão, gera automaticamente
   }
 
   updateStatus(
