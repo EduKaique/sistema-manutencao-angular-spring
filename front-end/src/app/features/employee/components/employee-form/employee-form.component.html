@@ -32,7 +32,7 @@
 
           <mat-form-field appearance="outline">
             <mat-label>Data de Nascimento</mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="dataNascimento" required>
+            <input matInput [matDatepicker]="picker" formControlName="dataNascimento" mask="00/00/0000" required>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
             <mat-error *ngIf="personalInfoForm.get('dataNascimento')?.hasError('required')">
@@ -88,6 +88,14 @@
           </mat-error>
           <mat-error *ngIf="professionalInfoForm.get('salario')?.hasError('min')">
             O salário deve ser maior que zero.
+          </mat-error>
+        </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Senha</mat-label>
+          <input matInput type="password" formControlName="senha" placeholder="" required>
+          <mat-error *ngIf="professionalInfoForm.get('senha')?.hasError('required')">
+            A senha é obrigatória.
           </mat-error>
         </mat-form-field>
 

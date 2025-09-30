@@ -12,6 +12,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { provideNativeDateAdapter } from '@angular/material/core';
+
 import { EmployeService } from '../../services/employe.service';
 import { Employee, Role } from '../../../../shared/models/employee';
 
@@ -60,6 +61,7 @@ export class EmployeeFormComponent implements OnInit {
     this.professionalInfoForm = this.fb.group({
       cargo: ['', Validators.required],
       salario: ['', [Validators.required, Validators.min(0.01)]],
+      senha: ['', [Validators.required]]
     });
   }
 
