@@ -20,6 +20,7 @@
         <span class="detalhes-status-badge">{{ detalhes.status }}</span>
       </div>
     </div>
+
     <div class="detalhes-info-row">
       <div class="detalhes-info">
         <span class="detalhes-info-label">Item</span>
@@ -37,6 +38,7 @@
         </div>
       </div>
     </div>
+
     <div class="detalhes-defeito">
       <span class="detalhes-defeito-label">Descrição do Defeito</span>
       <span class="detalhes-defeito-value">
@@ -52,14 +54,14 @@
         <mat-icon class="tecnico-icon" color="primary">groups</mat-icon>
         <span class="tecnico-title">Técnico Responsável</span>
       </div>
+
       <ng-container *ngIf="!responsavel; else responsavelPreenchido">
-        <div class="tecnico-content">
-          Nenhum Técnico Atribuído
-        </div>
+        <div class="tecnico-content">Nenhum Técnico Atribuído</div>
         <button mat-stroked-button color="primary" class="atribuir-btn" (click)="abrirDialog(dialogTemplate)">
           Atribuir Responsável
         </button>
       </ng-container>
+
       <ng-template #responsavelPreenchido>
         <div class="tecnico-content">
           <div><b>Nome:</b> {{ responsavel.nome }}</div>
@@ -82,6 +84,7 @@
             <mat-icon class="tab-icon" color="primary">attach_money</mat-icon>
             Orçamentos
           </ng-template>
+
           <div class="orcamento-content">
             <ng-container *ngIf="temOrcamento; else orcamentoVazio">
               <div class="orcamento-total-label">Valor Total do Orçamento</div>
@@ -91,20 +94,29 @@
                 {{ servicosInclusos }}
               </div>
             </ng-container>
+
             <ng-template #orcamentoVazio>
               <div class="orcamento-empty">Nenhum Orçamento Efetuado</div>
-              <button mat-flat-button color="primary" class="orcamento-btn" [disabled]="false">
+              <button
+                mat-flat-button
+                color="primary"
+                class="orcamento-btn"
+                [disabled]="false"
+                (click)="abrirDialogOrcamento(orcamentoDialogTemplate)"
+              >
                 Efetuar Orçamento
               </button>
             </ng-template>
           </div>
         </mat-tab>
+
         <!-- Aba Manutenção -->
         <mat-tab>
           <ng-template mat-tab-label>
             <mat-icon class="tab-icon" color="primary">groups</mat-icon>
             Manutenção
           </ng-template>
+
           <div class="manutencao-content">
             <ng-container *ngIf="temManutencao; else manutencaoVazio">
               <div class="manutencao-descricao">
@@ -116,6 +128,7 @@
                 <span>{{ orientacaoCliente }}</span>
               </div>
             </ng-container>
+
             <ng-template #manutencaoVazio>
               <div class="orcamento-empty">Nenhuma Manutenção Efetuada</div>
               <button mat-flat-button color="primary" class="manutencao-btn" [disabled]="false">
@@ -130,10 +143,11 @@
   </div>
 </div>
 
-<!-- Dialog Template (fora de qualquer <div>) -->
+<!-- Dialog Template: Atribuir Responsável -->
 <ng-template #dialogTemplate>
   <div class="dialog-container">
     <h2 class="dialog-title">Atribuição de Responsável</h2>
+
     <mat-form-field appearance="outline" class="dialog-field">
       <mat-label>Atribuir Solicitação Para:</mat-label>
       <mat-select [(ngModel)]="selectedFuncionario" placeholder="Pesquise/Selecione um Funcionário">
@@ -141,14 +155,70 @@
         <mat-option *ngFor="let f of funcionarios" [value]="f">{{ f.nome }} - {{ f.cargo }}</mat-option>
       </mat-select>
     </mat-form-field>
+
     <div style="display: flex; gap: 8px;">
       <button mat-stroked-button color="primary" class="dialog-btn" (click)="cancelarDialog()">
         Cancelar
       </button>
       <button mat-flat-button color="primary" class="dialog-btn"
-        [disabled]="selectedFuncionario === undefined"
-        (click)="atribuirResponsavel()">
+              [disabled]="selectedFuncionario === undefined"
+              (click)="atribuirResponsavel()">
         Atribuir
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Dialog Template: Efetuar Orçamento -->
+<ng-template #orcamentoDialogTemplate>
+  <div class="orcamento-dialog">
+    <div class="orcamento-dialog-header">
+      <div class="orcamento-dialog-title">Efetuar Orçamento</div>
+      <button mat-icon-button (click)="fecharDialogOrcamento()" aria-label="Fechar">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <div class="orcamento-dialog-body">
+      <mat-form-field appearance="outline" class="orcamento-dialog-field full">
+        <mat-label>*Serviços Inclusos na Manutenção</mat-label>
+        <mat-select
+          [(ngModel)]="servicosSelecionados"
+          multiple
+          placeholder="Selecione os serviços"
+          (selectionChange)="atualizarTotal()"
+        >
+          <mat-option *ngFor="let s of servicosDisponiveis" [value]="s">
+            {{ s.nome }} — R$ {{ s.valor | number:'1.2-2' }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="orcamento-dialog-field full">
+        <mat-label>Valor Total</mat-label>
+        <input
+          matInput
+          [value]="servicosSelecionados.length ? (valorTotal | currency:'BRL':'symbol-narrow':'1.2-2') : ''"
+          placeholder="Total calculado"
+          readonly
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="orcamento-dialog-actions">
+      <div class="orcamento-dialog-helper">
+        * Campo de preenchimento obrigatório
+      </div>
+
+      <button
+        mat-flat-button
+        color="primary"
+        class="orcamento-dialog-confirm"
+        [disabled]="servicosSelecionados.length === 0"
+        (click)="confirmarOrcamento()"
+      >
+        Efetuar Orçamento
+        <mat-icon>check</mat-icon>
       </button>
     </div>
   </div>
