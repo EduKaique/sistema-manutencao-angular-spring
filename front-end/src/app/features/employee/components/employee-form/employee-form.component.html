@@ -93,7 +93,7 @@
 
           <mat-form-field appearance="outline" class="full-width">
           <mat-label>Senha</mat-label>
-          <input matInput type="password" formControlName="senha" placeholder="Senha" required>
+          <input matInput type="password" formControlName="senha" placeholder="" required>
           <mat-error *ngIf="professionalInfoForm.get('senha')?.hasError('required')">
             A senha é obrigatória.
           </mat-error>
