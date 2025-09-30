@@ -18,7 +18,6 @@ export class BudgetService {
       return JSON.parse(data);
     }
     
-    // Auto-gerar orçamento para demonstração se habilitado
     if (this.shouldAutoGenerate()) {
       return this.generateMockBudget(requestId);
     }
@@ -27,7 +26,6 @@ export class BudgetService {
   }
 
   private generateMockBudget(requestId: number): RequestData {
-    // Gerar valores baseados no ID para ter consistência
     const seed = requestId % 1000;
     const valores = [320.00, 450.00, 520.00, 680.00, 750.00, 890.00, 1200.00];
     const prazos = ['1-2 dias úteis', '2-3 dias úteis', '2-5 dias úteis', '3-7 dias úteis', '5-10 dias úteis'];
@@ -55,7 +53,6 @@ export class BudgetService {
       servicos: servicos[seed % servicos.length]
     };
 
-    // Salvar automaticamente para não gerar novamente
     this.saveBudget(budget);
     return budget;
   }
@@ -97,15 +94,15 @@ export class BudgetService {
       title: title,
       date: new Date(),
       requestId: requestId,
-      userId: 1, // Should be replaced with actual logged user ID
-      statusId: 2, // 2 for APPROVED status
+      userId: 1,
+      statusId: 2
     };
 
     history.push(newHistoryEntry);
     localStorage.setItem('requestHistory', JSON.stringify(history));
   }
 
-  // Método para criar/cadastrar um novo orçamento
+
   createBudget(requestId: number, budgetData: {
     valor: number;
     prazo?: string;
@@ -130,7 +127,7 @@ export class BudgetService {
     console.log('Budget created for request:', requestId, budget);
   }
 
-  // Método para controlar se deve gerar orçamentos automáticos
+
   enableAutoGenerateBudgets(): void {
     localStorage.setItem('autoGenerateBudgets', 'true');
   }
@@ -141,7 +138,7 @@ export class BudgetService {
 
   private shouldAutoGenerate(): boolean {
     const setting = localStorage.getItem('autoGenerateBudgets');
-    return setting !== 'false'; // Por padrão, gera automaticamente
+    return setting !== 'false';
   }
 
   updateStatus(
@@ -157,7 +154,7 @@ export class BudgetService {
     );
     let budget = this.getBudget(requestId);
 
-    // Se não existir um orçamento, cria um novo
+
     if (!budget) {
       budget = {
         id: requestId,
@@ -172,7 +169,7 @@ export class BudgetService {
     console.log('Saving budget:', budget);
     this.saveBudget(budget);
 
-    // Também atualiza o Request
+
     const requests = localStorage.getItem('requests');
     if (requests) {
       const parsedRequests = JSON.parse(requests);
@@ -186,7 +183,7 @@ export class BudgetService {
       }
     }
 
-    // Add to history if request is being rescued (changing from REJECTED to APPROVED)
+
     if (status === 'APROVADA' && budget.status === 'REJEITADA') {
       this.addToHistory(
         requestId,

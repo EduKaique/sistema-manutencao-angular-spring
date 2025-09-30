@@ -72,7 +72,6 @@ export class ApproveRejectPanelComponent implements OnInit {
       case 'APROVADA':
         return 'APROVADA';
       default:
-        // Lógica baseada na existência de orçamento
         if (this.hasBudget) {
           return 'ORÇADA - Aguardando aprovação';
         } else {
