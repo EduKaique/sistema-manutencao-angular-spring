@@ -2,7 +2,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'cpfPipes',
-  standalone: true,
 })
 export class CpfPipesPipe implements PipeTransform {
   transform(value: unknown, ...args: unknown[]): unknown {

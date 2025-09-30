@@ -12,8 +12,23 @@ html, body {
     background: var(--color-background-page);
 }
 
+
+.main-layout {
+    display: flex;
+}
+
+.main-section {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+    overflow: auto;
+}
+
 main {
-    height: 100%;
+    height: 100vh;
+    width: 100%;
+    padding: 0 var(--spacing-xl);
 }
 
 a {
@@ -31,6 +46,7 @@ a {
     border: 0;
     color: var(--color-primary-lightest);
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 button:disabled, .button-primary:disabled {
@@ -53,6 +69,7 @@ button:disabled, .button-primary:disabled {
     color: var(--color-primary-default);
     cursor: pointer;
 }
+
 
 /* TYPESCALE*/
 
@@ -162,24 +179,20 @@ button:disabled, .button-primary:disabled {
     letter-spacing: var(--label-small-letter-spacing)
 }
 
-/* Cor da bolinha normal */
 .mat-step-icon {
     color: white !important;
 }
 
-/* Fundo quando selecionado */
 .mat-step-icon-selected {
   background-color: var(--color-secondary-default) !important;
   color: white !important;
 }
 
-/* Fundo quando concluído */
 .mat-step-icon-state-done {
   background-color: var(--color-secondary-default) !important;
   color: white !important;
 }
 
-/* Fundo quando em edição */
 .mat-step-icon-state-edit {
   background-color: var(--color-secondary-default) !important;
   color: white !important;

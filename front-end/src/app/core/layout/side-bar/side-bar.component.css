@@ -1,0 +1,97 @@
+
+.sidebar-container {
+  background-color: var(--color-primary-darker);
+  color: var(--color-primary-lightest);
+  height: 100%;
+  padding: 16px 8px;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease-in-out;
+  
+}
+
+.sidebar-container {
+  width: 80px;
+}
+
+.sidebar-container.expanded {
+  width: 260px;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+  justify-content: center;
+}
+
+.sidebar-container.expanded .sidebar-header {
+  justify-content: space-between;
+}
+
+.logo {
+  max-width: 120px;
+}
+
+.toggle-button {
+  background: none;
+  border: none;
+  color: #cbd5e1;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggle-button:hover {
+  background-color: #334155;
+}
+
+.menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 14px 16px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.menu-item .icon {
+  min-width: 32px;
+  margin-right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-container.expanded .menu-item .icon {
+  margin-right: 16px;
+}
+
+.menu-item .label {
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.sidebar-container.expanded .menu-item .label {
+  opacity: 1;
+}
+
+
+.menu-item.active {
+  background-color: var(--color-cyan-10);;
+  color: var(--color-primary-dark);
+  font-weight: 600;
+}

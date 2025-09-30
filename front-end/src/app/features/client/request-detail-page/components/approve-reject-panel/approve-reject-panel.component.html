@@ -1,7 +1,7 @@
 <main class="container" *ngIf="request">
   <div class="header">
     <div class="title-section">
-      <h2>Orçamento #{{request.id}}</h2>
+      <h2 class="heading_3">Orçamento #{{request.id}}</h2>
       <div class="status-section">
         <span class="status" 
           [class.rejected]="request.status === 'REJEITADA'"
@@ -18,25 +18,25 @@
   <section class="request-details">
     <div class="info-grid">
       <div class="info-block">
-        <h3>Equipamento</h3>
+        <h3 class="heading_5">Equipamento</h3>
         <p>{{request.equipmentName}}</p>
       </div>
       <div class="info-block">
-        <h3>Data da Solicitação</h3>
+        <h3 class="heading_5">Data da Solicitação</h3>
         <p>{{request.requestDate | date:'dd/MM/yyyy HH:mm'}}</p>
       </div>
     </div>
 
     <div class="description-block">
-      <h3>Descrição do Defeito</h3>
+      <h3 class="heading_5">Descrição do Defeito</h3>
       <p>{{request.equipmentDescription}}</p>
     </div>
   </section>
 
   <section class="budget-details">
     <div class="price-highlight">
-      <h3>Valor do Serviço</h3>
-      <p class="price">R$ 520,00</p>
+      <h3> Valor do Serviço</h3>
+      <p class="heading_3 price">R$ 520,00</p>
     </div>
 
     <!-- <div class="info-row">

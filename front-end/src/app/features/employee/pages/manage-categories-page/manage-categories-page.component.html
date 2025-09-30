@@ -1,0 +1,71 @@
+<div class="header-category">
+  <h1 class="heading_1">Categorias de Equipamento</h1>
+  <button class="button-primary label_large btn-new-category" (click)="openNewCategoryModal()">
+    <mat-icon>add</mat-icon>
+    Nova categoria
+  </button>
+</div>
+
+<div class="categories-container">
+  <div class="category-card" *ngFor="let category of categories">
+    <div class="category-card-icon">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="30"
+        height="26"
+        viewBox="0 0 30 26"
+        fill="none"
+      >
+        <path
+          d="M27.012 18.5792H2.98805M23.9486 1C24.7397 1 25.4984 1.33714 26.0578 1.93726C26.6172 2.53737 26.9314 3.3513 26.9314 4.19999V17.8416C26.9312 18.3399 27.0395 18.8313 27.2476 19.2768L28.8404 22.68C28.9554 22.9247 29.0099 23.1971 28.9985 23.4709C28.9872 23.7448 28.9105 24.0109 28.7758 24.2438C28.641 24.4767 28.4528 24.6685 28.229 24.8009C28.0053 24.9333 27.7537 25.0019 27.4982 25H2.50184C2.24635 25.0019 1.99467 24.9333 1.77096 24.8009C1.54725 24.6685 1.35899 24.4767 1.22425 24.2438C1.08951 24.0109 1.01279 23.7448 1.00147 23.4709C0.990139 23.1971 1.04458 22.9247 1.15956 22.68L2.7524 19.2768C2.96052 18.8313 3.06879 18.3399 3.06859 17.8416V4.19999C3.06859 3.3513 3.38285 2.53737 3.94224 1.93726C4.50164 1.33714 5.26034 1 6.05144 1H23.9486Z"
+          stroke="#2B3E61"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </div>
+    <h3 class="heading_3">{{ category.nome }}</h3>
+    <div class="card-actions">
+      <button (click)="editCategory(category)" class="editButton">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+        >
+          <path
+            d="M5 19H6.425L16.2 9.225L14.775 7.8L5 17.575V19ZM3 21V16.75L16.2 3.575C16.4 3.39167 16.6208 3.25 16.8625 3.15C17.1042 3.05 17.3583 3 17.625 3C17.8917 3 18.15 3.05 18.4 3.15C18.65 3.25 18.8667 3.4 19.05 3.6L20.425 5C20.625 5.18333 20.7708 5.4 20.8625 5.65C20.9542 5.9 21 6.15 21 6.4C21 6.66667 20.9542 6.92083 20.8625 7.1625C20.7708 7.40417 20.625 7.625 20.425 7.825L7.25 21H3Z"
+            fill="#349896"
+          /></svg
+        >Editar
+      </button>
+      <button (click)="deleteCategory(category.id)" class="deleteButton">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+        >
+          <path
+            d="M7 21C6.45 21 5.97917 20.8042 5.5875 20.4125C5.19583 20.0208 5 19.55 5 19V6H4V4H9V3H15V4H20V6H19V19C19 19.55 18.8042 20.0208 18.4125 20.4125C18.0208 20.8042 17.55 21 17 21H7ZM17 6H7V19H17V6ZM9 17H11V8H9V17ZM13 17H15V8H13V17Z"
+            fill="#FF5E5B"
+          /></svg
+        >Excluir
+      </button>
+    </div>
+  </div>
+</div>
+<p *ngIf="categories.length === 0" class="no-categories">
+  Nenhuma categoria cadastrada.
+</p>
+
+<app-new-category-modal
+  *ngIf="isModalShowing"
+  [editingCategory]="selectedCategory"
+  (submitted)="onModalSubmit($event)"
+  (closeModal)="onModalClose()"
+>
+</app-new-category-modal>

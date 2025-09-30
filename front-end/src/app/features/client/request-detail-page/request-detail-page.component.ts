@@ -1,25 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RequestDescriptionComponent } from "./components/request-description/request-description.component";
-import { RequestHistoryComponent } from "./components/request-history/request-history.component";
+import { RequestDescriptionComponent } from './components/request-description/request-description.component';
+import { RequestHistoryComponent } from './components/request-history/request-history.component';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { RequestService } from '../../../shared/services/request.service';
+import { RequestService } from '../../../core/services/request.service';
 import { Request } from '../../../shared/models/request';
 import { MatIconModule } from '@angular/material/icon';
-import { ApproveRejectPanelComponent } from "./components/approve-reject-panel/approve-reject-panel.component";
-
+import { ApproveRejectPanelComponent } from './components/approve-reject-panel/approve-reject-panel.component';
+import { HeaderComponent } from '../../../core/layout/header/header.component';
 
 @Component({
   selector: 'app-request-detail-page',
-  standalone: true,
-  imports: [RequestDescriptionComponent, RequestHistoryComponent, CommonModule, MatIconModule, RouterModule, ApproveRejectPanelComponent],
+  imports: [
+    RequestDescriptionComponent,
+    RequestHistoryComponent,
+    CommonModule,
+    MatIconModule,
+    RouterModule,
+    ApproveRejectPanelComponent,
+    HeaderComponent,
+  ],
   templateUrl: './request-detail-page.component.html',
-  styleUrl: './request-detail-page.component.css'
-})   
-
-export class RequestDetailPageComponent implements OnInit{
-
-  request: Request | undefined
+  styleUrl: './request-detail-page.component.css',
+})
+export class RequestDetailPageComponent implements OnInit {
+  request: Request | undefined;
   currentRequestId!: number;
 
   constructor(
@@ -27,7 +32,7 @@ export class RequestDetailPageComponent implements OnInit{
     private requestService: RequestService,
     private router: Router
   ) {}
-  
+
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
@@ -36,7 +41,7 @@ export class RequestDetailPageComponent implements OnInit{
     }
   }
 
-  backToDashboard() : void {
-    this.router.navigate(['/client-dashboard']);
+  backToDashboard(): void {
+    this.router.navigate(['/client/dashboard']);
   }
 }

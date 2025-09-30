@@ -1,0 +1,68 @@
+
+<div class="dashboard">
+  <h1 class="heading_1">Solicitações Abertas</h1>
+  
+  <div class="summary-cards">
+    <div class="card card-open">
+      <div class="card-content">
+        <div class="icon-area" id="open">
+          <mat-icon id="open" fontIcon="add_to_queue"></mat-icon>
+        </div>
+        <div class="text-area">
+          <span class="body_medium">Solicitações Abertas</span>
+          <span class="heading_3">{{ openRequests }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-late">
+      <div class="card-content">
+        <div class="icon-area">
+          <mat-icon fontIcon="schedule"></mat-icon>
+        </div>
+        <div class="text-area">
+          <span class="body_medium">Solicitações Atrasadas</span>
+          <span class="heading_3">{{ overdueRequests }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-neutral">
+      <div class="card-content">
+        <div class="icon-area">
+          <mat-icon fontIcon="person_alert"></mat-icon>
+        </div>
+        <div class="text-area">
+          <span class="body_medium">Sem Responsável</span>
+          <span class="heading_3">{{ noResponsible }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-today">
+      <div class="card-content">
+        <div class="icon-area">
+          <mat-icon fontIcon="inventory"></mat-icon>
+        </div>
+        <div class="text-area">
+          <span class="body_medium">Criadas Hoje</span>
+          <span class="heading_3">{{ createdToday }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="request-list">
+     @for (req of requests; track req.id) {
+      @if (req.statusId == 1) {
+        <app-request-card class="request-card" [request]="req">
+          <button (click)="makeQuote(req)">Efetuar Orçamento</button>
+        </app-request-card>
+      }
+    } @empty {
+      <p class="empty-state">Nenhuma solicitação neste status.</p>
+    }
+  </div>
+
+

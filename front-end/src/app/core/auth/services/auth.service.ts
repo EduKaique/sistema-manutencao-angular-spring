@@ -1,7 +1,5 @@
-// src/app/services/auth.service.ts
-
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, delay, tap } from 'rxjs';
+import { BehaviorSubject, Observable, of, delay, tap, map } from 'rxjs';
 import { User } from '../../../shared/models/user';
 import { Client } from '../../../shared/models/client';
 import { Employee } from '../../../shared/models/employee';
@@ -10,12 +8,24 @@ import { Router } from '@angular/router';
 
 type LoginResponse = Client | Employee | null;
 
+function isEmployee(user: LoginResponse): user is Employee {
+  return user !== null && 'employeeId' in user;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private currentUserSubject = new BehaviorSubject<LoginResponse>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
+
+  public isEmployee$: Observable<boolean> = this.currentUser$.pipe(
+    map(user => isEmployee(user))
+  );
+  
+  public isLoggedIn$: Observable<boolean> = this.currentUser$.pipe(
+    map(user => user !== null)
+  );
 
   constructor(private router: Router) {
     this.loadInitialUser();
@@ -62,6 +72,7 @@ export class AuthService {
       })
     );
   }
+  
 
   public logout(): void {
     localStorage.removeItem('currentUser');

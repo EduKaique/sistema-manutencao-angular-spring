@@ -5,16 +5,16 @@ import { NewRequestPageComponent } from '../new-request-page/new-request-page.co
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { RequestService } from '../../../shared/services/request.service';
+import { RequestService } from '../../../core/services/request.service';
 import { Request } from '../../../shared/models/request';
 import { CommonModule } from '@angular/common';
-import { StatusService } from '../../../shared/services/status.service';
+import { StatusService } from '../../../core/services/status.service';
 import { HeaderComponent } from '../../../core/layout/header/header.component';
-
+import { CategoryService } from '../../employee/services/category.service';
 
 @Component({
   selector: 'app-client-dashboard-page',
-  standalone: true,
+
   imports: [
     MatDialogModule,
     MatFormFieldModule,
@@ -26,7 +26,6 @@ import { HeaderComponent } from '../../../core/layout/header/header.component';
   templateUrl: './client-dashboard-page.component.html',
   styleUrl: './client-dashboard-page.component.css',
 })
-
 export class ClientDashboardPageComponent implements OnInit {
   displayedColumns: string[] = [
     'equipmentName',
@@ -43,21 +42,26 @@ export class ClientDashboardPageComponent implements OnInit {
     private dialog: MatDialog,
     private requestService: RequestService,
     private statusService: StatusService,
-    private router: Router
+    private router: Router,
+    private categoryService: CategoryService
   ) {}
 
   ngOnInit(): void {
     this.requests = this.requestService.listarTodos();
     this.dataSource.data = this.requests;
   }
-// possível substituição por pipes:
-    getStatusName(id: number): string {
-      return this.statusService.getById(id)?.nome || '';
-    }
 
-    getStatusColor(id: number): string {
-      return this.statusService.getById(id)?.cor || '';
-    }
+  getCategoryName(id: number): string {
+    return this.categoryService.getById(id)?.nome || '';
+  }
+
+  getStatusName(id: number): string {
+    return this.statusService.getById(id)?.nome || '';
+  }
+
+  getStatusColor(id: number): string {
+    return this.statusService.getById(id)?.cor || '';
+  }
 
   openNewRequest() {
     const dialogRef = this.dialog.open(NewRequestPageComponent, {
@@ -84,17 +88,16 @@ export class ClientDashboardPageComponent implements OnInit {
   }
 
   remover(request: Request): void {
-      if(confirm('Deseja realmente excluir essa solicitação?')) {
-            this.requestService.remover(request.id!); 
-            this.requests = this.listarTodos();
-            this.dataSource.data = this.requests;
-      }
+    if (confirm('Deseja realmente excluir essa solicitação?')) {
+      this.requestService.remover(request.id!);
+      this.requests = this.listarTodos();
+      this.dataSource.data = this.requests;
     }
+  }
 
-    verServico(id: number) {
-      console.log('Tentando navegar para:', `/request-detail/${id}`);
+  verServico(id: number) {
+    console.log('Tentando navegar para:', `/client/request-detail/${id}`);
 
-      this.router.navigate(['/request-detail', id]);
-    }
+    this.router.navigate(['/client/request-detail', id]);
+  }
 }
-
