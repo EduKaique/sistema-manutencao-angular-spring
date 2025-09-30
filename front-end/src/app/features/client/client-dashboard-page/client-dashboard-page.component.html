@@ -17,7 +17,7 @@
     Você ainda não possui solicitações.
   </p>
 
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
     <ng-container matColumnDef="equipmentName">
       <th mat-header-cell *matHeaderCellDef> Nome do Equipamento </th>
@@ -28,8 +28,8 @@
       <td mat-cell *matCellDef="let element"> {{ getCategoryName(element.categoryId) }} </td>
     </ng-container>
     <ng-container matColumnDef="requestDate">
-      <th mat-header-cell *matHeaderCellDef> Data de Criação </th>
-      <td mat-cell *matCellDef="let element"> {{ element.requestDate | date:'dd/MM/yyyy' }} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Data de Criação </th>
+      <td mat-cell *matCellDef="let element"> {{ element.requestDate | date:'dd/MM/yyyy HH:mm' }} </td>
     </ng-container>
     <ng-container matColumnDef="ultimaAtualizacao">
       <th mat-header-cell *matHeaderCellDef> Última Atualização </th>
@@ -51,12 +51,24 @@
     </ng-container>
 
     <ng-container matColumnDef="acoes">
-      <th mat-header-cell *matHeaderCellDef> Ações </th>
-      <td mat-cell *matCellDef="let element">
-        <button class="btn-custom" (click)="verServico(element.id)">Ver serviço</button>
-        <button class="btn-custom2" (click)="remover(element)">Excluir</button>
-      </td>
-    </ng-container>
+    <th mat-header-cell *matHeaderCellDef> Ações </th>
+    <td mat-cell *matCellDef="let element">
+        
+        <ng-container *ngIf="element.statusId === 1">
+            <button class="btn-custom" (click)="verServico(element.id)">Ver Solicitação</button>
+            <button class="btn-custom2" (click)="remover(element)">Excluir</button>
+        </ng-container>
+
+        <ng-container *ngIf="element.statusId === 2">
+            <button class="btn-custom" (click)="verServico(element.id)">Aprovar ou Recusar</button>
+        </ng-container>
+
+        <ng-container *ngIf="element.statusId === 3">
+            <button class="btn-custom" (click)="verServico(element.id)">Resgatar Solicitação</button>
+        </ng-container>
+
+        </td>
+</ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     <tr class="mat-row" *matNoDataRow>

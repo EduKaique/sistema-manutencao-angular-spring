@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { NewRequestPageComponent } from '../new-request-page/new-request-page.component';
@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { StatusService } from '../../../core/services/status.service';
 import { HeaderComponent } from '../../../core/layout/header/header.component';
 import { CategoryService } from '../../employee/services/category.service';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-client-dashboard-page',
@@ -26,7 +27,7 @@ import { CategoryService } from '../../employee/services/category.service';
   templateUrl: './client-dashboard-page.component.html',
   styleUrl: './client-dashboard-page.component.css',
 })
-export class ClientDashboardPageComponent implements OnInit {
+export class ClientDashboardPageComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = [
     'equipmentName',
     'categoryId',
@@ -38,6 +39,8 @@ export class ClientDashboardPageComponent implements OnInit {
   dataSource = new MatTableDataSource<Request>();
   requests: Request[] = [];
 
+  @ViewChild(MatSort) sort!: MatSort;
+
   constructor(
     private dialog: MatDialog,
     private requestService: RequestService,
@@ -47,8 +50,17 @@ export class ClientDashboardPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.requests = this.requestService.listarTodos();
+    this.requests = this.requestService.listarTodos().map(req => ({
+      ...req,
+      requestDate: new Date(req.requestDate),
+    }));
     this.dataSource.data = this.requests;
+  }
+
+  ngAfterViewInit(): void {
+    this.sort.active = 'requestDate';
+    this.sort.direction = 'desc';
+    this.dataSource.sort = this.sort;
   }
 
   getCategoryName(id: number): string {
@@ -72,7 +84,10 @@ export class ClientDashboardPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         console.log('Solicitação enviada', result);
-        this.requests = this.requestService.listarTodos();
+        this.requests = this.requestService.listarTodos().map(req => ({
+          ...req,
+          requestDate: new Date(req.requestDate),
+        }));
         this.dataSource.data = this.requests;
       }
     });
@@ -90,7 +105,10 @@ export class ClientDashboardPageComponent implements OnInit {
   remover(request: Request): void {
     if (confirm('Deseja realmente excluir essa solicitação?')) {
       this.requestService.remover(request.id!);
-      this.requests = this.listarTodos();
+      this.requests = this.requestService.listarTodos().map(req => ({
+        ...req,
+        requestDate: new Date(req.requestDate),
+      }));
       this.dataSource.data = this.requests;
     }
   }
