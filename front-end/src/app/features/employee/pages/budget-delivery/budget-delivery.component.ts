@@ -14,7 +14,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 
-import { HeaderComponent } from '../../../core/layout/header/header.component';
 
 @Component({
   selector: 'app-budget-delivery',
@@ -33,8 +32,7 @@ import { HeaderComponent } from '../../../core/layout/header/header.component';
     MatSelectModule,
     MatOptionModule,
     MatInputModule,
-    MatDialogModule,
-    HeaderComponent
+    MatDialogModule
   ]
 })
 export class BudgetDeliveryComponent {

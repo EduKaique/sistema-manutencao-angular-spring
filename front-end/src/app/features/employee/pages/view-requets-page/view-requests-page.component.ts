@@ -9,6 +9,7 @@ import { StatusService } from '../../../../core/services/status.service';
 import { Status } from '../../../../shared/models/status';
 import { Request as RequestModel } from '../../../../shared/models/request';
 import { StatusColumnComponent } from './components/status-column/status-column.component';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 
 interface GroupedRequests {
   status: Status;
@@ -21,6 +22,7 @@ interface GroupedRequests {
     MatIcon,
     CommonModule,
     StatusColumnComponent,
+    MatTableModule
   ],
   templateUrl: './view-requests-page.component.html',
   styleUrl: './view-requests-page.component.css',
@@ -43,7 +45,30 @@ export class ViewRequestsPageComponent {
     }));
   });
 
+
+
+  dataSource = computed(
+    () =>
+      new MatTableDataSource<RequestModel>(
+        this.groupedRequests().flatMap((g) =>
+          g.requests.map((r) => ({
+            ...r,
+            status: g.status.nome, // adiciona o objeto status se precisar na tabela
+          }))
+        )
+      )
+  );
+
+  displayedColumns: string[] = ['Nome do Equipamento', 'Categoria', 'Cliente', 'Data', 'Status'];
+
+
   toggleView() {
     this.isKanbanView = !this.isKanbanView;
   }
+
+  //
+  //
+  //
+  //
+  //
 }
