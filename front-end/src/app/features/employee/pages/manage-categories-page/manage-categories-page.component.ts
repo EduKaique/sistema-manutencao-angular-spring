@@ -4,6 +4,8 @@ import { CategoryService } from '../../services/category.service';
 import { Category } from '../../../../shared/models/category';
 import { NewCategoryModalComponent } from '../../components/new-category-modal/new-category-modal.component';
 import { MatIcon } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { WarningDialogComponent } from '../../../../shared/components/warning-dialog/warning-dialog.component';
 
 @Component({
   selector: 'app-manage-categories-page',
@@ -16,7 +18,7 @@ export class ManageCategoriesPageComponent implements OnInit {
   isModalShowing = false;
   selectedCategory: Category | null = null;
 
-  constructor(private categoryService: CategoryService) {}
+  constructor(private categoryService: CategoryService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.getAllCategories();
@@ -47,7 +49,18 @@ export class ManageCategoriesPageComponent implements OnInit {
   }
 
   deleteCategory(id: number): void {
-    this.categoryService.deleteCategory(id);
-    this.getAllCategories();
+    const dialogRef = this.dialog.open(WarningDialogComponent, {
+      data: {
+        title: 'Confirmar exclusão',
+        message: 'Tem certeza que deseja excluir esta categoria?',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.categoryService.deleteCategory(id);
+        this.getAllCategories();
+      }
+    });
   }
 }

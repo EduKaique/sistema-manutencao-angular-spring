@@ -1,8 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { RequestHistoryService } from '../../../../../core/services/request-history.service';
 import { RequestHistory } from '../../../../../shared/models/request-history';
+import { StatusService } from '../../../../../core/services/status.service';
+import { Status } from '../../../../../shared/models/status';
 import { DatePipe } from '@angular/common';
+
+type RequestHistoryView = RequestHistory & { status?: Status };
 
 @Component({
   selector: 'app-request-history',
@@ -10,21 +15,42 @@ import { DatePipe } from '@angular/common';
   templateUrl: './request-history.component.html',
   styleUrl: './request-history.component.css',
 })
-export class RequestHistoryComponent implements OnInit {
-  @Input() requestId!: number;
-  history: RequestHistory[] = [];
+export class RequestHistoryComponent implements OnDestroy {
+  private _requestId!: number;
+  @Input() set requestId(value: number) {
+    this._requestId = value;
+    this.subscribeHistory();
+  }
 
-  constructor(private requestHistoryService: RequestHistoryService) {}
+  get requestId() {
+    return this._requestId;
+  }
 
-  ngOnInit(): void {
-    if (this.requestId) {
-      const rawHistory = this.requestHistoryService.getHistoryByRequestId(
-        this.requestId
-      );
-      this.history = rawHistory.map((entry) => ({
+  private historySubscription?: Subscription;
+  history: RequestHistoryView[] = [];
+
+  constructor(private requestHistoryService: RequestHistoryService, private statusService: StatusService) {}
+
+  private subscribeHistory() {
+    if (this.historySubscription) {
+      this.historySubscription.unsubscribe();
+      this.historySubscription = undefined;
+    }
+    if (!this.requestId) return; 
+    this.historySubscription = this.requestHistoryService.getHistoryObsByRequestId(this.requestId).subscribe((history) => {
+      this.history = history.map((entry) => ({
         ...entry,
         date: new Date(entry.date),
+        status: this.statusService.getById(entry.statusId),
       }));
+    });
+  }
+
+  getUser(userId: number): string {
+    return `${userId}`;
+  }
+
+    ngOnDestroy(): void {
+      this.historySubscription?.unsubscribe();
     }
   }
-}
