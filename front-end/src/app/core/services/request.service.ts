@@ -26,7 +26,6 @@ export class RequestService {
     request.id = new Date().getTime();
     request.statusId = 1;
     request.requestDate = new Date();
-    //request.lastAtualization = new Date();
     request.clientId = 1;
     requests.push(request);
     localStorage[LS_CHAVE] = JSON.stringify(requests);
@@ -69,7 +68,6 @@ export class RequestService {
           };
           this.requestHistoryService.addHistory(entry);
         }
-        //request.lastAtualization = new Date();
         objs[index] = request;
       }
     });
