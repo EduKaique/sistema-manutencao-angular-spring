@@ -1,64 +1,5 @@
 
-/* Reset básico */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
-body {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #d9dcdc;
-    color: #333;
-    min-height: 100vh;
-}
-
-/* Header */
-.header {
-    background-color: #14282c;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 24px;
-}
-
-.logo {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #27a7b3;
-}
-
-/* Navegação do usuário */
-.user-nav {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    font-size: 0.9rem;
-}
-
-.user-nav span {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-/* Botões */
-.btn-icon {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.2rem;
-    cursor: pointer;
-}
-
-.btn-logout {
-    background: none;
-    border: none;
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-}
 
 .btn-custom 
 {
@@ -80,23 +21,15 @@ body {
     cursor: pointer;
 }
 
-
-/* Container principal */
 .container {
-    max-width: 960px;
-    margin: 24px auto;
-    padding: 0 16px;
+    margin: 24px 0;
 }
 
+
 /* Sessão de solicitações */
-.requests h2 {
-    font-weight: 600;
-    font-size: 1.3rem;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+.requests h1 {
     color: #4b4b4b;
+    margin: 0 0 16px 0;
 }
 
 .icon {

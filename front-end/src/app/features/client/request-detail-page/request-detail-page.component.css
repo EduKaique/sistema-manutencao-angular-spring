@@ -1,45 +1,35 @@
-.header {
-    background-color: #14282c;
-    color: white;
+
+.main-content {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 24px;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
 }
 
-.logo {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #27a7b3;
+.content-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 24px;
+    width: 100%;
+    align-items: start;
 }
 
-/* Navegação do usuário */
-.user-nav {
+.details-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+
+.back-link {
+    text-decoration: none;
     display: flex;
     align-items: center;
-    gap: 16px;
-    font-size: 0.9rem;
+    gap: 4px;
+    margin: 16px 0;
 }
 
-.user-nav span {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-/* Botões */
-.btn-icon {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.2rem;
-    cursor: pointer;
-}
-
-.btn-logout {
-    background: none;
-    border: none;
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
+.back-link:hover {
+    text-decoration: underline;
 }

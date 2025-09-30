@@ -1,11 +1,9 @@
-@import url("../../../../styles/variables.css");
 
 .input-wrapper {
     display: flex;
     flex-direction: column;
     gap: 4px;
     width: 100%;
-    background: var(--color-background-inputs);
 }
 
 .input-content {

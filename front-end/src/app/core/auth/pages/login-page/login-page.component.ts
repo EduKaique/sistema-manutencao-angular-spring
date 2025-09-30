@@ -72,9 +72,9 @@ export class LoginPageComponent implements OnInit {
         if (user) {
           console.log('Login bem-sucedido!', user);
           if (user.userAccess === 'employee') {
-            this.router.navigate(['/employee-dashboard']); 
+            this.router.navigate(['/employee/dashboard']); 
           } else if (user.userAccess === 'client') {
-            this.router.navigate(['/client-dashboard']); 
+            this.router.navigate(['/client/dashboard']); 
           }
         } else {
           console.error('Email ou senha incorretos.');

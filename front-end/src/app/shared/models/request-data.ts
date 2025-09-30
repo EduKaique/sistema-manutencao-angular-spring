@@ -11,4 +11,5 @@ export interface RequestData {
   status: 'APROVADA' | 'REJEITADA' | string;
   prazo?: string; 
   servicos?: string;
+  rejectionReason?: string;
 }

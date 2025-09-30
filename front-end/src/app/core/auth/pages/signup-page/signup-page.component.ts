@@ -9,53 +9,56 @@ import {
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
-import { CpfPipesPipe } from '../../../../shared/pipes/cpf.pipes.pipe';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { SuccessfulSignupComponent } from './successful-signup/successful-signup.component';
 import { ViaCepService, Endereco } from '../../../services/viacep.service';
+import { AuthService } from '../../services/auth.service';
+import { AppSuccessModalComponent } from '../../../../shared/components/modal-mensagem/app-success-modal';
 
 @Component({
   selector: 'app-signup-page',
-  standalone: true,
   imports: [
     InputPrimaryComponent,
     ReactiveFormsModule,
     MatStepperModule,
     MatIconModule,
     MatDialogModule,
-    CpfPipesPipe,
+    AppSuccessModalComponent,
   ],
   templateUrl: './signup-page.component.html',
   styleUrls: ['./signup-page.component.css'],
 })
 export class SignupPageComponent {
-  private _formBuilder = inject(FormBuilder);
+  firstFormGroup!: FormGroup;
+  secondFormGroup!: FormGroup;
   endereco?: Endereco;
+  showModal = false;
 
   constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
     private router: Router,
     private dialog: MatDialog,
     private viaCepService: ViaCepService
   ) {}
 
-  // Primeiro Step: dados pessoais
-  firstFormGroup: FormGroup = this._formBuilder.group({
-    nameUser: ['', [Validators.required, Validators.minLength(3)]],
-    cpfUser: ['', [Validators.required]],
-    phoneUser: ['', [Validators.required]],
-    email: ['', [Validators.required, Validators.email]],
-  });
+  ngOnInit(): void {
+    this.firstFormGroup = this.fb.group({
+      nameUser: ['', [Validators.required, Validators.minLength(3)]],
+      cpfUser: ['', [Validators.required]],
+      phoneUser: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+    });
+    this.secondFormGroup = this.fb.group({
+      cep: ['', [Validators.required]],
+      address: ['', [Validators.required]],
+      number: ['', [Validators.required]],
+      complement: [''],
+      neighborhood: ['', [Validators.required]],
+      city: ['', [Validators.required]],
+      state: ['', [Validators.required]],
+    });
+  }
 
-  // Segundo Step: endereço
-  secondFormGroup: FormGroup = this._formBuilder.group({
-    cep: ['', [Validators.required]],
-    address: ['', [Validators.required]],
-    number: ['', [Validators.required]],
-    complement: [''],
-    neighborhood: ['', [Validators.required]],
-    city: ['', [Validators.required]],
-    state: ['', [Validators.required]],
-  });
 
   onSubmit(): void {
     if (this.firstFormGroup.valid && this.secondFormGroup.valid) {
@@ -64,20 +67,13 @@ export class SignupPageComponent {
         ...this.secondFormGroup.value,
       };
       console.log('Dados do formulário:', formData);
+      this.showModal = true;
     }
 
-    const dialogMessageSucess = this.dialog.open(SuccessfulSignupComponent, {
-      width: '565px',
-      disableClose: true,
-    });
 
-    dialogMessageSucess.afterClosed().subscribe(() => {
-      this.navigate();
-    });
   }
 
   navigate() {
-    console.log('Teste');
     this.router.navigate(['/login']);
   }
 

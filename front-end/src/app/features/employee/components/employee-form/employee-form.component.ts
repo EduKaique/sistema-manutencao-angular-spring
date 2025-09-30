@@ -2,8 +2,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CustomValidators } from '../../../../shared/utils/cpf-validator';
-
-// Angular Material Modules
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -20,7 +18,6 @@ import { Employee, Role } from '../../../../shared/models/employee';
 
 @Component({
   selector: 'app-employee-form',
-  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -53,7 +50,6 @@ export class EmployeeFormComponent implements OnInit {
     private dialogref: MatDialogRef<EmployeeFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Employee
   ) {
-    // Etapa 1: Informações Pessoais
     this.personalInfoForm = this.fb.group({
       nome: ['', Validators.required],
       cpf: ['', [Validators.required, CustomValidators.useExistingCpfValidator()]],
@@ -62,7 +58,6 @@ export class EmployeeFormComponent implements OnInit {
       celular: ['', Validators.required],
     });
 
-    // Etapa 2: Informações Profissionais
     this.professionalInfoForm = this.fb.group({
       cargo: ['', Validators.required],
       salario: ['', [Validators.required, Validators.min(0.01)]],

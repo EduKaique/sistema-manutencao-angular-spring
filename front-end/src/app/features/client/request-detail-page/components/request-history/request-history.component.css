@@ -2,9 +2,10 @@
     background: white;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    padding: 24px;
-    margin: 20px 0;
-    max-width: 800px;
+    padding: 16px;
+    margin: 0;
+    width: 100%;
+    height: 100%;
     color: var(--color-text-secondary, #627877);
     font-family: var(--label-large-font-family, Inter);
     font-size: var(--label-large-font-size, 18px);
