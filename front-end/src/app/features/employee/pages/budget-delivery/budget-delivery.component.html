@@ -1,9 +1,21 @@
+<!-- Ações superiores: Voltar (esquerda) e Finalizar Solicitação (direita) -->
+<div class="top-actions">
+  <a class="voltar-pagina-inicial" (click)="onVoltarPaginaInicial()">
+    <mat-icon class="voltar-icon">arrow_back</mat-icon>
+    <span>Voltar para Página Inicial</span>
+  </a>
 
-<!-- Botão Voltar para Página Inicial -->
-<a class="voltar-pagina-inicial" (click)="onVoltarPaginaInicial()">
-  <mat-icon class="voltar-icon">arrow_back</mat-icon>
-  <span>Voltar para Página Inicial</span>
-</a>
+  <button
+    mat-flat-button
+    color="primary"
+    class="finalizar-solicitacao-btn"
+    *ngIf="canFinalizarSolicitacao()"
+    (click)="abrirDialogFinalizacao(finalizacaoDialogTemplate)"
+  >
+    <mat-icon>check</mat-icon>
+    Finalizar Solicitação
+  </button>
+</div>
 
 <div class="main-content">
   <!-- Card Detalhes da Solicitação -->
@@ -117,7 +129,7 @@
             Manutenção
           </ng-template>
 
-          <div class="manutencao-content">
+          <div class="manutencao-content" [class.tem-manutencao]="temManutencao">
             <ng-container *ngIf="temManutencao; else manutencaoVazio">
               <div class="manutencao-descricao">
                 <b>Descrição da Manutenção:</b>
@@ -127,11 +139,28 @@
                 <b>Orientações para o Cliente:</b>
                 <span>{{ orientacaoCliente }}</span>
               </div>
+
+              <!-- Botão editar manutenção -->
+              <button
+                mat-flat-button
+                color="primary"
+                class="manutencao-btn"
+                (click)="abrirDialogManutencao(manutencaoDialogTemplate)"
+              >
+                <mat-icon>edit</mat-icon>
+                Editar Manutenção
+              </button>
             </ng-container>
 
             <ng-template #manutencaoVazio>
               <div class="orcamento-empty">Nenhuma Manutenção Efetuada</div>
-              <button mat-flat-button color="primary" class="manutencao-btn" [disabled]="false">
+              <button
+                mat-flat-button
+                color="primary"
+                class="manutencao-btn"
+                [disabled]="false"
+                (click)="abrirDialogManutencao(manutencaoDialogTemplate)"
+              >
                 <mat-icon>build</mat-icon>
                 Efetuar Manutenção
               </button>
@@ -143,7 +172,7 @@
   </div>
 </div>
 
-<!-- Dialog Template: Atribuir Responsável -->
+<!-- Dialog: Atribuir Responsável -->
 <ng-template #dialogTemplate>
   <div class="dialog-container">
     <h2 class="dialog-title">Atribuição de Responsável</h2>
@@ -169,7 +198,7 @@
   </div>
 </ng-template>
 
-<!-- Dialog Template: Efetuar Orçamento -->
+<!-- Dialog: Efetuar Orçamento -->
 <ng-template #orcamentoDialogTemplate>
   <div class="orcamento-dialog">
     <div class="orcamento-dialog-header">
@@ -223,3 +252,73 @@
     </div>
   </div>
 </ng-template>
+
+<!-- Dialog: Efetuar Manutenção -->
+<ng-template #manutencaoDialogTemplate>
+  <div class="manutencao-dialog">
+    <div class="manutencao-dialog-header">
+      <div class="manutencao-dialog-title">Efetuar Manutenção</div>
+      <button mat-icon-button (click)="fecharDialogManutencao()" aria-label="Fechar">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <div class="manutencao-dialog-body">
+      <mat-form-field appearance="outline" class="manutencao-dialog-field full">
+        <mat-label>*Descrição da Manutenção</mat-label>
+        <textarea
+          matInput
+          rows="5"
+          [(ngModel)]="manutencaoDescricaoInput"
+          placeholder="Descreva a manutenção"
+        ></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="manutencao-dialog-field full">
+        <mat-label>*Orientações para o Cliente</mat-label>
+        <textarea
+          matInput
+          rows="4"
+          [(ngModel)]="manutencaoOrientacaoInput"
+          placeholder="Descreva as orientações"
+        ></textarea>
+      </mat-form-field>
+    </div>
+
+    <div class="manutencao-dialog-actions">
+      <div class="manutencao-dialog-helper">
+        * Campo de preenchimento obrigatório
+      </div>
+
+      <button
+        mat-flat-button
+        color="primary"
+        class="manutencao-dialog-confirm"
+        [disabled]="!isManutencaoFormValid()"
+        (click)="confirmarManutencao()"
+      >
+        Efetuar Manutenção
+        <mat-icon>check</mat-icon>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Dialog: Finalização da Solicitação -->
+<ng-template #finalizacaoDialogTemplate>
+  <div class="finalizacao-dialog">
+    <div class="finalizacao-icon">
+      <mat-icon>check</mat-icon>
+    </div>
+    <div class="finalizacao-title">Solicitação finalizada com sucesso!</div>
+    <div class="finalizacao-date">Data: {{ dataFinalizacao }}</div>
+    <button
+      mat-flat-button
+      color="primary"
+      class="finalizacao-back-btn"
+      (click)="voltarPaginaInicialPosFinalizacao()"
+    >
+      Voltar para Página Inicial
+    </button>
+  </div>
+</ng-template>  
