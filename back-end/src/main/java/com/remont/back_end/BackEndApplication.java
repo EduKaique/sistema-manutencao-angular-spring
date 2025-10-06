@@ -1,4 +1,4 @@
-package com.trabalhoweb2.back_end;
+package com.remont.back_end;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

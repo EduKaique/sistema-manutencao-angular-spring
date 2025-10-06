@@ -183,7 +183,7 @@ export class BudgetService {
       }
     }
 
-
+    // Add to history if request is being rescued (changing from REJECTED to APPROVED)
     if (status === 'APROVADA' && budget.status === 'REJEITADA') {
       this.addToHistory(
         requestId,
