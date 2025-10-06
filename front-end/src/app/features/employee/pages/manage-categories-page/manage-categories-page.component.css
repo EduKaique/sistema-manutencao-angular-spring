@@ -5,9 +5,14 @@
 }
 
 h1 {
-    color: var(--color-heading-subtle);
+    color: var(--color-heading-default);
 }
 
+.btn-new-category {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
 
 .categories-container {
     display: grid;
