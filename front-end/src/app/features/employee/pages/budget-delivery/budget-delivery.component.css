@@ -1,12 +1,21 @@
 :root {
   --color-background-page: #E5E9E9;
   --color-background-card: #FAFAFA;
+  --color-primary-default: #349896;
 }
-
+  
 body, .main-content {
   background: var(--color-background-page, #E5E9E9);
 }
-
+  
+.top-actions {
+  width: 1280px;
+  margin: 32px auto 16px auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+  
 .main-content {
   width: 1280px;
   margin: 0 auto;
@@ -15,7 +24,7 @@ body, .main-content {
   align-items: center;
   gap: 24px;
 }
-
+  
 /* Detalhes */
 .detalhes-card {
   width: 100%;
@@ -27,44 +36,31 @@ body, .main-content {
   gap: 32px;
   box-shadow: none;
 }
-
-.detalhes-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  gap: 24px;
-}
-
-.detalhes-header-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
+  
+.detalhes-header { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 24px; }
+.detalhes-header-left { display: flex; align-items: center; gap: 12px; }
 .detalhes-icon { color: #3B598E; font-size: 24px; }
 .detalhes-title { color: #546666; font-size: 20px; font-family: Inter, sans-serif; font-weight: 500; line-height: 24px; }
 .detalhes-id { color: #627877; font-size: 16px; font-family: Inter, sans-serif; font-weight: 600; line-height: 20px; }
 .detalhes-date { color: #627877; font-size: 18px; font-family: Roboto, sans-serif; font-weight: 400; line-height: 24px; }
-
 .detalhes-status { display: flex; align-items: center; gap: 4px; }
 .detalhes-status-label { color: #475756; font-size: 18px; font-family: Inter, sans-serif; font-weight: 600; line-height: 24px; }
 .detalhes-status-badge { padding: 4px 20px; background: #627877; border-radius: 1000px; color: #fff; font-size: 18px; font-family: Inter, sans-serif; font-weight: 600; line-height: 24px; }
-
+  
 .detalhes-info-row { display: flex; gap: 24px; width: 100%; }
 .detalhes-info { flex: 1 1 0; display: flex; flex-direction: column; gap: 8px; }
 .detalhes-info-label { color: #627877; font-size: 18px; font-family: Inter, sans-serif; font-weight: 600; line-height: 24px; }
 .detalhes-info-value { color: #374343; font-size: 20px; font-family: Roboto, sans-serif; font-weight: 400; line-height: 28px; }
 .detalhes-info-autor { display: flex; align-items: center; gap: 16px; }
-.detalhes-autor-icon { color: #349896; font-size: 28px; }
-
+.detalhes-autor-icon { color: var(--color-primary-default); font-size: 28px; }
+  
 .detalhes-defeito { display: flex; flex-direction: column; gap: 8px; }
 .detalhes-defeito-label { color: #627877; font-size: 18px; font-family: Inter, sans-serif; font-weight: 600; line-height: 24px; }
 .detalhes-defeito-value { color: #374343; font-size: 20px; font-family: Roboto, sans-serif; font-weight: 400; line-height: 28px; }
-
+  
 /* Cards inferiores */
 .cards-row { display: flex; align-items: flex-start; gap: 24px; width: 100%; }
-
+  
 .tecnico-card, .side-card {
   width: 628px;
   height: 354px;
@@ -76,101 +72,141 @@ body, .main-content {
   justify-content: space-between;
   box-shadow: none;
 }
-
 .tecnico-card { align-items: center; }
+  
 .tecnico-header { display: flex; align-items: center; gap: 8px; width: 100%; margin-bottom: 32px; }
 .tecnico-title { color: #546666; font-size: 20px; font-family: Inter, sans-serif; font-weight: 500; line-height: 24px; }
-
+  
 .tecnico-content {
   color: #7C9493; font-size: 20px; font-family: Inter, sans-serif; font-weight: 500; line-height: 24px;
   margin: 32px 0; text-align: center; width: 100%;
 }
-
+  
+/* Botão Atribuir/Trocar Responsável (stroked) na cor padrão */
 .atribuir-btn {
-  width: 100%; height: 48px; border-radius: 8px; border-width: 2px; border-color: #349896;
-  color: #349896; font-size: 18px; font-family: 'Inter', sans-serif; font-weight: 600; line-height: 24px;
+  width: 100%; height: 48px; border-radius: 8px; border-width: 2px;
+  border-color: var(--color-primary-default) !important;
+  color: var(--color-primary-default) !important;
+  font-size: 18px; font-family: 'Inter', sans-serif; font-weight: 600; line-height: 24px;
   background: transparent; transition: background 0.2s; outline: none; box-shadow: none;
 }
-
-.side-card { align-items: flex-start; }
-.side-card-header { width: 100%; margin-bottom: 24px; }
-.side-card-title { color: #546666; font-size: 20px; font-family: Inter, sans-serif; font-weight: 500; line-height: 24px; }
-
+  
 .orcamento-manutencao-card {
   width: 628px; height: 356px; background: var(--color-background-card, #FAFAFA);
   border-radius: 16px; display: flex; flex-direction: column; box-shadow: none; padding: 0;
 }
-
-/* As regras aninhadas abaixo podem não funcionar em .css puro.
-   Se preferir, mantenha como está; o dialog funcionará de qualquer forma. */
-.orcamento-tabs {
-  width: 100%;
-}
+  
+/* Abas */
+.orcamento-tabs { width: 100%; }
 .orcamento-content, .manutencao-content {
   padding: 32px 32px 0 32px; display: flex; flex-direction: column; align-items: center;
   gap: 32px; width: 100%; height: 260px; justify-content: center; overflow-y: auto;
 }
-
+.manutencao-content.tem-manutencao { justify-content: flex-start; }
+  
 .orcamento-empty {
   color: #7C9493; font-family: Inter, sans-serif; font-size: 20px; font-weight: 500;
   text-align: center; margin-bottom: 24px;
 }
-
-.orcamento-btn, .manutencao-btn {
+  
+/* Mantém Orçamento como estava */
+.orcamento-btn {
   width: 100%; height: 48px; border-radius: 8px; font-size: 18px; font-family: Inter, sans-serif; font-weight: 600;
   background: #b7dad8 !important; color: #fff !important; border: none; margin-top: 12px;
   display: flex; align-items: center; justify-content: center; gap: 8px;
 }
-.orcamento-btn[disabled], .manutencao-btn[disabled] { opacity: 0.6; }
 
+/* Manutenção com cor padrão */
+.manutencao-btn {
+  width: 100%; height: 48px; border-radius: 8px; font-size: 18px; font-family: Inter, sans-serif; font-weight: 600;
+  background: var(--color-primary-default) !important; color: #fff !important; border: none; margin-top: 12px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.orcamento-btn[disabled], .manutencao-btn[disabled] { opacity: 0.6; }
+  
 .orcamento-total-label { color: #627877; font-family: Inter, sans-serif; font-size: 20px; font-weight: 600; text-align: center; }
 .orcamento-total { color: #3B598E; font-family: Inter, sans-serif; font-size: 40px; font-weight: 700; text-align: center; margin-bottom: 16px; }
 .orcamento-servicos-label { color: #627877; font-family: Inter, sans-serif; font-size: 18px; font-weight: 600; margin-top: 16px; text-align: center; }
 .orcamento-servicos { color: #374343; font-family: Roboto, sans-serif; font-size: 18px; font-weight: 400; text-align: center; }
-
+  
+/* Mais contraste no card de Manutenção */
 .manutencao-descricao, .manutencao-orientacao {
-  color: #374343; font-family: Roboto, sans-serif; font-size: 18px; font-weight: 400;
+  color: #3E4C4B !important; /* texto principal mais escuro */
+  font-family: Roboto, sans-serif; font-size: 18px; font-weight: 400;
   text-align: left; margin-bottom: 8px; width: 100%;
 }
 .manutencao-descricao b, .manutencao-orientacao b {
-  color: #627877; font-family: Inter, sans-serif; font-size: 18px; font-weight: 600;
+  color: #3E4C4B !important; /* rótulos com contraste maior */
+  font-family: Inter, sans-serif; font-size: 18px; font-weight: 600;
 }
-
-/* Voltar */
+  
+/* Voltar (link no topo à esquerda) */
 .voltar-pagina-inicial {
-  display: flex; align-items: center; gap: 6px; color: #349896; font-size: 16px; font-family: Inter, sans-serif;
-  font-weight: 600; line-height: 24px; text-decoration: none; cursor: pointer; margin-top: 32px; margin-bottom: 16px;
-  width: fit-content;
+  display: flex; align-items: center; gap: 6px; color: var(--color-primary-default); font-size: 16px; font-family: Inter, sans-serif;
+  font-weight: 600; line-height: 24px; text-decoration: none; cursor: pointer;
 }
 .voltar-pagina-inicial:hover { text-decoration: underline; }
-.voltar-icon { font-size: 22px; color: #349896; }
-
-/* Dialog padrão (já existente) */
+.voltar-icon { font-size: 22px; color: var(--color-primary-default); }
+  
+/* Botão Finalizar Solicitação (topo direito) na cor padrão */
+.finalizar-solicitacao-btn {
+  height: 40px; border-radius: 8px; font-size: 16px; font-family: Inter, sans-serif; font-weight: 600;
+  display: inline-flex; align-items: center; gap: 8px; padding: 0 16px;
+  background: var(--color-primary-default) !important; color: #fff !important;
+}
+  
+/* Dialog padrão */
 .dialog-container { width: 350px; padding: 24px 24px 16px 24px; display: flex; flex-direction: column; align-items: stretch; }
 .dialog-title { font-family: Inter, sans-serif; font-size: 22px; font-weight: 600; margin-bottom: 16px; }
 .dialog-field { margin-bottom: 24px; }
-.dialog-btn { width: 100%; height: 48px; border-radius: 8px; font-size: 18px; font-family: Inter, sans-serif; font-weight: 600; background: #349896 !important; color: #fff !important; }
+.dialog-btn { width: 100%; height: 48px; border-radius: 8px; font-size: 18px; font-family: Inter, sans-serif; font-weight: 600; background: var(--color-primary-default) !important; color: #fff !important; }
 .custom-dialog .mat-dialog-container { border-radius: 16px; padding: 0; }
-
-/* Dialog Efetuar Orçamento (visual do Figma) */
+  
+/* Dialog Efetuar Orçamento */
 .orcamento-dialog { width: 560px; padding: 24px; background: var(--color-background-card, #FAFAFA); border-radius: 16px; display: flex; flex-direction: column; gap: 24px; }
-
-.orcamento-dialog-header {
-  display: flex; align-items: center; justify-content: space-between;
-}
+.orcamento-dialog-header { display: flex; align-items: center; justify-content: space-between; }
 .orcamento-dialog-title { color: #3E4C4B; font-size: 24px; font-family: Inter, sans-serif; font-weight: 500; line-height: 28px; }
 .orcamento-dialog-header button mat-icon { color: #546666; }
-
 .orcamento-dialog-body { display: flex; flex-direction: column; gap: 16px; }
 .orcamento-dialog-field.full { width: 100%; }
 .orcamento-dialog-field .mat-mdc-text-field-wrapper { border-radius: 8px; }
-
-.orcamento-dialog-actions {
-  display: flex; align-items: center; justify-content: space-between;
-}
+.orcamento-dialog-actions { display: flex; align-items: center; justify-content: space-between; }
 .orcamento-dialog-helper { color: #627877; font-size: 16px; font-family: Roboto, sans-serif; font-weight: 400; line-height: 16px; }
 .orcamento-dialog-confirm {
   width: 245px; height: 48px; border-radius: 8px; font-size: 18px; font-family: Inter, sans-serif; font-weight: 600;
-  background: #349896 !important; color: #fff !important; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  background: var(--color-primary-default) !important; color: #fff !important; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
 }
 .orcamento-dialog-confirm[disabled] { opacity: 0.6; }
+  
+/* Dialog Efetuar Manutenção */
+.manutencao-dialog { width: 560px; padding: 24px; background: var(--color-background-card, #FAFAFA); border-radius: 16px; display: flex; flex-direction: column; gap: 24px; }
+.manutencao-dialog-header { display: flex; align-items: center; justify-content: space-between; }
+.manutencao-dialog-title { color: #3E4C4B; font-size: 24px; font-family: Inter, sans-serif; font-weight: 500; line-height: 28px; }
+.manutencao-dialog-header button mat-icon { color: #546666; }
+.manutencao-dialog-body { display: flex; flex-direction: column; gap: 16px; }
+.manutencao-dialog-field.full { width: 100%; }
+.manutencao-dialog-field .mat-mdc-text-field-wrapper { border-radius: 8px; }
+.manutencao-dialog-actions { display: flex; align-items: center; justify-content: space-between; }
+.manutencao-dialog-helper { color: #627877; font-size: 16px; font-family: Roboto, sans-serif; font-weight: 400; line-height: 16px; }
+.manutencao-dialog-confirm {
+  width: 245px; height: 48px; border-radius: 8px; font-size: 18px; font-family: Inter, sans-serif; font-weight: 600;
+  background: var(--color-primary-default) !important; color: #fff !important; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+}
+.manutencao-dialog-confirm[disabled] { opacity: 0.6; }
+  
+/* Dialog Finalização */
+.finalizacao-dialog {
+  width: 360px; padding: 24px; background: var(--color-background-card, #FAFAFA);
+  border-radius: 16px; display: flex; flex-direction: column; align-items: center; gap: 16px;
+}
+.finalizacao-icon {
+  width: 64px; height: 64px; border-radius: 50%; background: #2EB872;
+  display: flex; align-items: center; justify-content: center;
+}
+.finalizacao-icon mat-icon { color: #fff; font-size: 32px; }
+.finalizacao-title { color: #3E4C4B; font-size: 20px; font-family: Inter, sans-serif; font-weight: 600; text-align: center; }
+.finalizacao-date { color: #627877; font-size: 14px; font-family: Roboto, sans-serif; font-weight: 400; }
+.finalizacao-back-btn {
+  width: 100%; height: 44px; border-radius: 8px; font-size: 16px; font-family: Inter, sans-serif; font-weight: 600;
+  background: var(--color-primary-default) !important; color: #fff !important;
+}
