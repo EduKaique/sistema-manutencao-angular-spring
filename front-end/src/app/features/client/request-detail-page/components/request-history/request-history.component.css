@@ -6,13 +6,6 @@
     margin: 0;
     width: 100%;
     height: 100%;
-    color: var(--color-text-secondary, #627877);
-    font-family: var(--label-large-font-family, Inter);
-    font-size: var(--label-large-font-size, 18px);
-    font-style: normal;
-    font-weight: var(--label-large-font-weight, 600);
-    line-height: var(--label-large-line-height, 24px); 
-    letter-spacing: var(--label-large-letter-spacing, 0);
 }
 
 h2 {
@@ -23,4 +16,65 @@ h2 {
     font-weight: var(--heading-h5-font-weight, 500);
     line-height: var(--heading-h5-line-height, 28px); 
     letter-spacing: var(--heading-h5-letter-spacing, -0.2px);
+    margin-bottom: 12px;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.history-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.date {
+  margin-top: 10px;
+  text-transform: capitalize;
+  color: var(--color-text-label, #475756);
+  font-family: var(--label-small-font-family, Inter);
+  font-size: var(--body-default-font-size, 18px);
+  font-weight: var(--label-small-font-weight, 600);
+  line-height: var(--label-small-line-height, 16px);
+  letter-spacing: var(--label-small-letter-spacing, 0);
+}
+
+.history-body {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.time {
+  color: var(--color-text-secondary, #627877);
+  font-family: var(--body-small-font-family, Roboto);
+  font-size: var(--body-small-font-size, 16px);
+  font-weight: var(--body-small-font-weight, 400);
+  line-height: var(--body-small-line-height, 16px);
+  letter-spacing: var(--body-small-letter-spacing, 0);
+  text-align: right;
+}
+
+.responsible {
+  color: var(--color-text-default, #374343);
+  font-family: var(--body-default-font-family, Roboto);
+  font-size: var(--body-default-font-size, 18px);
+  font-weight: var(--body-default-font-weight, 400);
+  line-height: var(--body-default-line-height, 24px);
+  letter-spacing: var(--body-default-letter-spacing, -0.1px);
+}
+
+.desc {
+  color: var(--color-text-secondary, #627877);
+  font-family: var(--body-small-font-family, Roboto);
+  font-size: var(--body-small-font-size, 16px);
+  font-weight: var(--body-small-font-weight, 400);
+  line-height: var(--body-small-line-height, 16px);
+  letter-spacing: var(--body-small-letter-spacing, 0);
 }
