@@ -146,8 +146,35 @@
   gap: 16px;
 }
 
+.info-block h3 {
+  color: var(--color-text-subtle, #627877);
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0 0 4px 0;
+}
+
+.info-block p {
+  color: var(--color-heading-default, #293535);
+  font-size: 16px;
+  margin: 0;
+}
+
 .description-block {
   margin-top: 8px;
+}
+
+.description-block h3 {
+  color: var(--color-text-subtle, #627877);
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0 0 4px 0;
+}
+
+.description-block p {
+  color: var(--color-heading-default, #293535);
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
 }
 
 .budget-details {
@@ -201,6 +228,13 @@
   font-size: 14px;
   font-weight: 500;
   margin: 0;
+}
+
+.services-section p {
+  color: var(--color-heading-default, #293535);
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 8px 0 0 0;
 }
 
 .services-list {
@@ -295,4 +329,24 @@
   font-size: 14px;
   margin: 0;
   line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 16px;
+  }
+  
+  .info-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .price {
+    font-size: 24px;
+  }
 }
