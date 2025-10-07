@@ -5,14 +5,18 @@
   </div>
 
   <div class="history-list">
-    <ng-container *ngFor="let entry of history">
+    <ng-container *ngFor="let entry of history; let i = index">
       <div class="history-item">
-      <span class="date"> {{ entry.date | date:'dd/MM' }}</span>        
+        <div class="date" *ngIf="i === 0 || (entry.date | date:'dd/MM/yyyy') !== (history[i - 1].date | date:'dd/MM/yyyy')">
+          <strong>{{ entry.date | date:'EEEE, dd \'de\' MMMM' }}</strong> 
+        </div>  
       <div class="history-body">
           <span class="time"> {{ entry.date | date:'HH:mm' }}</span>
-          <span class="responsible"> {{ getUser(entry.userId) }}</span>
-          <p class="title">{{ entry.title }}</p>
-        </div>
+          <div class="info">
+            <div class="responsible">{{ getUser(entry.userId) }}</div>
+            <div class="desc">{{ getDescription(entry) }}</div>
+          </div>
+      </div>
       </div>
     </ng-container>
   </div>
