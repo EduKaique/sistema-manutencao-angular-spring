@@ -12,6 +12,7 @@ import { StatusService } from '../../../core/services/status.service';
 import { HeaderComponent } from '../../../core/layout/header/header.component';
 import { CategoryService } from '../../employee/services/category.service';
 import { MatSort } from '@angular/material/sort';
+import { BudgetService } from '../../../core/services/budget.service';
 
 @Component({
   selector: 'app-client-dashboard-page',
@@ -46,7 +47,8 @@ export class ClientDashboardPageComponent implements OnInit, AfterViewInit {
     private requestService: RequestService,
     private statusService: StatusService,
     private router: Router,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private budgetService: BudgetService
   ) {}
 
   ngOnInit(): void {
@@ -73,6 +75,30 @@ export class ClientDashboardPageComponent implements OnInit, AfterViewInit {
 
   getStatusColor(id: number): string {
     return this.statusService.getById(id)?.cor || '';
+  }
+
+  getBudgetStatus(requestId: number): string {
+    const budget = this.budgetService.getBudget(requestId);
+    
+    if (budget) {
+      if (budget.status === 'APROVADA') return 'APROVADA';
+      if (budget.status === 'REJEITADA') return 'REJEITADA';
+      return 'ORÇADA';
+    }
+    
+    return 'ABERTA';
+  }
+
+  getBudgetStatusColor(requestId: number): string {
+    const status = this.getBudgetStatus(requestId);
+    
+    switch (status) {
+      case 'APROVADA': return '#25A46B';
+      case 'REJEITADA': return '#FF5E5B';
+      case 'ORÇADA': return '#856404';
+      case 'ABERTA': return '#6c757d';
+      default: return '#6c757d';
+    }
   }
 
   openNewRequest() {

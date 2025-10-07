@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BudgetService } from '../../../../../core/services/budget.service';
 import { Request } from '../../../../../shared/models/request';
 import { RejectModalComponent } from '../../../../../shared/components/reject-modal/reject-modal.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-approve-reject-panel',
@@ -41,13 +42,27 @@ export class ApproveRejectPanelComponent implements OnInit {
   resgatarServico() {
     if (!this.request) return;
     this.budgetService.updateStatus(this.request.id, 'APROVADA');
-    alert('Serviço foi resgatado e aprovado!');
+    
+    Swal.fire({
+      title: 'Resgatado!',
+      text: 'Serviço foi resgatado e aprovado!',
+      icon: 'success',
+      confirmButtonText: 'OK',
+      confirmButtonColor: '#25A46B'
+    });
   }
 
   aprovar() {
     if (!this.request) return;
     this.budgetService.updateStatus(this.request.id, 'APROVADA');
-    alert('Serviço foi aprovado!');
+    
+    Swal.fire({
+      title: 'Sucesso!',
+      text: 'Serviço foi aprovado!',
+      icon: 'success',
+      confirmButtonText: 'OK',
+      confirmButtonColor: '#25A46B'
+    });
   }
 
   onRejectConfirm(reason: string) {
@@ -56,7 +71,14 @@ export class ApproveRejectPanelComponent implements OnInit {
     this.budgetService.updateStatus(this.request.id, 'REJEITADA', reason);
     console.log('Request after rejection:', this.request);
     this.showRejectModal = false;
-    alert('Serviço Rejeitado');
+    
+    Swal.fire({
+      title: 'Rejeitado!',
+      text: 'Serviço foi rejeitado',
+      icon: 'error',
+      confirmButtonText: 'OK',
+      confirmButtonColor: '#FF5E5B'
+    });
   }
 
   onRejectCancel() {
