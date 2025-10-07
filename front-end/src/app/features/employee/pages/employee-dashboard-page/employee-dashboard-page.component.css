@@ -97,6 +97,8 @@ mat-icon#open {
 }
 
 
+
+
 .request-list {
   display: flex;
   gap: 24px;
@@ -139,3 +141,25 @@ button {
 button:hover {
   background-color: #005fa3;
 }
+ .request-card {
+  width: 280px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.request-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+.status-indicator {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+
+.status-indicator.Aberta { background-color: #2196f3; }
+.status-indicator.EmAndamento { background-color: #ffb300; }
+.status-indicator.Finalizada { background-color: #4caf50; }
+.status-indicator.Atrasada { background-color: #f44336; }
