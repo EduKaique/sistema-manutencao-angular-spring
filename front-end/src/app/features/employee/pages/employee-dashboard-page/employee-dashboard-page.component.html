@@ -59,6 +59,30 @@
         <app-request-card class="request-card" [request]="req">
           <button (click)="makeQuote(req)">Efetuar Orçamento</button>
         </app-request-card>
+
+
+        <mat-card class="request-card">
+  <mat-card-header>
+    <div mat-card-avatar class="status-indicator" [ngClass]="request.statusName"></div>
+    <mat-card-title>{{ request.title }}</mat-card-title>
+    <mat-card-subtitle>Categoria: {{ request.category }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p><strong>Cliente:</strong> {{ request.clientName }}</p>
+    <p><strong>Data de criação:</strong> {{ request.creationDate | date: 'dd/MM/yyyy' }}</p>
+    <p><strong>Prioridade:</strong> {{ request.priority || 'Normal' }}</p>
+    <p><strong>Status:</strong> {{ request.statusName }}</p>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-stroked-button color="primary" (click)="verDetalhes()">Ver Detalhes</button>
+    <button mat-flat-button color="accent" (click)="finalizar()">Finalizar</button>
+    <button mat-stroked-button color="warn" (click)="excluir()">Excluir</button>
+  </mat-card-actions>
+</mat-card>
+
+
       }
     } @empty {
       <p class="empty-state">Nenhuma solicitação neste status.</p>
