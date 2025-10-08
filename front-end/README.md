@@ -92,7 +92,7 @@ src/
 │    │        │   ├── employee-list/
 │    │        │   ├── manage-categories-page/        
 │    │        │   ├── reports-page/   
-│    │        │   └── view-requets-page/    
+│    │        │   └── view-requests-page/    
 │    │        │
 │    │        ├── services/
 │    │        │
