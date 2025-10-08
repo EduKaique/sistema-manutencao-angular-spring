@@ -65,8 +65,9 @@ src/
 │    │    │
 │    │    ├── layout/
 │    │    │   ├── header/               
-│    │    │   ├── footer/               
-│    │    │   └── side-bar/          
+│    │    │   ├── page-not-found/               
+│    │    │   ├── side-bar/     
+│    │    │   └── unauthorized-page/    
 │    │    │
 │    │    └── services/
 │    │
@@ -74,29 +75,36 @@ src/
 │    │    ├── client/
 │    │    │   ├── client-dashboard-page/    
 │    │    │   │
-│    │    │   ├── new-request-page/        
+│    │    │   ├── new-request-page/   
+│    │    │   │     
+│    │    │   ├── payment-panel/
 │    │    │   │
-│    │    │   └── request-detail-page/      
+│    │    │   ├── request-detail-page/
+│    │    │   │
+│    │    │   └── client.routes.ts    
 │    │    │
 │    │    └── employee/
-│    │        ├── employee-dashboard-page/  
+│    │        ├── components/  
 │    │        │
-│    │        ├── request-management/
-│    │        │   ├── all-requests-page/      
-│    │        │   ├── budgeting-page/         
-│    │        │   └── maintenance-page/      
+│    │        ├── pages/
+│    │        │   ├── budget-delivery/      
+│    │        │   ├── employee-dashboard-page/
+│    │        │   ├── employee-list/
+│    │        │   ├── manage-categories-page/        
+│    │        │   ├── reports-page/   
+│    │        │   └── view-requests-page/    
 │    │        │
-│    │        ├── admin/
-│    │        │   ├── manage-categories-page/ 
-│    │        │   └── manage-employees-page/  
+│    │        ├── services/
 │    │        │
-│    │        └── reports/
-│    │            └── reports-page/           
+│    │        └── employee.routes.ts         
+│    │
 │    │
 │    └── shared/
 │        ├── components/
 │        │
 │        ├── directives/
+│        │
+│        ├── models/
 │        │
 │        ├── pipes/
 │        │
