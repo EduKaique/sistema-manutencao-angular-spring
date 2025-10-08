@@ -96,7 +96,7 @@ src/
 │    │        │
 │    │        ├── services/
 │    │        │
-│    │        └── employe.routes.ts         
+│    │        └── employee.routes.ts         
 │    │
 │    │
 │    └── shared/
