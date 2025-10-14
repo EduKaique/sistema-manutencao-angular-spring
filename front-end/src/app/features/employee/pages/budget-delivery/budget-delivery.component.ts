@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, TemplateRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, TemplateRef, inject, computed, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 
 import { MatCardModule } from '@angular/material/card';
@@ -13,6 +13,13 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
+
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs/operators';
+
+// AJUSTE os paths abaixo conforme sua estrutura de pastas
+import { StatusService } from '../../../../core/services/status.service';
+import { RequestService } from '../../../../core/services/request.service';
 
 @Component({
   selector: 'app-budget-delivery',
@@ -35,13 +42,44 @@ import { FormsModule } from '@angular/forms';
   ]
 })
 export class BudgetDeliveryComponent {
-  constructor(
-    private router: Router,
-    private dialog: MatDialog,
-    private cdr: ChangeDetectorRef
-  ) {}
+  // Services e Router
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
+  private cdr = inject(ChangeDetectorRef);
 
-  // Voltar
+  // NOVO: services e rota (signals)
+  private statusService = inject(StatusService);
+  private requestService = inject(RequestService);
+  private route = inject(ActivatedRoute);
+
+  // Lê o id da rota: /.../:id ou /.../:requestId
+  private routeId = toSignal(
+    this.route.paramMap.pipe(map(pm => pm.get('id') ?? pm.get('requestId'))),
+    { initialValue: null }
+  );
+
+  // Signals vindos dos serviços (mesmo padrão do dashboard)
+  private statuses = toSignal(this.statusService.getAll(), { initialValue: [] as Status[] }); // Signal<Status[]>
+  private requests = this.requestService.listarTodos(); // Signal<Request[]>
+
+  // Seleciona a solicitação corrente pelo id da rota
+  private selectedRequest = computed(() => {
+    const id = this.routeId();
+    const reqs = this.requests();
+    if (!id || !reqs?.length) return undefined;
+    return reqs.find(r => String((r as any).id) === String(id));
+  });
+
+  // Nome do status corrente
+  private statusName = computed(() => {
+    const req = this.selectedRequest();
+    const list = this.statuses();
+    if (!req || !list?.length) return this.detalhes.status;
+    const st = list.find(s => s.id === (req as any).statusId);
+    return (st as any)?.nome ?? (st as any)?.name ?? this.detalhes.status;
+  });
+
+  // Navegação
   onVoltarPaginaInicial() {
     this.router.navigate(['/client-dashboard']);
   }
@@ -81,7 +119,7 @@ export class BudgetDeliveryComponent {
     this.dialogRef.close();
   }
 
-  // Detalhes
+  // Detalhes (preenchidos automaticamente pelo effect)
   detalhes = {
     id: '001',
     data: new Date('2025-08-27T12:18:54'),
@@ -157,7 +195,6 @@ export class BudgetDeliveryComponent {
   manutencaoDialogRef: any;
 
   abrirDialogManutencao(template: TemplateRef<any>) {
-    // Pré-preenche se já existir manutenção
     this.manutencaoDescricaoInput = this.temManutencao
       ? this.descricaoManutencao
       : '';
@@ -202,7 +239,6 @@ export class BudgetDeliveryComponent {
   }
 
   abrirDialogFinalizacao(template: TemplateRef<any>) {
-    // Define status e data de finalização
     this.detalhes.status = 'PAGA';
     this.dataFinalizacao = new Date().toLocaleString('pt-BR', {
       day: '2-digit', month: '2-digit', year: 'numeric',
@@ -223,4 +259,48 @@ export class BudgetDeliveryComponent {
     }
     this.router.navigate(['/client-dashboard']);
   }
+
+  // ====== NOVO: effect para popular automaticamente a tela pelos dados do serviço ======
+  private _syncEffect = effect(() => {
+    const req: any = this.selectedRequest();
+    const statusLabel = this.statusName();
+
+    if (!req) return;
+
+    // Detalhes
+    this.detalhes = {
+      id: String(req.id ?? this.detalhes.id),
+      data: new Date(req.createdAt ?? req.data ?? this.detalhes.data),
+      status: statusLabel ?? this.detalhes.status,
+      item: req.item ?? req.title ?? this.detalhes.item,
+      categoria: req.categoria ?? req.category ?? this.detalhes.categoria,
+      autor: req.autor ?? req.author?.name ?? this.detalhes.autor,
+      defeito: req.defeito ?? req.description ?? this.detalhes.defeito
+    };
+
+    // Responsável
+    const resp = req.responsavel ?? req.assignee ?? null;
+    this.responsavel = resp;
+    this.dataAtribuicao =
+      req.assignedAt
+        ? new Date(req.assignedAt).toLocaleString('pt-BR', {
+            day: '2-digit', month: '2-digit', year: 'numeric',
+            hour: '2-digit', minute: '2-digit', second: '2-digit'
+          })
+        : (resp ? this.dataAtribuicao : '');
+
+    // Orçamento
+    const orc = req.orcamento ?? req.budget ?? null;
+    this.temOrcamento = !!orc;
+    this.valorOrcamento = orc?.total ?? this.valorOrcamento;
+    this.servicosInclusos = orc?.servicos?.map((s: any) => s.nome ?? s.name).join(', ') ?? this.servicosInclusos;
+
+    // Manutenção
+    const man = req.manutencao ?? req.maintenance ?? null;
+    this.temManutencao = !!man;
+    this.descricaoManutencao = man?.descricao ?? man?.description ?? this.descricaoManutencao;
+    this.orientacaoCliente = man?.orientacao ?? man?.instructions ?? this.orientacaoCliente;
+
+    this.cdr.markForCheck();
+  });
 }

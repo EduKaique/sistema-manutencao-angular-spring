@@ -32,18 +32,15 @@ cd ./sistema-manutencao-angular-spring
 ```
 
 ### 2. Configurar o Backend (Spring Boot)
-1.  Abra a pasta do projeto backend (ex: `/api`) na sua IDE.
-2.  Configure as credenciais do seu banco de dados no arquivo `src/main/resources/application.properties`.
-    ```properties
-    spring.datasource.url=jdbc:mysql://localhost:3306/seu_banco_de_dados
-    spring.datasource.username=seu_usuario
-    spring.datasource.password=sua_senha
-    spring.jpa.hibernate.ddl-auto=update
+1.  Abra a pasta do projeto backend na sua IDE.
+2.  Suba a docker compose do banco de dados mysql.
+    ```bash
+    docker compose up -d
     ```
 3.  Execute a aplicação a partir da sua IDE ou via linha de comando.
 
 ### 3. Configurar o Frontend (Angular)
-1.  Abra um novo terminal e navegue até a pasta do projeto frontend (ex: `/client`).
+1.  Abra um novo terminal e navegue até a pasta front-end.
 2.  Instale as dependências do Node.js:
     ```bash
     npm install
