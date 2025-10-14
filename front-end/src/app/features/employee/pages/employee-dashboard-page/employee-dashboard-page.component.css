@@ -161,5 +161,64 @@ button:hover {
 .status-indicator.Finalizada { background-color: #4caf50; }
 .status-indicator.Atrasada { background-color: #f44336; }
 
+.text-area {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 
+.label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.count {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 4px;
+}
+
+.card-open {
+  background-color: var(--color-secondary-default);
+}
+
+.card-late {
+  background-color: var(--color-background-card);
+}
+
+.card-neutral {
+  background-color: var(--color-background-card);
+}
+
+.card-today {
+  background-color: var(--color-background-card);
+}
+
+.request-list {
+  display: flex;
+  gap: 24px;
+}
+
+.request-card {
+  border-radius: 12px;
+  transition: transform 0.2s ease;
+  width: 100%;
+  max-width: 25%;
+}
+
+.request-card:hover {
+  transform: translateY(-3px);
+}
+
+.request-card h3 {
+  margin-top: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.request-card p {
+  margin: 6px 0;
+  font-size: 14px;
+  color: #555;
+}
 
