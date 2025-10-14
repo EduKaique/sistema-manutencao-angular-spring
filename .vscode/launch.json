@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-BackEndApplication<back-end>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.remont.back_end.BackEndApplication",
+            "projectName": "back-end",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
