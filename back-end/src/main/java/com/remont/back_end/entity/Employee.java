@@ -1,13 +1,21 @@
-import jakarta.persistence.*;
+package com.remont.back_end.entity;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 @Entity
-@Table(name= "employee")
+@Table(name = "employee")
 public class Employee {
-    
+
     @Id
-    @GeneratedValue*(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
@@ -25,15 +33,16 @@ public class Employee {
     private String role;
 
     private String phone;
-    
+
     private LocalDate birthDate;
 
     private Double wage;
 
-    public Funcionario() {
+    public Employee() { 
     }
 
-    public Funcionario(Long id, String name, String email, String password, String cpf, String role, String phone, LocalDate birthDate, Double wage) {
+    public Employee(Long id, String name, String email, String password, String cpf,
+                    String role, String phone, LocalDate birthDate, Double wage) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -53,11 +62,11 @@ public class Employee {
         this.id = id;
     }
 
-    public String getname() {
+    public String getName() { 
         return name;
     }
 
-    public void setname(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -69,11 +78,11 @@ public class Employee {
         this.email = email;
     }
 
-    public String getpassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setpassword(String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -85,35 +94,35 @@ public class Employee {
         this.cpf = cpf;
     }
 
-    public String getrole() {
+    public String getRole() {
         return role;
     }
 
-    public void setrole(String role) {
+    public void setRole(String role) {
         this.role = role;
     }
 
-    public String getphone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setphone(String phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
-    public LocalDate getbirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setbirthDate(LocalDate birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 
-    public Double getwage() {
+    public Double getWage() {
         return wage;
     }
 
-    public void setwage(Double wage) {
+    public void setWage(Double wage) {
         this.wage = wage;
     }
 
@@ -121,7 +130,7 @@ public class Employee {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Funcionario that = (Funcionario) o;
+        Employee that = (Employee) o; 
         return Objects.equals(id, that.id);
     }
 
@@ -132,7 +141,7 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "Funcionario{" +
+        return "Employee{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
