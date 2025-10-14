@@ -96,9 +96,6 @@ mat-icon#open {
   background-color: var(--color-background-card);
 }
 
-
-
-
 .request-list {
   display: flex;
   gap: 24px;
@@ -163,3 +160,6 @@ button:hover {
 .status-indicator.EmAndamento { background-color: #ffb300; }
 .status-indicator.Finalizada { background-color: #4caf50; }
 .status-indicator.Atrasada { background-color: #f44336; }
+
+
+
