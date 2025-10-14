@@ -15,7 +15,7 @@ import jakarta.persistence.Table;
 public class Employee {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // ← corrigido
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
@@ -38,7 +38,7 @@ public class Employee {
 
     private Double wage;
 
-    public Employee() { // ← nome da classe corrigido
+    public Employee() { 
     }
 
     public Employee(Long id, String name, String email, String password, String cpf,
@@ -62,7 +62,7 @@ public class Employee {
         this.id = id;
     }
 
-    public String getName() { // ← padronizado
+    public String getName() { 
         return name;
     }
 
@@ -130,7 +130,7 @@ public class Employee {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Employee that = (Employee) o; // ← corrigido para Employee
+        Employee that = (Employee) o; 
         return Objects.equals(id, that.id);
     }
 
