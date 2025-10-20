@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, TemplateRef, inject, computed, effect } from '@angular/core';
+import { ChangeDetectionStrategy, Component, TemplateRef, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
+
 
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,12 +15,16 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 
-import { toSignal } from '@angular/core/rxjs-interop';
-import { map } from 'rxjs/operators';
 
-// AJUSTE os paths abaixo conforme sua estrutura de pastas
+// Tipos do seu projeto (ajuste os paths se necessário)
+import { Status } from '../../../../shared/models/status';
+import { Request as RequestModel } from '../../../../shared/models/request';
+
+
+// Services (ajuste os paths se necessário)
 import { StatusService } from '../../../../core/services/status.service';
 import { RequestService } from '../../../../core/services/request.service';
+
 
 @Component({
   selector: 'app-budget-delivery',
@@ -41,48 +46,49 @@ import { RequestService } from '../../../../core/services/request.service';
     MatDialogModule
   ]
 })
-export class BudgetDeliveryComponent {
-  // Services e Router
+export class BudgetDeliveryComponent implements OnInit {
+  // Router/Dialogs
   private router = inject(Router);
   private dialog = inject(MatDialog);
   private cdr = inject(ChangeDetectorRef);
 
-  // NOVO: services e rota (signals)
+
+  // Services e rota
   private statusService = inject(StatusService);
   private requestService = inject(RequestService);
   private route = inject(ActivatedRoute);
 
-  // Lê o id da rota: /.../:id ou /.../:requestId
-  private routeId = toSignal(
-    this.route.paramMap.pipe(map(pm => pm.get('id') ?? pm.get('requestId'))),
-    { initialValue: null }
-  );
 
-  // Signals vindos dos serviços (mesmo padrão do dashboard)
-  private statuses = toSignal(this.statusService.getAll(), { initialValue: [] as Status[] }); // Signal<Status[]>
-  private requests = this.requestService.listarTodos(); // Signal<Request[]>
+  // Dados vindos dos services (padrão do dashboard: arrays)
+  statuses: Status[] = [];
+  requests: RequestModel[] = [];
 
-  // Seleciona a solicitação corrente pelo id da rota
-  private selectedRequest = computed(() => {
-    const id = this.routeId();
-    const reqs = this.requests();
-    if (!id || !reqs?.length) return undefined;
-    return reqs.find(r => String((r as any).id) === String(id));
-  });
 
-  // Nome do status corrente
-  private statusName = computed(() => {
-    const req = this.selectedRequest();
-    const list = this.statuses();
-    if (!req || !list?.length) return this.detalhes.status;
-    const st = list.find(s => s.id === (req as any).statusId);
-    return (st as any)?.nome ?? (st as any)?.name ?? this.detalhes.status;
-  });
+  // Lifecycle
+  ngOnInit(): void {
+    // Carrega arrays dos services (como no dashboard)
+    this.statuses = this.statusService.getAll();
+    this.requests = this.requestService.listarTodos();
 
-  // Navegação
+
+    // Lê o id da rota e sincroniza a tela
+    this.route.paramMap.subscribe(pm => {
+      const id = pm.get('id') ?? pm.get('requestId');
+      if (id) {
+        const req = this.requests.find(r => String(r.id) === String(id));
+        if (req) {
+          this.preencherTelaComRequest(req);
+        }
+      }
+    });
+  }
+
+
+  // Navegação topo
   onVoltarPaginaInicial() {
     this.router.navigate(['/client-dashboard']);
   }
+
 
   // Responsável
   responsavel: any = null;
@@ -95,6 +101,7 @@ export class BudgetDeliveryComponent {
   selectedFuncionario: any = null;
   dialogRef: any;
 
+
   abrirDialog(template: TemplateRef<any>) {
     this.selectedFuncionario = this.responsavel ?? undefined;
     this.dialogRef = this.dialog.open(template, {
@@ -102,6 +109,7 @@ export class BudgetDeliveryComponent {
       panelClass: 'custom-dialog'
     });
   }
+
 
   atribuirResponsavel() {
     this.responsavel = this.selectedFuncionario;
@@ -115,11 +123,13 @@ export class BudgetDeliveryComponent {
     this.cdr.markForCheck();
   }
 
+
   cancelarDialog() {
     this.dialogRef.close();
   }
 
-  // Detalhes (preenchidos automaticamente pelo effect)
+
+  // Detalhes (preenchidos automaticamente)
   detalhes = {
     id: '001',
     data: new Date('2025-08-27T12:18:54'),
@@ -130,8 +140,10 @@ export class BudgetDeliveryComponent {
     defeito: 'O equipamento liga, mas a tela permanece preta (sem imagem). O LED indicador de energia acende e é possível ouvir o som da ventoinha em funcionamento, mas não há qualquer sinal de vídeo. O problema persiste mesmo após reiniciar o dispositivo várias vezes.'
   };
 
+
   // Abas
   selectedTab = 0;
+
 
   // Orçamento
   temOrcamento = false;
@@ -139,11 +151,13 @@ export class BudgetDeliveryComponent {
   servicosInclusos =
     'Diagnóstico técnico, Substituição do cabo flat da tela, Mão de obra, Limpeza interna + pasta térmica';
 
+
   // Manutenção
   temManutencao = false;
   descricaoManutencao =
     'Identifiquei que o problema estava em um dos módulos de memória RAM, que impedia a exibição de vídeo. Após substituir o módulo com defeito, o equipamento voltou a funcionar normalmente.';
   orientacaoCliente = 'N/A';
+
 
   // Dialog de Orçamento
   servicosDisponiveis = [
@@ -156,6 +170,7 @@ export class BudgetDeliveryComponent {
   valorTotal = 0;
   dialogOrcamentoRef: any;
 
+
   abrirDialogOrcamento(template: TemplateRef<any>) {
     this.servicosSelecionados = [];
     this.valorTotal = 0;
@@ -165,11 +180,13 @@ export class BudgetDeliveryComponent {
     });
   }
 
+
   fecharDialogOrcamento() {
     if (this.dialogOrcamentoRef) {
       this.dialogOrcamentoRef.close();
     }
   }
+
 
   atualizarTotal() {
     this.valorTotal = this.servicosSelecionados.reduce(
@@ -178,6 +195,7 @@ export class BudgetDeliveryComponent {
     );
     this.cdr.markForCheck();
   }
+
 
   confirmarOrcamento() {
     this.temOrcamento = true;
@@ -189,10 +207,12 @@ export class BudgetDeliveryComponent {
     this.cdr.markForCheck();
   }
 
+
   // Dialog de Manutenção
   manutencaoDescricaoInput = '';
   manutencaoOrientacaoInput = '';
   manutencaoDialogRef: any;
+
 
   abrirDialogManutencao(template: TemplateRef<any>) {
     this.manutencaoDescricaoInput = this.temManutencao
@@ -202,17 +222,20 @@ export class BudgetDeliveryComponent {
       ? this.orientacaoCliente
       : '';
 
+
     this.manutencaoDialogRef = this.dialog.open(template, {
       disableClose: true,
       panelClass: 'custom-dialog'
     });
   }
 
+
   fecharDialogManutencao() {
     if (this.manutencaoDialogRef) {
       this.manutencaoDialogRef.close();
     }
   }
+
 
   isManutencaoFormValid(): boolean {
     return (
@@ -221,22 +244,27 @@ export class BudgetDeliveryComponent {
     );
   }
 
+
   confirmarManutencao() {
     this.temManutencao = true;
     this.descricaoManutencao = this.manutencaoDescricaoInput.trim();
     this.orientacaoCliente = this.manutencaoOrientacaoInput.trim();
 
+
     this.fecharDialogManutencao();
     this.cdr.markForCheck();
   }
+
 
   // Finalização
   finalizacaoDialogRef: any;
   dataFinalizacao = '';
 
+
   canFinalizarSolicitacao(): boolean {
     return !!this.responsavel && this.temOrcamento && this.temManutencao;
   }
+
 
   abrirDialogFinalizacao(template: TemplateRef<any>) {
     this.detalhes.status = 'PAGA';
@@ -245,13 +273,16 @@ export class BudgetDeliveryComponent {
       hour: '2-digit', minute: '2-digit', second: '2-digit'
     });
 
+
     this.finalizacaoDialogRef = this.dialog.open(template, {
       disableClose: true,
       panelClass: 'custom-dialog'
     });
 
+
     this.cdr.markForCheck();
   }
+
 
   voltarPaginaInicialPosFinalizacao() {
     if (this.finalizacaoDialogRef) {
@@ -260,12 +291,13 @@ export class BudgetDeliveryComponent {
     this.router.navigate(['/client-dashboard']);
   }
 
-  // ====== NOVO: effect para popular automaticamente a tela pelos dados do serviço ======
-  private _syncEffect = effect(() => {
-    const req: any = this.selectedRequest();
-    const statusLabel = this.statusName();
 
-    if (!req) return;
+  // Preenche a tela com dados da Request (mesmo mapeamento que te passei)
+  private preencherTelaComRequest(req: any) {
+    // Status label
+    const st = this.statuses.find(s => s.id === (req as any).statusId);
+    const statusLabel = (st as any)?.nome ?? (st as any)?.name ?? this.detalhes.status;
+
 
     // Detalhes
     this.detalhes = {
@@ -278,6 +310,7 @@ export class BudgetDeliveryComponent {
       defeito: req.defeito ?? req.description ?? this.detalhes.defeito
     };
 
+
     // Responsável
     const resp = req.responsavel ?? req.assignee ?? null;
     this.responsavel = resp;
@@ -289,11 +322,13 @@ export class BudgetDeliveryComponent {
           })
         : (resp ? this.dataAtribuicao : '');
 
+
     // Orçamento
     const orc = req.orcamento ?? req.budget ?? null;
     this.temOrcamento = !!orc;
     this.valorOrcamento = orc?.total ?? this.valorOrcamento;
     this.servicosInclusos = orc?.servicos?.map((s: any) => s.nome ?? s.name).join(', ') ?? this.servicosInclusos;
+
 
     // Manutenção
     const man = req.manutencao ?? req.maintenance ?? null;
@@ -301,6 +336,7 @@ export class BudgetDeliveryComponent {
     this.descricaoManutencao = man?.descricao ?? man?.description ?? this.descricaoManutencao;
     this.orientacaoCliente = man?.orientacao ?? man?.instructions ?? this.orientacaoCliente;
 
+
     this.cdr.markForCheck();
-  });
+  }
 }
