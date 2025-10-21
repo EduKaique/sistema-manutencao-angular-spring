@@ -1,0 +1,45 @@
+package com.yourproject.controller;
+
+import com.yourproject.model.MaintenanceRequest;
+import com.yourproject.repository.MaintenanceRequestRepository;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/maintenance-requests")
+@CrossOrigin(origins = "http://localhost:8080")
+public class MaintenanceRequestController {
+
+    private final MaintenanceRequestRepository maintenanceRequestRepository;
+
+    public MaintenanceRequestController(MaintenanceRequestRepository maintenanceRequestRepository) {
+        this.maintenanceRequestRepository = maintenanceRequestRepository;
+    }
+
+    @GetMapping
+    public List<MaintenanceRequest> getAll() {
+        return maintenanceRequestRepository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public MaintenanceRequest getById(@PathVariable Long id) {
+        return maintenanceRequestRepository.findById(id).orElse(null);
+    }
+
+    @PostMapping
+    public MaintenanceRequest create(@RequestBody MaintenanceRequest maintenanceRequest) {
+        return maintenanceRequestRepository.save(maintenanceRequest);
+    }
+
+    @PutMapping("/{id}")
+    public MaintenanceRequest update(@PathVariable Long id, @RequestBody MaintenanceRequest maintenanceRequest) {
+        maintenanceRequest.setId(id);
+        return maintenanceRequestRepository.save(maintenanceRequest);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        maintenanceRequestRepository.deleteById(id);
+    }
+}
