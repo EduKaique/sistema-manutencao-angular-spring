@@ -3,7 +3,6 @@ package com.remont.back_end.service;
 import com.remont.back_end.dto.CategoryEquipmentDTO;
 import com.remont.back_end.model.CategoryEquipment;
 import com.remont.back_end.repository.CategoryEquipmentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +12,6 @@ public class CategoryEquipmentService {
     
     private final CategoryEquipmentRepository categoryEquipmentRepository;
 
-    @Autowired
     public CategoryEquipmentService(CategoryEquipmentRepository categoryEquipmentRepository) {
         this.categoryEquipmentRepository = categoryEquipmentRepository;
     }

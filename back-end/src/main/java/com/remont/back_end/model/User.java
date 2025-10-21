@@ -14,16 +14,16 @@ public abstract class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Name is mandatory")
+    @NotBlank(message = "O nome é obrigatório")
     @Column(nullable = false)
     private String name; 
 
-    @NotBlank(message = "Email is mandatory")
-    @Email(message = "Invalid email format")
+    @NotBlank(message = "O e-mail é obrigatório")
+    @Email(message = "Formato de e-mail inválido")
     @Column(nullable = false, unique = true) 
     private String email;
 
-    @NotBlank(message = "Password is mandatory")
+    @NotBlank(message = "A senha é obrigatória")
     @Column(nullable = false)
     private String password; 
 
