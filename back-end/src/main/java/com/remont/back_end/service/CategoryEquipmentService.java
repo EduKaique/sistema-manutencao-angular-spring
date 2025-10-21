@@ -1,7 +1,7 @@
 package com.remont.back_end.service;
 
-import com.remont.back_end.entity.CategoryEquipment;
 import com.remont.back_end.dto.CategoryEquipmentDTO;
+import com.remont.back_end.model.CategoryEquipment;
 import com.remont.back_end.repository.CategoryEquipmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
