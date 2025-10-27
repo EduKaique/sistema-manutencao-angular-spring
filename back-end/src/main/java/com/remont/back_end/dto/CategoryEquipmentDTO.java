@@ -8,14 +8,14 @@ public class CategoryEquipmentDTO {
 
     public CategoryEquipmentDTO() {}
 
-    public CategoryEquipmentDTO(int id, String name, String icon) {
+    public CategoryEquipmentDTO(Integer id, String name, String icon) {
         this.id = id;
         this.name = name;
         this.icon = icon;
     }
 
     public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public void setId(Integer id) { this.id = id; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }

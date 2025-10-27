@@ -39,8 +39,9 @@ public class CategoryEquipmentService {
     }
 
     public void deleteCategory(Integer id) {
-        categoryEquipmentRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Categoria com id " + id + " não foi encontrada."));
+        if (!categoryEquipmentRepository.existsById(id)) {
+            throw new IllegalArgumentException("Categoria com id " + id + " não encontrada.");
+        }
         categoryEquipmentRepository.deleteById(id);
     }
 }
