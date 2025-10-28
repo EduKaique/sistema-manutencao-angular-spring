@@ -1,6 +1,7 @@
 package com.remont.back_end.controller;
 
-import com.remont.back_end.exception.ResourceNotFoundException;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
 import com.remont.back_end.model.MaintenanceRequest;
 import com.remont.back_end.service.MaintenanceRequestService;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class MaintenanceRequestController {
     @GetMapping("/{id}")
     public MaintenanceRequest getById(@PathVariable Long id) {
         return maintenanceRequestService.getRequestById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("MaintenanceRequest não encontrado: " + id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "MaintenanceRequest não encontrado: " + id));
     }
 
     @PostMapping
