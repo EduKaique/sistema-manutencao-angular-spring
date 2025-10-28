@@ -1,4 +1,4 @@
-package com.remont.back_end.config; // ou com.remont.back_end
+package com.remont.back_end.config;
 
 import com.remont.back_end.model.Employee;
 import com.remont.back_end.repository.EmployeeRepository;
