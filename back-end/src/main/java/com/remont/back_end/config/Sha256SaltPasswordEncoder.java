@@ -86,7 +86,7 @@ public class Sha256SaltPasswordEncoder implements PasswordEncoder {
         
         md.update(salt); 
         
-        byte[] hash = md.digest(rawPassword.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));
+        byte[] hash = md.digest(rawPassword.getBytes(java.nio.charset.StandardCharsets.UTF_8));
         
         return hash;
     }
