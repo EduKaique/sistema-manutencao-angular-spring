@@ -1,7 +1,7 @@
-package com.yourproject.controller;
+package com.remont.back_end.controller;
 
-import com.yourproject.model.MaintenanceRequest;
-import com.yourproject.repository.MaintenanceRequestRepository;
+import com.remont.back_end.model.MaintenanceRequest;
+import com.remont.back_end.repository.MaintenanceRequestRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
