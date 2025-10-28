@@ -1,27 +1,23 @@
 package com.remont.back_end.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
-
 
 @Entity
-@Table(name = "maintenance_requests")
+@Table(name = "maintenance_request")
 public class MaintenanceRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String description;
+    @Column(name = "maintenance_desc", nullable = false)
+    private String maintenanceDesc;
 
-    @Column(nullable = false)
-    private LocalDateTime requestDate;
+    @Column(name = "guidance_client")
+    private String guidanceClient;
 
-    @ManyToOne
-    @JoinColumn(name = "employee_id", nullable = false)
-    private Employee assignedEmployee;
-
+    @Column(name = "request_id")
+    private Long requestId;
 
     public Long getId() {
         return id;
@@ -31,27 +27,27 @@ public class MaintenanceRequest {
         this.id = id;
     }
 
-    public String getDescription() {
-        return description;
+    public String getMaintenanceDesc() {
+        return maintenanceDesc;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setMaintenanceDesc(String maintenanceDesc) {
+        this.maintenanceDesc = maintenanceDesc;
     }
 
-    public LocalDateTime getRequestDate() {
-        return requestDate;
+    public String getGuidanceClient() {
+        return guidanceClient;
     }
 
-    public void setRequestDate(LocalDateTime requestDate) {
-        this.requestDate = requestDate;
+    public void setGuidanceClient(String guidanceClient) {
+        this.guidanceClient = guidanceClient;
     }
 
-    public Employee getAssignedEmployee() {
-        return assignedEmployee;
+    public Long getRequestId() {
+        return requestId;
     }
 
-    public void setAssignedEmployee(Employee assignedEmployee) {
-        this.assignedEmployee = assignedEmployee;
+    public void setRequestId(Long requestId) {
+        this.requestId = requestId;
     }
 }

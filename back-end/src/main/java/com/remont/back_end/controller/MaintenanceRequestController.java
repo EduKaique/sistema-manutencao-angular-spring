@@ -1,45 +1,47 @@
 package com.remont.back_end.controller;
 
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
 import com.remont.back_end.model.MaintenanceRequest;
-import com.remont.back_end.repository.MaintenanceRequestRepository;
+import com.remont.back_end.service.MaintenanceRequestService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/maintenance-requests")
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:4200")
 public class MaintenanceRequestController {
 
-    private final MaintenanceRequestRepository maintenanceRequestRepository;
+    private final MaintenanceRequestService maintenanceRequestService;
 
-    public MaintenanceRequestController(MaintenanceRequestRepository maintenanceRequestRepository) {
-        this.maintenanceRequestRepository = maintenanceRequestRepository;
+    public MaintenanceRequestController(MaintenanceRequestService maintenanceRequestService) {
+        this.maintenanceRequestService = maintenanceRequestService;
     }
 
     @GetMapping
     public List<MaintenanceRequest> getAll() {
-        return maintenanceRequestRepository.findAll();
+        return maintenanceRequestService.getAllRequests();
     }
 
     @GetMapping("/{id}")
     public MaintenanceRequest getById(@PathVariable Long id) {
-        return maintenanceRequestRepository.findById(id).orElse(null);
+        return maintenanceRequestService.getRequestById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "MaintenanceRequest não encontrado: " + id));
     }
 
     @PostMapping
     public MaintenanceRequest create(@RequestBody MaintenanceRequest maintenanceRequest) {
-        return maintenanceRequestRepository.save(maintenanceRequest);
+        return maintenanceRequestService.createRequest(maintenanceRequest);
     }
 
     @PutMapping("/{id}")
     public MaintenanceRequest update(@PathVariable Long id, @RequestBody MaintenanceRequest maintenanceRequest) {
-        maintenanceRequest.setId(id);
-        return maintenanceRequestRepository.save(maintenanceRequest);
+        return maintenanceRequestService.updateRequest(id, maintenanceRequest);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
-        maintenanceRequestRepository.deleteById(id);
+        maintenanceRequestService.deleteRequest(id);
     }
 }
