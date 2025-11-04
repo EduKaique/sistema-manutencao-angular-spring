@@ -1,28 +1,45 @@
 package com.remont.back_end.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "historico_solicitacoes")
+@Table(name = "historico_solicitacoes",
+       indexes = {
+           @Index(name = "idx_solicitacao_id", columnList = "solicitacao_id"),
+           @Index(name = "idx_usuario_id", columnList = "usuario_id"),
+           @Index(name = "idx_status_id", columnList = "status_id"),
+           @Index(name = "idx_data_solicitacao", columnList = "data_solicitacao")
+       })
 public class RequestHistory {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @NotBlank(message = "O título é obrigatório")
+    @Size(max = 32, message = "O título deve ter no máximo 32 caracteres")
     @Column(length = 32, nullable = false)
     private String titulo;
     
+    
+    @NotNull(message = "A data de solicitação é obrigatória")
     @Column(name = "data_solicitacao", nullable = false)
     private LocalDateTime dataSolicitacao;
     
+    @NotNull(message = "O ID da solicitação é obrigatório")
     @Column(name = "solicitacao_id", nullable = false)
     private Long solicitacaoId;
     
+    @NotNull(message = "O ID do usuário é obrigatório")
     @Column(name = "usuario_id", nullable = false)
     private Long usuarioId;
     
+    @NotNull(message = "O ID do status é obrigatório")
     @Column(name = "status_id", nullable = false)
     private Long statusId;
 
