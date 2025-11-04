@@ -34,7 +34,7 @@ public class EmployeeController {
     }
 
     /**
-     * READ (All) - Busca todos os funcionários
+     * GET (All) - Busca todos os funcionários
      */
     @GetMapping
     public ResponseEntity<List<EmployeeDTO>> getAllEmployees() {
@@ -43,7 +43,7 @@ public class EmployeeController {
     }
 
     /**
-     * READ (One) - Busca um funcionário pelo ID
+     * GET (One) - Busca um funcionário pelo ID
      */
     @GetMapping("/{id}")
     public ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable Long id) {
