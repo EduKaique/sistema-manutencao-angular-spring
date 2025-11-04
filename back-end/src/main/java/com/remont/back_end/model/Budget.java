@@ -1,54 +1,61 @@
 package com.remont.back_end.model;
 
+import jakarta.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-@Table(name = "budget")
 @Entity
+@Table(name = "budgets")
 public class Budget {
-   
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private double totalAmount;
-    
-    private LocalDateTime creationDate;
+    @Column(nullable = false)
+    private Long requestId;
 
-    private Long solicitacaoId;
-
+    @Column
     private Long employeeId;
 
-    public double getBudget() {
-        return totalAmount;
-    }
-    public void setBudget(double totalAmount) {
-        this.totalAmount = totalAmount;
+    @Column(nullable = false, precision = 12, scale = 2)
+    private BigDecimal total;
+
+    @Column(nullable = false, length = 2000)
+    private String services;
+
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column
+    private LocalDateTime updatedAt;
+
+    @PrePersist
+    public void onCreate() {
+        this.createdAt = LocalDateTime.now();
     }
 
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
+    @PreUpdate
+    public void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
     }
 
-    public Long getSolicitacaoId() {
-        return solicitacaoId;
-    }
-    public void setSolicitacaoId(Long solicitacaoId) {
-        this.solicitacaoId = solicitacaoId;
-    }
+    // getters e setters
 
-    public Long getEmployeeId() {
-        return employeeId;
-    }
-    public void setEmployeeId(Long employeeId) {
-        this.employeeId = employeeId;
-    }
+    public Long getId() { return id; }
+
+    public Long getRequestId() { return requestId; }
+    public void setRequestId(Long requestId) { this.requestId = requestId; }
+
+    public Long getEmployeeId() { return employeeId; }
+    public void setEmployeeId(Long employeeId) { this.employeeId = employeeId; }
+
+    public BigDecimal getTotal() { return total; }
+    public void setTotal(BigDecimal total) { this.total = total; }
+
+    public String getServices() { return services; }
+    public void setServices(String services) { this.services = services; }
+
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
 }
