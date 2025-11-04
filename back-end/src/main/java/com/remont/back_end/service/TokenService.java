@@ -1,8 +1,11 @@
 package com.remont.back_end.service;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.*;
 import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.remont.back_end.model.User;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -47,30 +50,27 @@ public class TokenService {
         }
     }
 
-    /*
-     * NOTA PARA A EQUIPE:
-     * O próximo passo (quando forem criar o filtro de autorização)
-     * será criar o método de VALIDAÇÃO de token. Com esta biblioteca,
-     * ele será parecido com isto:
-     *
-     * public String validateTokenAndGetSubject(String token) {
-     * try {
-     * Algorithm algorithm = Algorithm.HMAC256(jwtSecret);
-     *
-     * // Cria o objeto verificador
-     * JWTVerifier verifier = JWT.require(algorithm)
-     * .withIssuer(ISSUER)
-     * .build();
-     *
-     * // Verifica o token
-     * DecodedJWT jwt = verifier.verify(token);
-     *
-     * // Retorna o "Subject" (email/login)
-     * return jwt.getSubject();
-     * * } catch (JWTVerificationException exception){
-     * // Token inválido (expirado, assinatura errada, etc)
-     * throw new RuntimeException("Token inválido ou expirado", exception);
-     * }
-     * }
+    /**
+     * Valida um token e retorna o "subject" (email).
+     * @param token O string completo do token JWT.
+     * @return O e-mail do usuário se o token for válido.
+     * @throws JWTVerificationException Se o token for inválido (expirado, assinatura errada).
      */
+    public String validateTokenAndGetSubject(String token) throws JWTVerificationException {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(jwtSecret);
+
+            // Cria o objeto verificador com o mesmo issuer
+            JWTVerifier verifier = JWT.require(algorithm)
+                    .withIssuer(ISSUER)
+                    .build();
+
+            DecodedJWT jwt = verifier.verify(token);
+
+            return jwt.getSubject();
+
+        } catch (JWTVerificationException exception) {
+            throw new JWTVerificationException("Token inválido ou expirado", exception);
+        }
+    }
 }
