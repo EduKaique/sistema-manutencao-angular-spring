@@ -8,7 +8,13 @@ import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "historico_solicitacoes")
+@Table(name = "historico_solicitacoes",
+       indexes = {
+           @Index(name = "idx_solicitacao_id", columnList = "solicitacao_id"),
+           @Index(name = "idx_usuario_id", columnList = "usuario_id"),
+           @Index(name = "idx_status_id", columnList = "status_id"),
+           @Index(name = "idx_data_solicitacao", columnList = "data_solicitacao")
+       })
 public class RequestHistory {
     
     @Id
@@ -19,6 +25,7 @@ public class RequestHistory {
     @Size(max = 32, message = "O título deve ter no máximo 32 caracteres")
     @Column(length = 32, nullable = false)
     private String titulo;
+    
     
     @NotNull(message = "A data de solicitação é obrigatória")
     @Column(name = "data_solicitacao", nullable = false)
