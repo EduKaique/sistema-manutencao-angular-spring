@@ -11,17 +11,17 @@ public class Status {
     private Short id;
 
     @Column(nullable = false, length = 32)
-    private String nome;
+    private String name;
 
     @Column(length = 16)
-    private String cor;
+    private String color;
 
     public Status() {
     }
 
-    public Status(String nome, String cor) {
-        this.nome = nome;
-        this.cor = cor;
+    public Status(String name, String color) {
+        this.name = name;
+        this.color = color;
     }
 
     public Short getId() {
@@ -32,19 +32,19 @@ public class Status {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getCor() {
-        return cor;
+    public String getColor() {
+        return color;
     }
 
-    public void setCor(String cor) {
-        this.cor = cor;
+    public void setColor(String color) {
+        this.color = color;
     }
 }
