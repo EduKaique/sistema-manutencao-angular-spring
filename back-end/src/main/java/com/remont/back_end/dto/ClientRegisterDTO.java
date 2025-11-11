@@ -4,45 +4,44 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.br.CPF;
-import lombok.*;
+import lombok.Data;
 
 /**
  * DTO para o Autocadastro de Cliente.
+ * @Data inclui @Getter, @Setter, @ToString, @EqualsAndHashCode
  */
+@Data
 public class ClientRegisterDTO {
 
-    @NotBlank @CPF @Getter @Setter
+    @NotBlank @CPF
     private String cpf;
 
-    @NotBlank @Getter @Setter
+    @NotBlank
     private String name;
 
-    @NotBlank @Email @Getter @Setter
+    @NotBlank @Email
     private String email;
 
-    @NotBlank @Getter @Setter
+    @NotBlank
     private String phoneNumber;
 
-    @NotBlank @Size(min = 8, max = 8) @Getter @Setter
+    @NotBlank @Size(min = 8, max = 8)
     private String zipCode;
 
-    @NotBlank @Getter @Setter
+    @NotBlank
     private String street;
 
-    @NotBlank @Getter @Setter
+    @NotBlank
     private String number;
 
-    @Getter @Setter
     private String complement;
 
-    @NotBlank @Getter @Setter
+    @NotBlank
     private String neighborhood;
 
-    @NotBlank @Getter @Setter
+    @NotBlank
     private String city;
 
-    @NotBlank @Size(min = 2, max = 2) @Getter @Setter
+    @NotBlank @Size(min = 2, max = 2)
     private String state;
-
-
 }
