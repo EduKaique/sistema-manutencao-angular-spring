@@ -1,9 +1,10 @@
 package com.remont.back_end.controller;
 
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import com.remont.back_end.model.MaintenanceRequest;
-import com.remont.back_end.service.MaintenanceRequestServiceImpl;
+import com.remont.back_end.service.MaintenanceRequestService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,9 +14,10 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 public class MaintenanceRequestController {
 
-    private final MaintenanceRequestServiceImpl maintenanceRequestService;
+    private final MaintenanceRequestService maintenanceRequestService;
 
-    public MaintenanceRequestController(MaintenanceRequestServiceImpl maintenanceRequestService) {
+    @Autowired
+    public MaintenanceRequestController(MaintenanceRequestService maintenanceRequestService) {
         this.maintenanceRequestService = maintenanceRequestService;
     }
 
