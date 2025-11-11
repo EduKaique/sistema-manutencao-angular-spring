@@ -3,6 +3,8 @@ package com.remont.back_end.controller;
 import com.remont.back_end.dto.BudgetDTO;
 import com.remont.back_end.model.Budget;
 import com.remont.back_end.service.BudgetService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -18,6 +20,7 @@ public class BudgetController {
 
     private final BudgetService budgetService;
 
+    @Autowired
     public BudgetController(BudgetService budgetService) {
         this.budgetService = budgetService;
     }
