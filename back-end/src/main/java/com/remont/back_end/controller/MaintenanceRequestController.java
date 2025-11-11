@@ -1,6 +1,7 @@
 package com.remont.back_end.controller;
 
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import com.remont.back_end.model.MaintenanceRequest;
 import com.remont.back_end.service.MaintenanceRequestService;
@@ -15,6 +16,7 @@ public class MaintenanceRequestController {
 
     private final MaintenanceRequestService maintenanceRequestService;
 
+    @Autowired
     public MaintenanceRequestController(MaintenanceRequestService maintenanceRequestService) {
         this.maintenanceRequestService = maintenanceRequestService;
     }
