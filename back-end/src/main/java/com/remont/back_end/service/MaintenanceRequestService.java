@@ -1,74 +1,19 @@
 package com.remont.back_end.service;
 
-import org.springframework.web.server.ResponseStatusException;
-import org.springframework.http.HttpStatus;
 import com.remont.back_end.model.MaintenanceRequest;
-import com.remont.back_end.repository.MaintenanceRequestRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
-import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public class MaintenanceRequestService {
+public interface MaintenanceRequestService {
 
-    private final MaintenanceRequestRepository maintenanceRequestRepository;
+    List<MaintenanceRequest> getAllRequests();
 
-    public MaintenanceRequestService(MaintenanceRequestRepository maintenanceRequestRepository) {
-        this.maintenanceRequestRepository = maintenanceRequestRepository;
-    }
+    Optional<MaintenanceRequest> getRequestById(Long id);
 
-    public List<MaintenanceRequest> getAllRequests() {
-        return maintenanceRequestRepository.findAll();
-    }
+    MaintenanceRequest createRequest(MaintenanceRequest maintenanceRequest);
 
-    public Optional<MaintenanceRequest> getRequestById(Long id) {
-        return maintenanceRequestRepository.findById(id);
-    }
+    MaintenanceRequest updateRequest(Long id, MaintenanceRequest maintenanceRequest);
 
-    @Transactional
-    public MaintenanceRequest createRequest(MaintenanceRequest maintenanceRequest) {
-        return maintenanceRequestRepository.save(maintenanceRequest);
-    }
+    void deleteRequest(Long id);
 
-    @Transactional
-    public MaintenanceRequest updateRequest(Long id, MaintenanceRequest maintenanceRequest) {
-        return maintenanceRequestRepository.findById(id)
-                .map(existing -> {
-                    copyNonNullProperties(maintenanceRequest, existing);
-                    return maintenanceRequestRepository.save(existing);
-                })
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "MaintenanceRequest não encontrado: " + id));
-    }
-
-    @Transactional
-    public void deleteRequest(Long id) {
-        if (!maintenanceRequestRepository.existsById(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "MaintenanceRequest não encontrado: " + id);
-        }
-        maintenanceRequestRepository.deleteById(id);
-    }
-
-    
-    private void copyNonNullProperties(MaintenanceRequest source, MaintenanceRequest target) {
-        try {
-            for (PropertyDescriptor pd : Introspector.getBeanInfo(MaintenanceRequest.class, Object.class).getPropertyDescriptors()) {
-                String name = pd.getName();
-                if ("id".equals(name)) continue;
-                Method read = pd.getReadMethod();
-                Method write = pd.getWriteMethod();
-                if (read == null || write == null) continue;
-                Object value = read.invoke(source);
-                if (value != null) {
-                    write.invoke(target, value);
-                }
-            }
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao copiar propriedades de MaintenanceRequest", e);
-        }
-    }
 }
