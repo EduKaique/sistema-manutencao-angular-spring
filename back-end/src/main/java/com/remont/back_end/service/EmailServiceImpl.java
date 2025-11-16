@@ -20,7 +20,7 @@ public class EmailServiceImpl implements EmailService {
     private String fromEmail;
 
     /**
-     * Envia a senha aleatória para o cliente no ato do autocadastro (RF001).
+     * Envia a senha aleatória para o cliente no ato do autocadastro.
      */
     @Override
     public void sendRandomPasswordEmail(String toEmail, String password) {
@@ -33,7 +33,7 @@ public class EmailServiceImpl implements EmailService {
             message.setText("Olá!\n\n"
                     + "Seu cadastro em nosso sistema de manutenções foi realizado com sucesso.\n\n"
                     + "Seu login é o seu e-mail (" + toEmail + ").\n"
-                    + "Sua senha de acesso inicial é: " + password + "\n\n"
+                    + "Sua senha de acesso é: " + password + "\n\n"
                     + "Recomendamos que você altere esta senha no seu primeiro acesso.\n\n"
                     + "Atenciosamente,\n"
                     + "Equipe Remont.");

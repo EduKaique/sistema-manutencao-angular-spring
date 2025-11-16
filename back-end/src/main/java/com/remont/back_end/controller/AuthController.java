@@ -1,10 +1,10 @@
 package com.remont.back_end.controller;
 
-import com.remont.back_end.dto.AuthResponseDTO;
+import com.remont.back_end.dto.LoginResponseDTO;
 import com.remont.back_end.dto.ClientDTO;
 import com.remont.back_end.dto.ClientRegisterDTO;
 import com.remont.back_end.dto.LoginRequestDTO;
-import com.remont.back_end.service.AuthService;
+import com.remont.back_end.service.LoginService;
 import com.remont.back_end.service.RegistrationService;
 
 import jakarta.validation.Valid;
@@ -23,18 +23,15 @@ import org.springframework.security.core.AuthenticationException;
 public class AuthController {
 
     @Autowired
-    private AuthService authService; 
+    private LoginService loginService; 
 
     @Autowired
     private RegistrationService registrationService;
 
-    /**
-     * Endpoint público para realizar o login no sistema (RF002).
-     */
     @PostMapping("/login")
-    public ResponseEntity<AuthResponseDTO> login(@Valid @RequestBody LoginRequestDTO loginRequest) {
+    public ResponseEntity<LoginResponseDTO> login(@Valid @RequestBody LoginRequestDTO loginRequest) {
         try {
-            AuthResponseDTO response = authService.login(loginRequest);
+            LoginResponseDTO response = loginService.login(loginRequest);
             return ResponseEntity.ok(response);
         } catch (AuthenticationException e) {
             return ResponseEntity.status(401).body(null); 

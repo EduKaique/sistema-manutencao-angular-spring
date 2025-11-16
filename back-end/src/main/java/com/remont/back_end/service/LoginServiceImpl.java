@@ -1,6 +1,6 @@
 package com.remont.back_end.service;
 
-import com.remont.back_end.dto.AuthResponseDTO;
+import com.remont.back_end.dto.LoginResponseDTO;
 import com.remont.back_end.dto.LoginRequestDTO;
 import com.remont.back_end.model.User;
 import com.remont.back_end.repository.UserRepository;
@@ -14,8 +14,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthServiceImpl implements AuthService {
-
+public class LoginServiceImpl implements LoginService 
+ {
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -29,7 +29,7 @@ public class AuthServiceImpl implements AuthService {
      * Processamento de login.
      */
     @Override
-    public AuthResponseDTO login(LoginRequestDTO loginRequest) throws AuthenticationException {
+    public LoginResponseDTO login(LoginRequestDTO loginRequest) throws AuthenticationException {
         
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                 loginRequest.getEmail(),
@@ -45,6 +45,6 @@ public class AuthServiceImpl implements AuthService {
 
         String token = tokenService.generateToken(user);
 
-        return new AuthResponseDTO(token, user.getName(), user.getRole().name());
+        return new LoginResponseDTO(token, user.getName(), user.getRole().name());
     }
 }
