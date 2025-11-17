@@ -4,13 +4,13 @@ package com.remont.back_end.dto;
  * DTO para a resposta de autenticação.
  * Envia o token de acesso (JWT) e informações básicas do usuário.
  */
-public class AuthResponseDTO {
+public class LoginResponseDTO {
 
     private String token;
     private String userName;
     private String userRole; 
 
-    public AuthResponseDTO(String token, String userName, String userRole) {
+    public LoginResponseDTO(String token, String userName, String userRole) {
         this.token = token;
         this.userName = userName;
         this.userRole = userRole;
