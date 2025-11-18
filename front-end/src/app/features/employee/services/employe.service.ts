@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Employee, Role } from '../../../shared/models/employee';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
-const LS_KEY = "funcionarios";
+const API_URL = 'http://localhost:8080/api/employees';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeService {
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
     getCargos(): { value: Role, label: string }[] {
     return Object.values(Role).map(role => ({
@@ -16,40 +18,23 @@ export class EmployeService {
     }));
   }
 
-  getEmployees(): Employee[] {
-    const employees = localStorage[LS_KEY];
-    return employees ? JSON.parse(employees) : [];
+  getEmployees(): Observable<Employee[]> {
+    return this.http.get<Employee[]>(API_URL);
   }
 
-  getEmployeeById(id : number): Employee | undefined {
-    const employees = this.getEmployees();
-    return employees.find(emp => emp.id === id);
+  getEmployeeById(id : number): Observable<Employee> {
+    return this.http.get<Employee>(`${API_URL}/${id}`);
   }
 
-  addEmployee(employee: Employee): void {
-    const employees = this.getEmployees();
-    employee.id = new Date().getTime();
-
-    employees.push(employee);
-    localStorage[LS_KEY] = JSON.stringify(employees);
+  addEmployee(employee: Employee): Observable<Employee> {
+    return this.http.post<Employee>(API_URL, employee);
   }
 
-  updateEmployee(employee: Employee): void {
-    const employees = this.getEmployees();
-    
-    employees.forEach( (obj, index, objs) => {
-      if(employee.id === obj.id) {
-        objs[index] = employee
-      }
-    });
-
-    localStorage[LS_KEY] = JSON.stringify(employees);
+  updateEmployee(employee: Employee): Observable<Employee> {
+    return this.http.put<Employee>(`${API_URL}/${employee.id}`, employee);
   }
 
-  deleteEmployee(id: number): void {
-    let employees = this.getEmployees();
-
-    employees = employees.filter(employee => employee.id !== id);
-    localStorage[LS_KEY] = JSON.stringify(employees);
+  deleteEmployee(id: number): Observable<void> {
+    return this.http.delete<void>(`${API_URL}/${id}`);
   }
 }
