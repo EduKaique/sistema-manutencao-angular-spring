@@ -2,7 +2,7 @@ package com.remont.back_end.service;
 
 import com.remont.back_end.dto.ServiceRequestCreateDTO;
 import com.remont.back_end.dto.ServiceRequestResponseDTO;
-import com.remont.back_end.exception.ResourceNotFoundException; // (Crie esta classe)
+import com.remont.back_end.exception.ResourceNotFoundException;
 import com.remont.back_end.model.CategoryEquipment;
 import com.remont.back_end.model.Client;
 import com.remont.back_end.model.RequestHistory;
