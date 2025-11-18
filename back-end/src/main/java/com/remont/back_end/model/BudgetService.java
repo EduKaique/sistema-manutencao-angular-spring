@@ -1,12 +1,8 @@
 package com.remont.back_end.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonIgnore; // Importante para evitar loop infinito no JSON
 
-/**
- * Tabela intermediária para relacionamento muitos-para-muitos
- * entre Orçamentos e Serviços
- */
 @Entity
 @Table(name = "servicos_orcamento")
 public class BudgetService {
@@ -15,44 +11,28 @@ public class BudgetService {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @NotNull(message = "O ID do serviço é obrigatório")
-    @Column(name = "servico_id", nullable = false)
-    private Long servicoId;
+    @ManyToOne
+    @JoinColumn(name = "servico_id", nullable = false)
+    private ServiceItem serviceItem;
     
-    @NotNull(message = "O ID do orçamento é obrigatório")
-    @Column(name = "orcamento_id", nullable = false)
-    private Long orcamentoId;
+    @ManyToOne
+    @JoinColumn(name = "orcamento_id", nullable = false)
+    @JsonIgnore 
+    private Budget budget;
 
-    // Construtores
     public BudgetService() {}
     
-    public BudgetService(Long servicoId, Long orcamentoId) {
-        this.servicoId = servicoId;
-        this.orcamentoId = orcamentoId;
+    public BudgetService(ServiceItem serviceItem, Budget budget) {
+        this.serviceItem = serviceItem;
+        this.budget = budget;
     }
 
-    // Getters e Setters
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public ServiceItem getServiceItem() { return serviceItem; }
+    public void setServiceItem(ServiceItem serviceItem) { this.serviceItem = serviceItem; }
 
-    public Long getServicoId() {
-        return servicoId;
-    }
-
-    public void setServicoId(Long servicoId) {
-        this.servicoId = servicoId;
-    }
-
-    public Long getOrcamentoId() {
-        return orcamentoId;
-    }
-
-    public void setOrcamentoId(Long orcamentoId) {
-        this.orcamentoId = orcamentoId;
-    }
+    public Budget getBudget() { return budget; }
+    public void setBudget(Budget budget) { this.budget = budget; }
 }

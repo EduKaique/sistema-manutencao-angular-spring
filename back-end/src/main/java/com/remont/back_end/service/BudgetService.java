@@ -1,6 +1,7 @@
 package com.remont.back_end.service;
 
 import com.remont.back_end.dto.BudgetDTO;
+import com.remont.back_end.dto.ServiceItemDTO;
 import com.remont.back_end.model.Budget;
 import java.util.List;
 import java.util.Optional;
@@ -18,4 +19,10 @@ public interface BudgetService {
     Budget update(Long id, BudgetDTO dto);
 
     void delete(Long id);
+
+    void addServiceToBudget(Long budgetId, Long serviceId);
+    
+    void removeServiceFromBudget(Long budgetId, Long serviceId);
+    
+    List<ServiceItemDTO> listServicesFromBudget(Long budgetId);
 }

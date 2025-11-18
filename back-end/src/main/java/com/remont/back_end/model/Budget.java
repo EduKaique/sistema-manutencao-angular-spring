@@ -14,20 +14,17 @@ public class Budget {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // FK para solicitação (mantido como ID simples)
     @Column(nullable = false)
-    private Long requestId;
+    private Long requestId; // FK para solicitação
 
-    // FK para empregado (opcional)
     @Column
-    private Long employeeId;
+    private Long employeeId; // FK para empregado
 
     @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal total;
 
-    // Texto legível dos serviços inclusos (opcional, pode manter por compatibilidade)
-    @Column(nullable = false, length = 2000)
-    private String services;
+    @Column(length = 2000) // Pode ser null se você já tem a lista de itens
+    private String servicesDescription; 
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
@@ -36,43 +33,42 @@ public class Budget {
     private LocalDateTime updatedAt;
 
     @PrePersist
-    public void onCreate() {
-        this.createdAt = LocalDateTime.now();
-    }
+    public void onCreate() { this.createdAt = LocalDateTime.now(); }
 
     @PreUpdate
-    public void onUpdate() {
-        this.updatedAt = LocalDateTime.now();
-    }
+    public void onUpdate() { this.updatedAt = LocalDateTime.now(); }
 
-    // RELACIONAMENTO 1..n para itens de serviço do orçamento
+    // RELACIONAMENTO CORRIGIDO
+    // 'mappedBy = "budget"' refere-se ao campo 'budget' na classe BudgetService
     @OneToMany(mappedBy = "budget", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BudgetService> items = new ArrayList<>();
 
-    // getters e setters básicos
+    // Getters e Setters
     public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
     public Long getRequestId() { return requestId; }
     public void setRequestId(Long requestId) { this.requestId = requestId; }
     public Long getEmployeeId() { return employeeId; }
     public void setEmployeeId(Long employeeId) { this.employeeId = employeeId; }
     public BigDecimal getTotal() { return total; }
     public void setTotal(BigDecimal total) { this.total = total; }
-    public String getServices() { return services; }
-    public void setServices(String services) { this.services = services; }
+    public String getServicesDescription() { return servicesDescription; }
+    public void setServicesDescription(String servicesDescription) { this.servicesDescription = servicesDescription; }
     public LocalDateTime getCreatedAt() { return createdAt; }
     public LocalDateTime getUpdatedAt() { return updatedAt; }
 
     public List<BudgetService> getItems() { return items; }
-    public void setItems(List<BudgetService> items) { this.items = items; }
-
-    // Helpers (opcionais) para gerenciar a associação em memória
-    public void addServiceItem(BudgetService item) {
+    public void setItems(List<BudgetService> items) { 
+        this.items = items; 
+        // Garante a consistência do relacionamento bidirecional
+        if(items != null) {
+            items.forEach(item -> item.setBudget(this));
+        }
+    }
+    
+    // Método auxiliar para adicionar itens facilmente
+    public void addItem(BudgetService item) {
         items.add(item);
         item.setBudget(this);
-    }
-
-    public void removeServiceItem(BudgetService item) {
-        items.remove(item);
-        item.setBudget(null);
     }
 }

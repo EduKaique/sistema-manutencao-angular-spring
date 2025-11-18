@@ -2,7 +2,6 @@ package com.remont.back_end.model;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -27,29 +26,12 @@ public class ServiceItem {
         this.valorServico = valorServico;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public BigDecimal getValorServico() {
-        return valorServico;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public void setValorServico(BigDecimal valorServico) {
-        this.valorServico = valorServico;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = nome; }
+    public BigDecimal getValorServico() { return valorServico; }
+    public void setValorServico(BigDecimal valorServico) { this.valorServico = valorServico; }
 
     @Override
     public boolean equals(Object o) {
@@ -63,14 +45,5 @@ public class ServiceItem {
     public int hashCode() {
         return Objects.hash(getId());
     }
-
-    public List<ServiceItem> findAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
-    }
-
-    public Object findById(Long id2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
-    }
+    
 }
