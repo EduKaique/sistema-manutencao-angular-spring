@@ -8,19 +8,19 @@ import java.util.List;
 
 @Repository
 public interface BudgetServiceRepository extends JpaRepository<BudgetService, Long> {
-    
-    //  Buscar todos os serviços de um orçamento específico
-    List<BudgetService> findByOrcamentoId(Long orcamentoId);
 
-    //  Buscar todos os orçamentos que contêm um serviço específico
-    List<BudgetService> findByServicoId(Long servicoId);
-    
-    //  Verificar se existe um relacionamento específico
-    boolean existsByOrcamentoIdAndServicoId(Long orcamentoId, Long servicoId);
-    
-    //  Deletar um relacionamento específico
-    void deleteByOrcamentoIdAndServicoId(Long orcamentoId, Long servicoId);
-    
-    //  Deletar todos os serviços de um orçamento
-    void deleteByOrcamentoId(Long orcamentoId);
+    // Buscar todos os serviços vinculados a um orçamento
+    List<BudgetService> findByBudget_Id(Long budgetId);
+
+    // Buscar todos os vínculos de um serviço (em quais orçamentos ele aparece)
+    List<BudgetService> findByService_Id(Long serviceId);
+
+    // Verificar se já existe o vínculo orçamento-serviço
+    boolean existsByBudget_IdAndService_Id(Long budgetId, Long serviceId);
+
+    // Remover um vínculo específico
+    void deleteByBudget_IdAndService_Id(Long budgetId, Long serviceId);
+
+    // Remover todos os vínculos de um orçamento
+    void deleteByBudget_Id(Long budgetId);
 }
