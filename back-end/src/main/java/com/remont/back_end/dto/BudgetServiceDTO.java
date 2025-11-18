@@ -2,9 +2,8 @@ package com.remont.back_end.dto;
 
 import jakarta.validation.constraints.NotNull;
 
-/**
- * DTO para a tabela intermediária servicos_orcamento
- */
+//  DTO para a tabela intermediária servicos_orcamento
+
 public class BudgetServiceDTO {
     
     private Long id;
