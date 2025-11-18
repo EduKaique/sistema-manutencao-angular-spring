@@ -84,14 +84,15 @@ export class EmployeeFormComponent implements OnInit {
     };
 
     if (this.isEdit) {
-      employeeData.id = this.data.id;
-      this.employeeService.updateEmployee(employeeData);
+      this.employeeService.updateEmployee(employeeData).subscribe(() => {
+      this.dialogref.close(true);
+    });
     } else {
-      this.employeeService.addEmployee(employeeData);
-    }
-    
-    this.dialogref.close(true);
-  }
+      this.employeeService.addEmployee(employeeData).subscribe(() => {
+      this.dialogref.close(true);
+    });
+  }   
+}
 
   onCancel(): void {
     this.dialogref.close(false);

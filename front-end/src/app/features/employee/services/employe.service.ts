@@ -1,55 +1,62 @@
 import { Injectable } from '@angular/core';
 import { Employee, Role } from '../../../shared/models/employee';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
-const LS_KEY = "funcionarios";
+const API_URL = 'http://localhost:8080/api/employees';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeService {
-  constructor() { }
 
-    getCargos(): { value: Role, label: string }[] {
+  constructor(private http: HttpClient) { }
+
+  /**
+   * Retorna a lista de cargos disponíveis baseada no Enum Role.
+   * Usado para preencher o <select> de cargos disponíveis no formulário.
+   */
+  getCargos(): { value: Role, label: string }[] {
     return Object.values(Role).map(role => ({
       value: role,
       label: role.toString()
     }));
   }
 
-  getEmployees(): Employee[] {
-    const employees = localStorage[LS_KEY];
-    return employees ? JSON.parse(employees) : [];
+  /**
+   * Realiza uma chamada GET para a API.
+   * Retorna a lista completa de funcionários cadastrados no banco.
+   */
+  getEmployees(): Observable<Employee[]> {
+    return this.http.get<Employee[]>(API_URL);
   }
 
-  getEmployeeById(id : number): Employee | undefined {
-    const employees = this.getEmployees();
-    return employees.find(emp => emp.id === id);
+  /**
+   * Busca os detalhes de um funcionário específico pelo ID.
+   */
+  getEmployeeById(id: number): Observable<Employee> {
+    return this.http.get<Employee>(`${API_URL}/${id}`);
   }
 
-  addEmployee(employee: Employee): void {
-    const employees = this.getEmployees();
-    employee.id = new Date().getTime();
-
-    employees.push(employee);
-    localStorage[LS_KEY] = JSON.stringify(employees);
+  /**
+   * Envia um novo funcionário (POST) para o backend.
+   */
+  addEmployee(employee: Employee): Observable<Employee> {
+    return this.http.post<Employee>(API_URL, employee);
   }
 
-  updateEmployee(employee: Employee): void {
-    const employees = this.getEmployees();
-    
-    employees.forEach( (obj, index, objs) => {
-      if(employee.id === obj.id) {
-        objs[index] = employee
-      }
-    });
-
-    localStorage[LS_KEY] = JSON.stringify(employees);
+  /**
+   * Atualiza os dados de um funcionário existente (PUT).
+   */
+  updateEmployee(employee: Employee): Observable<Employee> {
+    return this.http.put<Employee>(`${API_URL}/${employee.id}`, employee);
   }
 
-  deleteEmployee(id: number): void {
-    let employees = this.getEmployees();
-
-    employees = employees.filter(employee => employee.id !== id);
-    localStorage[LS_KEY] = JSON.stringify(employees);
+  /**
+   * Remove um funcionário pelo ID (DELETE).
+   * Realiza uma exclusão lógica (inativação).
+   */
+  deleteEmployee(id: number): Observable<void> {
+    return this.http.delete<void>(`${API_URL}/${id}`);
   }
 }

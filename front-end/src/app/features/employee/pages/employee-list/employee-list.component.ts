@@ -50,8 +50,9 @@ export class EmployeeListComponent implements OnInit {
   }
 
   loadEmployees(): void {
-    const employees = this.employeeService.getEmployees();
-    this.dataSource.data = employees;
+    this.employeeService.getEmployees().subscribe(employees => {
+      this.dataSource.data = employees;
+    });
   }
 
   applyFilter(event: Event): void {
@@ -85,13 +86,14 @@ export class EmployeeListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.employeeService.deleteEmployee(employee.id!);
-        this.loadEmployees();
-        this.snackBar.open('Funcionário excluído com sucesso!', 'Fechar', {
-          duration: 3000
-        });
-      }
-    });
+        if (result) {
+          this.employeeService.deleteEmployee(employee.id!).subscribe(() => {
+            this.loadEmployees();
+            this.snackBar.open('Funcionário excluído com sucesso!', 'Fechar', {
+              duration: 3000
+            });
+          });
+        }
+      });
   }
 }
