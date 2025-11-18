@@ -1,9 +1,9 @@
 package com.remont.back_end.service;
 
-import com.remont.back_end.dto.AuthResponseDTO;
+import com.remont.back_end.dto.LoginResponseDTO;
 import com.remont.back_end.dto.LoginRequestDTO;
 
-public interface AuthService {
+public interface LoginService {
     
     /**
      * Processa a tentativa de login.
@@ -11,5 +11,5 @@ public interface AuthService {
      * @return DTO com o token e dados do usuário.
      * @throws org.springframework.security.core.AuthenticationException Se as credenciais forem inválidas.
      */
-    AuthResponseDTO login(LoginRequestDTO loginRequest);
+    LoginResponseDTO login(LoginRequestDTO loginRequest);
 }

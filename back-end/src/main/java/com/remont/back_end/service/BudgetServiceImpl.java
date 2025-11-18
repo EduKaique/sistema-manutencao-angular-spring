@@ -1,20 +1,34 @@
 package com.remont.back_end.service;
 
 import com.remont.back_end.dto.BudgetDTO;
+import com.remont.back_end.dto.ServiceItemDTO;
+import com.remont.back_end.exception.ResourceNotFoundException;
 import com.remont.back_end.model.Budget;
+import com.remont.back_end.model.ServiceItem;
 import com.remont.back_end.repository.BudgetRepository;
+import com.remont.back_end.repository.BudgetServiceRepository;
+import com.remont.back_end.repository.ServiceItemRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
-public class BudgetServiceImpl implements BudgetService{
+public class BudgetServiceImpl implements BudgetService {
 
     private final BudgetRepository budgetRepository;
+    private final ServiceItemRepository serviceItemRepository;
+    private final BudgetServiceRepository linkRepository;
 
-    public BudgetServiceImpl(BudgetRepository budgetRepository) {
+    public BudgetServiceImpl(BudgetRepository budgetRepository,
+                             ServiceItemRepository serviceItemRepository,
+                             BudgetServiceRepository linkRepository) {
         this.budgetRepository = budgetRepository;
+        this.serviceItemRepository = serviceItemRepository;
+        this.linkRepository = linkRepository;
     }
 
     @Override
@@ -33,39 +47,104 @@ public class BudgetServiceImpl implements BudgetService{
     }
 
     @Override
+    @Transactional
     public Budget create(BudgetDTO dto) {
-        Budget b = new Budget();
-        b.setRequestId(dto.getRequestId());
-        b.setEmployeeId(dto.getEmployeeId());
-        b.setTotal(dto.getTotal());
-        b.setServices(dto.getServices());
-        return budgetRepository.save(b);
+        Budget budget = new Budget();
+        budget.setRequestId(dto.getRequestId()); 
+        budget.setEmployeeId(dto.getEmployeeId()); 
+        budget.setTotal(BigDecimal.ZERO);
+        budget.setServicesDescription(""); 
+        
+        return budgetRepository.save(budget);
     }
 
     @Override
+    @Transactional
     public Budget update(Long id, BudgetDTO dto) {
-        Budget b = budgetRepository.findById(id)
-                .orElseThrow();
+        Budget budget = budgetRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Orçamento não encontrado id=" + id));
 
-        // Atualiza apenas campos presentes no DTO (permite atualização parcial)
-        if (dto.getRequestId() != null) {
-            b.setRequestId(dto.getRequestId());
+        if(dto.getEmployeeId() != null) {
+            budget.setEmployeeId(dto.getEmployeeId());
         }
-        if (dto.getEmployeeId() != null) {
-            b.setEmployeeId(dto.getEmployeeId());
-        }
-        if (dto.getTotal() != null) {
-            b.setTotal(dto.getTotal());
-        }
-        if (dto.getServices() != null) {
-            b.setServices(dto.getServices());
-        }
-
-        return budgetRepository.save(b);
+        
+        return budgetRepository.save(budget);
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
+        if (!budgetRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Orçamento não encontrado id=" + id);
+        }
         budgetRepository.deleteById(id);
+    }
+
+
+    @Override
+    public List<ServiceItemDTO> listServicesFromBudget(Long budgetId) {
+        if (!budgetRepository.existsById(budgetId)) {
+            throw new ResourceNotFoundException("Orçamento não encontrado id=" + budgetId);
+        }
+
+        List<com.remont.back_end.model.BudgetService> links = linkRepository.findByBudget_Id(budgetId);
+
+        return links.stream()
+                .map(link -> {
+                    ServiceItem item = link.getServiceItem();
+                    return new ServiceItemDTO(item.getId(), item.getNome(), item.getValorServico());
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void addServiceToBudget(Long budgetId, Long serviceId) {
+        Budget budget = budgetRepository.findById(budgetId)
+                .orElseThrow(() -> new ResourceNotFoundException("Orçamento não encontrado id=" + budgetId));
+
+        ServiceItem serviceItem = serviceItemRepository.findById(serviceId)
+                .orElseThrow(() -> new ResourceNotFoundException("Serviço não encontrado id=" + serviceId));
+
+        if (linkRepository.existsByBudgetAndServiceItem(budget, serviceItem)) {
+            return; 
+        }
+
+        com.remont.back_end.model.BudgetService link = new com.remont.back_end.model.BudgetService(serviceItem, budget);
+        linkRepository.save(link);
+
+        recalcTotal(budget);
+    }
+
+    @Override
+    @Transactional
+    public void removeServiceFromBudget(Long budgetId, Long serviceId) {
+        Budget budget = budgetRepository.findById(budgetId)
+                .orElseThrow(() -> new ResourceNotFoundException("Orçamento não encontrado id=" + budgetId));
+        
+        ServiceItem serviceItem = serviceItemRepository.findById(serviceId)
+                .orElseThrow(() -> new ResourceNotFoundException("Serviço não encontrado id=" + serviceId));
+
+        if (linkRepository.existsByBudgetAndServiceItem(budget, serviceItem)) {
+            linkRepository.deleteByBudgetAndServiceItem(budget, serviceItem);
+            recalcTotal(budget);
+        }
+    }
+
+    private void recalcTotal(Budget budget) {
+        List<com.remont.back_end.model.BudgetService> items = linkRepository.findByBudget_Id(budget.getId());
+
+        BigDecimal total = items.stream()
+                .map(link -> link.getServiceItem().getValorServico())
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        String description = items.stream()
+                .map(link -> link.getServiceItem().getNome())
+                .collect(Collectors.joining(", "));
+
+        budget.setTotal(total);
+        budget.setServicesDescription(description); 
+
+        budgetRepository.save(budget);
     }
 }
