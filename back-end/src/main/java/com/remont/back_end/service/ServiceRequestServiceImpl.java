@@ -96,5 +96,8 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
         history.setStatusId(request.getStatus().getId());
         
         requestHistoryRepository.save(history);
+        
+        // Log da criação do histórico para auditoria
+        System.out.println("Histórico criado para solicitação ID: " + request.getId() + " - " + titulo);
     }
 }
