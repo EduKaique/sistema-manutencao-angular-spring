@@ -14,7 +14,7 @@
           <span class="time"> {{ entry.date | date:'HH:mm' }}</span>
           <div class="info">
             <div class="responsible">{{ getUser(entry.userId) }}</div>
-            <div class="desc">{{ getDescription(entry) }}</div>
+            <div class="desc">{{ getDescription(entry) | async}}</div>
           </div>
       </div>
       </div>

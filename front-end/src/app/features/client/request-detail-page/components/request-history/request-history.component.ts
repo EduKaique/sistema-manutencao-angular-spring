@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable, of } from 'rxjs'; // Adicionado Observable e of
+import { map, catchError } from 'rxjs/operators'; // Adicionado operadores
 import { CommonModule } from '@angular/common';
 import { RequestHistoryService } from '../../../../../core/services/request-history.service';
 import { RequestHistory } from '../../../../../shared/models/request-history';
@@ -12,13 +13,14 @@ type RequestHistoryView = RequestHistory & { status?: Status };
 
 @Component({
   selector: 'app-request-history',
+  standalone: true, // Garanti que é standalone
   imports: [CommonModule, DatePipe],
   templateUrl: './request-history.component.html',
   styleUrl: './request-history.component.css',
 })
-
 export class RequestHistoryComponent implements OnDestroy {
   private _requestId!: number;
+  
   @Input() set requestId(value: number) {
     this._requestId = value;
     this.subscribeHistory();
@@ -32,16 +34,18 @@ export class RequestHistoryComponent implements OnDestroy {
   history: RequestHistoryView[] = [];
 
   constructor(
-    private requestHistoryService: RequestHistoryService, 
-    private statusService: StatusService, 
-    private employeeService: EmployeService) {}
+    private requestHistoryService: RequestHistoryService,
+    private statusService: StatusService,
+    private employeeService: EmployeService
+  ) {}
 
   private subscribeHistory() {
     if (this.historySubscription) {
       this.historySubscription.unsubscribe();
       this.historySubscription = undefined;
     }
-    if (!this.requestId) return;    
+    if (!this.requestId) return;
+    
     this.historySubscription = this.requestHistoryService.getHistoryObsByRequestId(this.requestId).subscribe((history) => {
       this.history = history.map((entry) => ({
         ...entry,
@@ -51,23 +55,31 @@ export class RequestHistoryComponent implements OnDestroy {
     });
   }
 
-  getUser(userId: number): string {
-    const employee = this.employeeService.getEmployeeById(userId);
-    return employee ? employee.name : 'Usuário desconhecido';
+
+  getUser(userId: number): Observable<string> {
+    return this.employeeService.getEmployeeById(userId).pipe(
+      map(employee => employee.name),
+      catchError(() => of('Usuário desconhecido'))
+    );
   }
 
-  getDescription(entry: RequestHistoryView): string {
-  const user = this.getUser(entry.userId);
-  const title = entry.title.toLowerCase();
+  getDescription(entry: RequestHistoryView): Observable<string> {
+    const title = entry.title.toLowerCase();
 
-  if (title.includes('criada')) return 'Solicitação aberta';
-  if (title.includes('orçamento realizado')) return `Orçamento realizado por ${user}`;
-  if (title.includes('aprovada')) return 'Orçamento aprovado';
-  if (title.includes('troca')) return 'Troca de responsável';
-  return entry.title;
-}
-
-    ngOnDestroy(): void {
-      this.historySubscription?.unsubscribe();
+    if (title.includes('criada')) return of('Solicitação aberta');
+    if (title.includes('aprovada')) return of('Orçamento aprovado');
+    if (title.includes('troca')) return of('Troca de responsável');
+    
+    if (title.includes('orçamento realizado')) {
+       return this.getUser(entry.userId).pipe(
+         map(userName => `Orçamento realizado por ${userName}`)
+       );
     }
+
+    return of(entry.title);
   }
+
+  ngOnDestroy(): void {
+    this.historySubscription?.unsubscribe();
+  }
+}
