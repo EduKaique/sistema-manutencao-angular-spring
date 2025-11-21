@@ -29,10 +29,10 @@ INSERT IGNORE INTO users (id, name, email, password, role) VALUES (5, 'José', '
 INSERT IGNORE INTO users (id, name, email, password, role) VALUES (6, 'Joana', 'joana@gmail.com', 'j2IK4ncufg7B96M4SruwHw==$R0x65S+oatz0Owpzv3CsS36xVX0lqO03Z78rYXrv208=', 'ROLE_CLIENT');
 INSERT IGNORE INTO users (id, name, email, password, role) VALUES (7, 'Joaquina', 'joaquina@gmail.com', 'j2IK4ncufg7B96M4SruwHw==$R0x65S+oatz0Owpzv3CsS36xVX0lqO03Z78rYXrv208=', 'ROLE_CLIENT');
 
-INSERT IGNORE INTO employees (user_id, birth_date, active) VALUES
-(1, '1990-01-01', 1),
-(2, '1995-05-20', 1),
-(3, '1988-12-15', 1);
+INSERT IGNORE INTO employees (user_id, birth_date, active, wage, phone, cpf) VALUES
+(1, '1990-01-01', 1, 5000.00, '41999991111', '10020030040'),
+(2, '1995-05-20', 1, 3500.50, '41999992222', '50060070080'),
+(3, '1988-12-15', 1, 4200.00, '41999993333', '90080070060');
 
 INSERT IGNORE INTO clients (user_id, cpf, phone_number, zip_code, street, number, neighborhood, city, state) VALUES
 (4, '11111111111', '41999999991', '80000000', 'Rua das Flores', '100', 'Centro', 'Curitiba', 'PR'),
