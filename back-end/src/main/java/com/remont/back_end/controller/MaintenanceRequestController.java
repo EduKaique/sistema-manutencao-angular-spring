@@ -1,6 +1,8 @@
 package com.remont.back_end.controller;
 
 import com.remont.back_end.dto.BudgetDTO;
+import com.remont.back_end.dto.ClientRequestDetailDTO;
+import com.remont.back_end.dto.EmployeeRequestDetailDTO;
 import com.remont.back_end.dto.MaintenanceRecordDTO;
 import com.remont.back_end.dto.RejectionDTO;
 import com.remont.back_end.security.UserPrincipal;
@@ -49,16 +51,37 @@ public class MaintenanceRequestController {
         return ResponseEntity.ok(maintenanceRequestService.getRequestsForEmployee(authentication.getName()));
     }
 
-    @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('CLIENT', 'EMPLOYEE')")
-    public ResponseEntity<MaintenanceRequestResponseDTO> getRequestById(
+    /**
+     * Visualizar detalhes completos para CLIENTE.
+     * Retorna: Request + Orçamentos + Histórico
+     */
+    @GetMapping("/client/{id}")
+    @PreAuthorize("hasRole('CLIENT')")
+    public ResponseEntity<ClientRequestDetailDTO> getRequestForClient(
             @PathVariable Long id, 
             Authentication authentication) {
-        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-        return ResponseEntity.ok(maintenanceRequestService.getRequestById(id, userPrincipal.getId()));
+        
+        UserPrincipal user = (UserPrincipal) authentication.getPrincipal();
+        return ResponseEntity.ok(
+            maintenanceRequestService.getRequestDetailForClient(id, user.getId())
+        );
     }
 
-    @PostMapping("/{id}/budget")
+    /**
+     * Visualizar detalhes completo para funcionário.
+     * Retorna: Request + Cliente + Orçamentos + Manutenção
+     */
+    @GetMapping("/employee/{id}")
+    @PreAuthorize("hasRole('EMPLOYEE')")
+    public ResponseEntity<EmployeeRequestDetailDTO> getRequestForEmployee(
+            @PathVariable Long id) {
+        
+        return ResponseEntity.ok(
+            maintenanceRequestService.getRequestDetailForEmployee(id)
+        );
+    }
+
+    @PostMapping("/employee/{id}/budget")
     @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<MaintenanceRequestResponseDTO> setBudget(
             @PathVariable Long id, 
@@ -68,7 +91,7 @@ public class MaintenanceRequestController {
         return ResponseEntity.ok(maintenanceRequestService.createBudget(id, dto, userPrincipal.getId()));
     }
 
-    @PostMapping("/{id}/approve")
+    @PostMapping("/client/{id}/approve")
     @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<MaintenanceRequestResponseDTO> approveBudget(
             @PathVariable Long id, 
@@ -77,7 +100,7 @@ public class MaintenanceRequestController {
         return ResponseEntity.ok(maintenanceRequestService.approveBudget(id, userPrincipal.getId()));
     }
 
-    @PostMapping("/{id}/reject")
+    @PostMapping("/client/{id}/reject")
     @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<MaintenanceRequestResponseDTO> rejectBudget(
             @PathVariable Long id, 
@@ -87,7 +110,7 @@ public class MaintenanceRequestController {
         return ResponseEntity.ok(maintenanceRequestService.rejectBudget(id, dto, userPrincipal.getId()));
     }
 
-    @PostMapping("/{id}/rescue")
+    @PostMapping("/client/{id}/rescue")
     @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<MaintenanceRequestResponseDTO> rescueRequest(
             @PathVariable Long id, 
@@ -96,7 +119,7 @@ public class MaintenanceRequestController {
         return ResponseEntity.ok(maintenanceRequestService.rescueRequest(id, userPrincipal.getId()));
     }
 
-    @PostMapping("/{id}/maintenance")
+    @PostMapping("/employee/{id}/maintenance")
     @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<MaintenanceRequestResponseDTO> executeMaintenance(
             @PathVariable Long id, 
@@ -106,7 +129,7 @@ public class MaintenanceRequestController {
         return ResponseEntity.ok(maintenanceRequestService.executeMaintenance(id, dto, userPrincipal.getId()));
     }
 
-    @PostMapping("/{id}/redirect")
+    @PostMapping("/employee/{id}/redirect")
     @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<MaintenanceRequestResponseDTO> redirectMaintenance(
             @PathVariable Long id, 
@@ -116,7 +139,7 @@ public class MaintenanceRequestController {
         return ResponseEntity.ok(maintenanceRequestService.redirectMaintenance(id, targetEmployeeId, userPrincipal.getId()));
     }
 
-    @PostMapping("/{id}/pay")
+    @PostMapping("/client/{id}/pay")
     @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<MaintenanceRequestResponseDTO> payRequest(
             @PathVariable Long id, 
@@ -125,7 +148,7 @@ public class MaintenanceRequestController {
         return ResponseEntity.ok(maintenanceRequestService.payRequest(id, userPrincipal.getId()));
     }
 
-    @PostMapping("/{id}/finalize")
+    @PostMapping("/employee/{id}/finalize")
     @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<MaintenanceRequestResponseDTO> finalizeRequest(
             @PathVariable Long id, 

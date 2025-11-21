@@ -2,6 +2,8 @@ package com.remont.back_end.service;
 
 import java.util.List;
 import com.remont.back_end.dto.BudgetDTO;
+import com.remont.back_end.dto.ClientRequestDetailDTO;
+import com.remont.back_end.dto.EmployeeRequestDetailDTO;
 import com.remont.back_end.dto.MaintenanceRecordDTO;
 import com.remont.back_end.dto.RejectionDTO;
 import com.remont.back_end.dto.MaintenanceRequestCreateDTO;
@@ -15,7 +17,9 @@ public interface MaintenanceRequestService {
 
     List<MaintenanceRequestResponseDTO> getRequestsForEmployee(String employeeEmail);
 
-    MaintenanceRequestResponseDTO getRequestById(Long id, Long userId);
+    ClientRequestDetailDTO getRequestDetailForClient(Long requestId, Long clientId);
+
+    EmployeeRequestDetailDTO getRequestDetailForEmployee(Long requestId);
 
     MaintenanceRequestResponseDTO createBudget(Long requestId, BudgetDTO dto, Long employeeId);
 

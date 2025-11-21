@@ -1,8 +1,11 @@
 package com.remont.back_end.service;
 
 import com.remont.back_end.dto.BudgetDTO;
+import com.remont.back_end.dto.ClientRequestDetailDTO;
+import com.remont.back_end.dto.EmployeeRequestDetailDTO;
 import com.remont.back_end.dto.MaintenanceRecordDTO;
 import com.remont.back_end.dto.RejectionDTO;
+import com.remont.back_end.dto.RequestHistoryDTO;
 import com.remont.back_end.dto.MaintenanceRequestCreateDTO;
 import com.remont.back_end.dto.MaintenanceRequestResponseDTO;
 import com.remont.back_end.exception.ResourceNotFoundException;
@@ -92,18 +95,31 @@ public class MaintenanceRequestServiceImpl implements MaintenanceRequestService 
     }
 
     /**
-     * Obter Solicitação por ID
+     * Listar o detalhe da solicitação (Cliente)
      */
     @Override
     @Transactional(readOnly = true)
-    public MaintenanceRequestResponseDTO getRequestById(Long id, Long userId) {
-        MaintenanceRequest request = findRequestById(id);
+    public ClientRequestDetailDTO getRequestDetailForClient(Long requestId, Long clientId) {
+        MaintenanceRequest request = findRequestById(requestId);
 
-        if (!request.getClient().getId().equals(userId)) {
-            throw new SecurityException("Você não tem permissão para visualizar esta solicitação.");
+        if (!request.getClient().getId().equals(clientId)) {
+            throw new SecurityException("Acesso negado a esta solicitação.");
         }
         
-        return convertToResponseDTO(request);
+        List<RequestHistoryDTO> historyList = historyService.getHistoryByRequestId(requestId);
+
+        return ClientRequestDetailDTO.fromEntity(request, historyList);
+    }
+
+    /**
+     * Listar o detalhe da solicitação (Funcionário)
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public EmployeeRequestDetailDTO getRequestDetailForEmployee(Long requestId) {
+        MaintenanceRequest request = findRequestById(requestId);
+
+        return EmployeeRequestDetailDTO.fromEntity(request);
     }
 
     /**
