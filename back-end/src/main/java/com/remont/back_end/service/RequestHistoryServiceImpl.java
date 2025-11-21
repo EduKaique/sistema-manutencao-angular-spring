@@ -39,7 +39,7 @@ public class RequestHistoryServiceImpl implements RequestHistoryService {
             throw new ResourceNotFoundException("Solicitação não encontrada id=" + requestId);
         }
 
-        return historyRepository.findByRequestIdOrderByOccurrenceDateAsc(requestId)
+        return historyRepository.findByMaintenanceRequest_IdOrderByOccurrenceDateAsc(requestId)
                 .stream()
                 .map(RequestHistoryDTO::fromEntity)
                 .collect(Collectors.toList());
