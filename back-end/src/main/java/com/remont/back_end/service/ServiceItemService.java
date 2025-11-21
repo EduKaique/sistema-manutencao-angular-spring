@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ServiceItemService {
 
-    // ATENÇÃO: o tipo aqui é ServiceItemRepository (não ServiceItem)
     private final ServiceItemRepository repository;
 
     public ServiceItemService(ServiceItemRepository repository) {
@@ -25,7 +25,7 @@ public class ServiceItemService {
     public ServiceItem findByIdOrThrow(Long id) {
         // orElseThrow funciona em Optional (Java 8+). Se ainda der erro,
         // é porque repository NÃO é um JpaRepository (verifique o tipo/imports).
-        return repository.findById(id)
+        return repository.findById(Objects.requireNonNull(id))
                 .orElseThrow();
     }
 
@@ -56,12 +56,12 @@ public class ServiceItemService {
             s.setValorServico(dto.getValorServico());
         }
 
-        return repository.save(s);
+        return repository.save(Objects.requireNonNull(s));
     }
 
     @Transactional
     public void delete(Long id) {
         ServiceItem s = findByIdOrThrow(id);
-        repository.delete(s);
+        repository.delete(Objects.requireNonNull(s));
     }
 }

@@ -1,26 +1,24 @@
-package com.remont.back_end.config; 
+package com.remont.back_end.security;
 
-import com.remont.back_end.service.TokenService;
-import com.remont.back_end.service.UserDetailsServiceImpl;
-
+import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 /**
- * Filtro que intercepta todas as requisições para validar o Token JWT.
+ * Filtro de autenticação JWT que intercepta as requisições HTTP para validar o token JWT.
  */
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -28,8 +26,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private TokenService tokenService;
 
-    @Autowired
-    private UserDetailsServiceImpl userDetailsService; 
     @Override
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,
@@ -45,29 +41,28 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         final String token = authHeader.substring(7);
-        final String userEmail;
 
         try {
-            userEmail = tokenService.validateTokenAndGetSubject(token);
-        } catch (Exception e) {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            response.getWriter().write("Token inválido ou expirado");
-            return;
-        }
+            DecodedJWT jwt = tokenService.validateToken(token);
 
-        if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+            String email = jwt.getSubject();
+            Long id = jwt.getClaim("id").asLong();
+            String role = jwt.getClaim("role").asString();
+
+            List<SimpleGrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(role));
+
+            UserPrincipal principal = new UserPrincipal(id, email, role);
 
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                    userDetails,
+                    principal,
                     null,
-                    userDetails.getAuthorities()
+                    authorities
             );
 
-            authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
             SecurityContextHolder.getContext().setAuthentication(authToken);
+
+        } catch (Exception e) {
+            SecurityContextHolder.clearContext();
         }
 
         filterChain.doFilter(request, response);

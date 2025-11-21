@@ -1,4 +1,4 @@
-package com.remont.back_end.config;
+package com.remont.back_end.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

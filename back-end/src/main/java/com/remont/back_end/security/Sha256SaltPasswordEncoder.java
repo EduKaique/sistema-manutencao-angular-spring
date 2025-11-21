@@ -1,4 +1,4 @@
-package com.remont.back_end.config;
+package com.remont.back_end.security;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import java.security.MessageDigest;
