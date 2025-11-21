@@ -1,19 +1,35 @@
 package com.remont.back_end.service;
 
-import com.remont.back_end.model.MaintenanceRequest;
 import java.util.List;
-import java.util.Optional;
+import com.remont.back_end.dto.BudgetDTO;
+import com.remont.back_end.dto.MaintenanceRecordDTO;
+import com.remont.back_end.dto.RejectionDTO;
+import com.remont.back_end.dto.MaintenanceRequestCreateDTO;
+import com.remont.back_end.dto.MaintenanceRequestResponseDTO;
 
 public interface MaintenanceRequestService {
 
-    List<MaintenanceRequest> getAllRequests();
+    MaintenanceRequestResponseDTO createMaintenanceRequest(MaintenanceRequestCreateDTO createDTO, Long clientId);
 
-    Optional<MaintenanceRequest> getRequestById(Long id);
+    List<MaintenanceRequestResponseDTO> getRequestsForClient(Long clientId);
 
-    MaintenanceRequest createRequest(MaintenanceRequest maintenanceRequest);
+    List<MaintenanceRequestResponseDTO> getRequestsForEmployee(String employeeEmail);
 
-    MaintenanceRequest updateRequest(Long id, MaintenanceRequest maintenanceRequest);
+    MaintenanceRequestResponseDTO getRequestById(Long id, Long userId);
 
-    void deleteRequest(Long id);
+    MaintenanceRequestResponseDTO createBudget(Long requestId, BudgetDTO dto, Long employeeId);
 
+    MaintenanceRequestResponseDTO approveBudget(Long requestId, Long clientId);
+
+    MaintenanceRequestResponseDTO rejectBudget(Long requestId, RejectionDTO dto, Long clientId);
+
+    MaintenanceRequestResponseDTO rescueRequest(Long requestId, Long clientId);
+
+    MaintenanceRequestResponseDTO executeMaintenance(Long requestId, MaintenanceRecordDTO dto, Long employeeId);
+
+    MaintenanceRequestResponseDTO redirectMaintenance(Long requestId, Long targetEmployeeId, Long employeeId);
+
+    MaintenanceRequestResponseDTO payRequest(Long requestId, Long clientId);
+
+    MaintenanceRequestResponseDTO finalizeRequest(Long requestId, Long employeeId);
 }

@@ -9,7 +9,7 @@ import lombok.Data;
  * DTO para receber os dados da criação de uma solicitação.
  */
 @Data
-public class ServiceRequestCreateDTO {
+public class MaintenanceRequestCreateDTO {
 
     @NotBlank(message = "O nome do equipamento é obrigatório")
     @Size(max = 100)

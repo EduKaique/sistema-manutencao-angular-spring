@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
  * DTO para enviar a resposta de uma solicitação criada ou consultada.
  */
 @Data
-public class ServiceRequestResponseDTO {
+public class MaintenanceRequestResponseDTO {
 
     private Long id;
     private String equipmentName;

@@ -1,13 +1,13 @@
 
-INSERT IGNORE INTO status (id, name, color) VALUES 
-(1, 'ABERTA', '#627877'),
-(2, 'ORÇADA', '#7C3804'),
-(3, 'REJEITADA', '#FF5E5B'),
-(4, 'APROVADA', '#FFAE36'),
-(5, 'REDIRECIONADA', '#8A84E2'),
-(6, 'ARRUMADA', '#2B3E61'),
-(7, 'PAGA', '#EC7505'),
-(8, 'FINALIZADA', '#136947');
+-- INSERT IGNORE INTO status (id, name, color) VALUES 
+-- (1, 'ABERTA', '#627877'),
+-- (2, 'ORÇADA', '#7C3804'),
+-- (3, 'REJEITADA', '#FF5E5B'),
+-- (4, 'APROVADA', '#FFAE36'),
+-- (5, 'REDIRECIONADA', '#8A84E2'),
+-- (6, 'ARRUMADA', '#2B3E61'),
+-- (7, 'PAGA', '#EC7505'),
+-- (8, 'FINALIZADA', '#136947');
 
 INSERT IGNORE INTO category (id, name, icon) VALUES
 (1, 'Notebook', 'laptop'),

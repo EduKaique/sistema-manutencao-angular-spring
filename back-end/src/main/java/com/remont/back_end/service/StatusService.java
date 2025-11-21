@@ -8,6 +8,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
 import java.util.Optional;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class StatusService {
@@ -19,7 +20,7 @@ public class StatusService {
     }
 
     public Optional<Status> getById(Short id) {
-        return repository.findById(id);
+        return repository.findById(Objects.requireNonNull(id));
     }
 
     public Status create(Status status) {
@@ -30,7 +31,7 @@ public class StatusService {
     }
 
     public Status update(Short id, Status newStatus) {
-        Status existing = repository.findById(id)
+        Status existing = repository.findById(Objects.requireNonNull(id))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Status não encontrado"));
 
         if (newStatus.getName() != null) {
@@ -40,11 +41,11 @@ public class StatusService {
             existing.setColor(newStatus.getColor());
         }
 
-        return repository.save(existing);
+        return repository.save(Objects.requireNonNull(existing));
     }
 
     public void delete(Short id) {
-        if (!repository.existsById(id)) {
+        if (!repository.existsById(Objects.requireNonNull(id))) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Status não encontrado");
         }
         repository.deleteById(id);

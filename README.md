@@ -9,17 +9,13 @@ O objetivo é criar um sistema completo para gerenciamento de ordens de serviço
 Este projeto foi construído com as seguintes tecnologias:
 
 -   **Frontend:** [Angular 19](https://v19.angular.dev/overview)
--   **Backend:** [Spring Boot 3](https://spring.io/projects/spring-boot)
+-   **Backend:** [Spring Boot 3 - Java 21](https://spring.io/projects/spring-boot)
 -   **Banco de Dados:** [MySQL](https://www.mysql.com/)
 
 ## 📋 Pré-requisitos
 
-Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
-*   [JDK 21 (LTS)](https://www.oracle.com/java/technologies/downloads/)
-*   [Node.js 20.+ e npm](https://nodejs.org/en/)
-*   [Angular CLI 19](https://angular.io/cli)
-*   [MySQL Server](https://dev.mysql.com/downloads/mysql/)
-*   Uma IDE de sua preferência (ex: VS Code, IntelliJ IDEA)
+Antes de começar, você vai precisar ter instalado em sua máquina:
+*   [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 
 ## 🚀 Rodando o Projeto
 
@@ -31,26 +27,11 @@ git clone https://github.com/EduKaique/sistema-manutencao-angular-spring
 cd ./sistema-manutencao-angular-spring
 ```
 
-### 2. Configurar o Backend (Spring Boot)
-1.  Abra a pasta do projeto backend na sua IDE.
-2.  Suba a docker compose do banco de dados mysql.
+### 2. Subir o docker
+- Suba a docker compose da aplicação (front, back e mysql).
     ```bash
     docker compose up -d
     ```
-3.  Execute a aplicação a partir da sua IDE ou via linha de comando.
 
-### 3. Configurar o Frontend (Angular)
-1.  Abra um novo terminal e navegue até a pasta front-end.
-2.  Instale as dependências do Node.js:
-    ```bash
-    npm install
-    ```
-3.  Inicie o servidor de desenvolvimento do Angular:
-    ```bash
-    ng serve
-    ```
-4.  Acesse `http://localhost:4200/` no seu navegador para ver a aplicação em funcionamento.
-
----
 
 Desenvolvido para a disciplina de Desenvolvimento Web 2 - UFPR.

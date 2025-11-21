@@ -1,53 +1,54 @@
 package com.remont.back_end.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * Entidade principal para a Solicitação de Manutenção (RF004).
+ */
+@Data
 @Entity
-@Table(name = "maintenance_request")
+@Table(name = "maintenance_requests")
 public class MaintenanceRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "maintenance_desc", nullable = false)
-    private String maintenanceDesc;
+    @Column(nullable = false, length = 100)
+    private String equipmentName;
 
-    @Column(name = "guidance_client")
-    private String guidanceClient;
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String defectDescription;
 
-    @Column(name = "request_id")
-    private Long requestId;
+    @Column(nullable = false)
+    private LocalDateTime requestDate;
 
-    public Long getId() {
-        return id;
-    }
+    @Column(nullable = true, columnDefinition = "TEXT")
+    private String rejectionReason;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false, length = 20)
+    private StatusEnum status;
 
-    public String getMaintenanceDesc() {
-        return maintenanceDesc;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id", nullable = false)
+    private Client client;
 
-    public void setMaintenanceDesc(String maintenanceDesc) {
-        this.maintenanceDesc = maintenanceDesc;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", nullable = false)
+    private CategoryEquipment category;
 
-    public String getGuidanceClient() {
-        return guidanceClient;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_id", nullable = true)
+    private Employee assignedEmployee;
 
-    public void setGuidanceClient(String guidanceClient) {
-        this.guidanceClient = guidanceClient;
-    }
+    @OneToMany(mappedBy = "maintenanceRequest", cascade = CascadeType.ALL)
+    private List<Budget> budgets = new ArrayList<>();
 
-    public Long getRequestId() {
-        return requestId;
-    }
-
-    public void setRequestId(Long requestId) {
-        this.requestId = requestId;
-    }
+    @OneToOne(mappedBy = "maintenanceRequest", cascade = CascadeType.ALL)
+    private MaintenanceRecord maintenanceRecord;
 }

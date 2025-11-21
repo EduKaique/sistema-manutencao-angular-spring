@@ -5,6 +5,7 @@ import com.remont.back_end.model.CategoryEquipment;
 import com.remont.back_end.repository.CategoryEquipmentRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -23,17 +24,17 @@ public class CategoryEquipmentServiceImpl implements CategoryEquipmentService{
 
     @Override
     public Optional<CategoryEquipment> getCategoryById(Integer id) {
-        return categoryEquipmentRepository.findById(id);
+        return categoryEquipmentRepository.findById(Objects.requireNonNull(id));
     }
 
     @Override
     public CategoryEquipment saveCategory(CategoryEquipment categoryEquipment) {
-        return categoryEquipmentRepository.save(categoryEquipment);
+        return categoryEquipmentRepository.save(Objects.requireNonNull(categoryEquipment));
     }
 
     @Override
     public CategoryEquipment updateCategory(Integer id, CategoryEquipmentDTO categoryDTO) {
-        CategoryEquipment existingCategory = categoryEquipmentRepository.findById(id)
+        CategoryEquipment existingCategory = categoryEquipmentRepository.findById(Objects.requireNonNull(id))
             .orElseThrow(() -> new IllegalArgumentException("Categoria com id " + id + " não foi encontrada."));
         
         existingCategory.setName(categoryDTO.getName());
@@ -44,7 +45,7 @@ public class CategoryEquipmentServiceImpl implements CategoryEquipmentService{
 
     @Override
     public void deleteCategory(Integer id) {
-        if (!categoryEquipmentRepository.existsById(id)) {
+        if (!categoryEquipmentRepository.existsById(Objects.requireNonNull(id))) {
             throw new IllegalArgumentException("Categoria com id " + id + " não encontrada.");
         }
         categoryEquipmentRepository.deleteById(id);
