@@ -14,15 +14,18 @@ export class RequestHistoryService {
   private historySubject = new BehaviorSubject<RequestHistory[]>(this.loadFromLocalStorage());
 
   private loadFromLocalStorage() {
-    const requestHistory = localStorage.getItem(LS_CHAVE);
-    if (!requestHistory) return [];
-    try {
-      const arr: RequestHistory[] = JSON.parse(requestHistory);
-      return arr.map((entry) => ({  ...entry, date: new Date(entry.date) }));
-    } catch {
-      return [];
-    }
+  const requestHistory = localStorage.getItem(LS_CHAVE);
+  if (!requestHistory) return [];
+  try {
+    const arr: RequestHistory[] = JSON.parse(requestHistory);
+    return arr.map((entry) => ({
+      ...entry,
+      date: entry.date ? new Date(entry.date) : new Date(0),
+    }));
+  } catch {
+    return [];
   }
+}
 
   private saveToLocalStorage(history: RequestHistory[]) {
     localStorage.setItem(LS_CHAVE, JSON.stringify(history));
@@ -45,6 +48,6 @@ export class RequestHistoryService {
     const requestHistory = this.loadFromLocalStorage();   
     entry.id = new Date().getTime();
     requestHistory.push(entry); 
-    this.saveToLocalStorage(requestHistory);
+    //this.saveToLocalStorage(requestHistory);
   }
 }
