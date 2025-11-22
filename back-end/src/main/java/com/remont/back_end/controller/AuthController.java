@@ -1,5 +1,6 @@
 package com.remont.back_end.controller;
 
+
 import com.remont.back_end.dto.LoginResponseDTO;
 import com.remont.back_end.dto.ClientDTO;
 import com.remont.back_end.dto.ClientRegisterDTO;
@@ -15,11 +16,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.security.core.AuthenticationException; 
 
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin(origins = {
+    "http://localhost:4200", 
+    "https://refactored-space-fiesta-6qrxj44wpjw245xv-4200.app.github.dev"
+})
 public class AuthController {
 
     @Autowired
