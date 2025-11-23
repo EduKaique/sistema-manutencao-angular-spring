@@ -13,6 +13,8 @@ public class EmployeeDTO {
     private LocalDate birthDate;
     private Double wage;
     private boolean active;
+    private String role;
+    private String password;
 
     public EmployeeDTO() {
     }
@@ -91,6 +93,22 @@ public class EmployeeDTO {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 

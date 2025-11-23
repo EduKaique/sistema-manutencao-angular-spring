@@ -17,6 +17,7 @@ import { WarningDialogComponent } from '../../../../shared/components/warning-di
   selector: 'app-employee-list',
   templateUrl: './employee-list.component.html',
   styleUrl: './employee-list.component.css',
+  standalone: true,
   imports: [
     MatTableModule,
     MatButtonModule,
@@ -50,8 +51,17 @@ export class EmployeeListComponent implements OnInit {
   }
 
   loadEmployees(): void {
-    this.employeeService.getEmployees().subscribe(employees => {
-      this.dataSource.data = employees;
+    this.employeeService.getEmployees().subscribe({
+      next: (employees) => {
+        this.dataSource.data = employees;
+      },
+      error: (err) => {
+        console.error('Erro ao buscar funcionários', err);
+        // Se der 403, é falta do Interceptor (Token)
+        if (err.status === 403) {
+          this.snackBar.open('Sessão expirada ou sem permissão. Faça login novamente.', 'OK', { duration: 5000 });
+        }
+      }
     });
   }
 
@@ -79,21 +89,21 @@ export class EmployeeListComponent implements OnInit {
   deleteEmployee(employee: Employee): void {
     const dialogRef = this.dialog.open(WarningDialogComponent, {
       width: '450px',
-      data: { 
-        title: 'Atenção!', 
-        message: `Você tem certeza que deseja excluir o funcionário ${employee.name}? Esta ação não pode ser desfeita.` 
-      }
+      data: {
+        title: 'Atenção!',
+        message: `Você tem certeza que deseja excluir o funcionário ${employee.name}? Esta ação não pode ser desfeita.`,
+      },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.employeeService.deleteEmployee(employee.id!).subscribe(() => {
-            this.loadEmployees();
-            this.snackBar.open('Funcionário excluído com sucesso!', 'Fechar', {
-              duration: 3000
-            });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.employeeService.deleteEmployee(employee.id!).subscribe(() => {
+          this.loadEmployees();
+          this.snackBar.open('Funcionário excluído com sucesso!', 'Fechar', {
+            duration: 3000,
           });
-        }
-      });
+        });
+      }
+    });
   }
 }

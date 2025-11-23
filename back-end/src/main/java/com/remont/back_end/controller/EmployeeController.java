@@ -2,6 +2,7 @@ package com.remont.back_end.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin; 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import com.remont.back_end.service.EmployeeService;
 
 @RestController
 @RequestMapping("/api/employees")
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*") 
 public class EmployeeController {
 
     @Autowired

@@ -1,21 +1,20 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap, map } from 'rxjs';
 import { Router } from '@angular/router';
+import { API_URL } from '../../configs/api.token';
 
-// Interface da resposta exata do Backend (Spring Boot)
 interface LoginResponseApi {
   token: string;
   userName: string;
   userRole: string;
 }
 
-// Ajustamos o tipo para usar 'userAccess' ao invés de 'userType'
 type UserState = {
   id?: number;
   name: string;
   email?: string;
-  userAccess: 'employee' | 'client'; // <--- CORRIGIDO AQUI (era userType)
+  userAccess: 'employee' | 'client'; 
   token: string;
 } | null;
 
@@ -23,12 +22,13 @@ type UserState = {
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/api'; 
+  private http = inject(HttpClient);
+  private apiBaseUrl = inject(API_URL); 
+  private router = inject(Router);
   
   private currentUserSubject = new BehaviorSubject<UserState>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
-  // Atualizado para ler 'userAccess'
   public isEmployee$: Observable<boolean> = this.currentUser$.pipe(
     map(user => user?.userAccess === 'employee')
   );
@@ -37,10 +37,7 @@ export class AuthService {
     map(user => user !== null)
   );
 
-  constructor(
-    private http: HttpClient,
-    private router: Router
-  ) {
+  constructor() {
     this.loadInitialUser();
   }
 
@@ -62,17 +59,16 @@ export class AuthService {
   }
 
   public login(email: string, password: string): Observable<UserState> {
-    return this.http.post<LoginResponseApi>(`${this.apiUrl}/login`, {
+    return this.http.post<LoginResponseApi>(`${this.apiBaseUrl}/auth/login`, {
       email,     
       password
     }).pipe(
       map(response => {
-        // Converte a Role do Java para o seu tipo do Front
         const accessType = this.mapRoleToUserAccess(response.userRole);
 
         const user: UserState = {
           name: response.userName,
-          userAccess: accessType, // <--- CORRIGIDO AQUI (atribuindo à propriedade correta)
+          userAccess: accessType, 
           token: response.token,
         };
         
@@ -93,7 +89,6 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-  // Renomeei o método para ficar semântico
   private mapRoleToUserAccess(role: string): 'employee' | 'client' {
     if (role === 'ROLE_EMPLOYEE') return 'employee';
     if (role === 'ROLE_CLIENT') return 'client';
