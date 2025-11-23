@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap, map } from 'rxjs';
 import { Router } from '@angular/router';
 import { API_URL } from '../../configs/api.token';
+import { RegisterRequest } from '../../../shared/models/register-request';
 
 interface LoginResponseApi {
   token: string;
@@ -87,6 +88,14 @@ export class AuthService {
     localStorage.removeItem('token');
     this.currentUserSubject.next(null);
     this.router.navigate(['/login']);
+  }
+
+  /**
+   * Realiza o cadastro de um novo cliente.
+   * @param data Objeto com dados pessoais e endereço
+   */
+  public signup(data: RegisterRequest): Observable<void> {
+    return this.http.post<void>(`${this.apiBaseUrl}/auth/register`, data);
   }
 
   private mapRoleToUserAccess(role: string): 'employee' | 'client' {
