@@ -13,6 +13,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ViaCepService, Endereco } from '../../../services/viacep.service';
 import { AuthService } from '../../services/auth.service';
 import { AppSuccessModalComponent } from '../../../../shared/components/modal-mensagem/app-success-modal';
+import { RegisterRequest } from '../../../../shared/models/register-request';
 
 @Component({
   selector: 'app-signup-page',
@@ -61,16 +62,40 @@ export class SignupPageComponent {
 
 
   onSubmit(): void {
-    if (this.firstFormGroup.valid && this.secondFormGroup.valid) {
-      const formData = {
-        ...this.firstFormGroup.value,
-        ...this.secondFormGroup.value,
+  if (this.firstFormGroup.valid && this.secondFormGroup.valid) {
+      const personalData = this.firstFormGroup.value;
+      const addressData = this.secondFormGroup.value;
+
+      const removeNonDigits = (value: string) => value.replace(/\D/g, '');
+
+      const requestData: RegisterRequest = {
+        name: personalData.nameUser,
+        cpf: removeNonDigits(personalData.cpfUser),
+        email: personalData.email,
+        phoneNumber: removeNonDigits(personalData.phoneUser),
+        zipCode: removeNonDigits(addressData.cep),     
+        street: addressData.address,    
+        number: addressData.number,
+        complement: addressData.complement,
+        neighborhood: addressData.neighborhood,
+        city: addressData.city,
+        state: addressData.state
       };
-      console.log('Dados do formulário:', formData);
-      this.showModal = true;
+      console.log(requestData);
+
+      this.authService.signup(requestData).subscribe({
+        next: () => {
+          console.log('Cadastro realizado com sucesso!');
+          this.showModal = true;
+        },
+        error: (err) => {
+          console.error('Erro no cadastro:', err);
+        }
+      });
+    } else {
+      this.firstFormGroup.markAllAsTouched();
+      this.secondFormGroup.markAllAsTouched();
     }
-
-
   }
 
   navigate() {
