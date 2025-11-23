@@ -118,6 +118,9 @@ public class EmployeeServiceImpl implements EmployeeService {
      */
     private EmployeeDTO mapToDTO(Employee employee) {
         EmployeeDTO dto = new EmployeeDTO();
+        if (employee.getRole() != null) {
+            dto.setRole(employee.getRole().toString());
+        }
         dto.setId(employee.getId());
         dto.setName(employee.getName());
         dto.setEmail(employee.getEmail());
@@ -142,7 +145,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setBirthDate(dto.getBirthDate());
         employee.setWage(dto.getWage());
         employee.setActive(dto.isActive());
-        
+        // Se vier senha no DTO, usa ela. Se não vier, define uma padrão.
+        if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
+            employee.setPassword(dto.getPassword());
+        } else {
+            employee.setPassword("123456"); 
+        }
         return employee;
     }
 }

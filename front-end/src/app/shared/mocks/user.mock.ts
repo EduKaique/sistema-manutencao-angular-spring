@@ -3,7 +3,8 @@ import { Client } from '../models/client';
 import { Employee, Role } from '../models/employee';
 
 export const CLIENT_MOCKS: Client[] = [
-  {
+ //Não utilizado
+  /* {
     id: 2,
     name: 'Nilton Nativas',
     email: 'cliente@email.com',
@@ -49,6 +50,6 @@ export const EMPLOYEE_MOCKS: Employee[] = [
     role: Role.TecnicoEmEletronica,
     salary: 7000,
     birthDate: new Date('1985-10-20'),
-  },
+  },*/
 ];
 

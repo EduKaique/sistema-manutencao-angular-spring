@@ -23,7 +23,7 @@ type UserState = {
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'https://refactored-space-fiesta-6qrxj44wpjw245xv-8080.app.github.dev/api/auth'; 
+  private apiUrl = 'http://localhost:8080/api/auth'; 
   
   private currentUserSubject = new BehaviorSubject<UserState>(null);
   public currentUser$ = this.currentUserSubject.asObservable();

@@ -7,9 +7,13 @@ export enum Role {
   AuxiliarTecnico = 'Auxiliar Técnico',
 }
 
-export interface Employee extends User {
-  employeeId: number
-  role: Role;
-  salary: number;
-  birthDate: Date;
+export interface Employee {
+    id: number;
+    name: string;
+    email: string;
+    cpf: string | null;
+    phone: string | null;
+    birthDate: string;
+    wage: number | null;
+    active: boolean;
 }
