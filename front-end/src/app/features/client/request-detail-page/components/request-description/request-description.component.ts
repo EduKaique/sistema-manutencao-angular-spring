@@ -30,10 +30,10 @@ export class RequestDescriptionComponent implements OnInit {
   }
 
   loadCategoryName(): void {
-    const category = this.categoryService
-      .getAllCategories()
-      .find((category) => category.id === this.request.categoryId);
-    this.categoryName = category ? category.nome : 'Categoria não encontrada';
+    this.categoryService.getAllCategories().subscribe(categories => {
+    const category = categories.find(c => c.id === this.request.categoryId);
+    this.categoryName = category ? category.name : 'Categoria não encontrada';
+  });
   }
 
   formatDate(date: string | Date): string {

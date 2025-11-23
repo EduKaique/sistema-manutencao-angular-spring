@@ -14,7 +14,7 @@ export class NewCategoryModalComponent implements OnInit{
   @Output() submitted = new EventEmitter<any>();
   @Output() closeModal = new EventEmitter<void>();
 
-  category: Category = {id: 0, nome: '', icone: ''};
+  category: Category = {id: 0, name: '', icon: ''};
 
   ngOnInit(): void {
     if (this.editingCategory) {

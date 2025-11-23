@@ -44,7 +44,7 @@ public class CategoryEquipmentController {
         CategoryEquipment category = new CategoryEquipment(categoryDTO.getName(), categoryDTO.getIcon());
         CategoryEquipment savedCategory = categoryEquipmentService.saveCategory(category);
 
-        URI uri = uriBuilder.path("/categories/{id}")
+        URI uri = uriBuilder.path("/api/categories/{id}")
                 .buildAndExpand(savedCategory.getId()).toUri();
 
         CategoryEquipmentDTO responseDTO = new CategoryEquipmentDTO(savedCategory.getId(), savedCategory.getName(), savedCategory.getIcon());

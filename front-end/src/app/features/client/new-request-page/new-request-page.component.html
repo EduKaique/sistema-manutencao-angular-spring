@@ -26,7 +26,7 @@
                 <select id="equipmentCategory" name="equipmentCategory" 
                 [(ngModel)]="request.categoryId" #categoria="ngModel" required> 
                     <option [ngValue]="undefined" disabled selected>Selecione a categoria</option>
-                    <option *ngFor="let category of categories" [ngValue]="category.id">{{ category.nome }}</option>
+                    <option *ngFor="let category of categories" [ngValue]="category.id">{{ category.name }}</option>
                 </select>
             </div>
                 
