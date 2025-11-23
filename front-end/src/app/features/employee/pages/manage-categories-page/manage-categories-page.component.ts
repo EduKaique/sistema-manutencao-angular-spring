@@ -25,25 +25,42 @@ export class ManageCategoriesPageComponent implements OnInit {
   }
 
   getAllCategories(): void {
-    this.categories = this.categoryService.getAllCategories();
+    this.categoryService.getAllCategories().subscribe({
+      next: (data: Category[]) => (this.categories = data),
+      error: (err: unknown) => console.error('Erro ao carregar categorias', err)
+    });
   }
+
   openNewCategoryModal(): void {
     this.selectedCategory = null;
     this.isModalShowing = true;
   }
+
   editCategory(category: Category): void {
     this.selectedCategory = { ...category }; // cria uma cópia
     this.isModalShowing = true;
   }
+
   onModalSubmit(category: Category): void {
     if (this.selectedCategory) {
-      this.categoryService.updateCategory(category);
+      this.categoryService.updateCategory(category).subscribe({
+        next: () => {
+          this.getAllCategories();
+          this.isModalShowing = false;
+        },
+        error: (err: unknown) => console.error('Erro ao atualizar categoria', err)
+      });
     } else {
-      this.categoryService.addCategory(category);
+      this.categoryService.addCategory(category).subscribe({
+        next: () => {
+          this.getAllCategories();
+          this.isModalShowing = false;
+        },
+        error: (err: unknown) => console.error('Erro ao adicionar categoria', err)
+      });
     }
-    this.getAllCategories();
-    this.isModalShowing = false;
   }
+
   onModalClose(): void {
     this.isModalShowing = false;
   }
@@ -56,10 +73,11 @@ export class ManageCategoriesPageComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe((result: unknown) => {
       if (result) {
-        this.categoryService.deleteCategory(id);
-        this.getAllCategories();
+        this.categoryService.deleteCategory(id).subscribe(() => {
+          this.getAllCategories();
+        });
       }
     });
   }
