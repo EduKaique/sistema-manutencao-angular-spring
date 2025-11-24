@@ -22,11 +22,15 @@ export class NewRequestPageComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.getAllCategories();
+    this.categoryService.getAllCategories().subscribe(cats => {
+      this.categories = cats;
+    });
   }
 
   getAllCategories(): void {
-    this.categories = this.categoryService.getAllCategories() || [];
+    this.categoryService.getAllCategories().subscribe(cats => {
+      this.categories = cats;
+    });
   }
 
   constructor(

@@ -51,12 +51,20 @@ export class ClientDashboardPageComponent implements OnInit, AfterViewInit {
     private budgetService: BudgetService
   ) {}
 
+  categoryMap: Record<number, string> = {};
+
   ngOnInit(): void {
     this.requests = this.requestService.listarTodos().map(req => ({
       ...req,
       requestDate: new Date(req.requestDate),
     }));
     this.dataSource.data = this.requests;
+
+    this.categoryService.getAllCategories().subscribe(categories => {
+    categories.forEach(cat => {
+      this.categoryMap[cat.id] = cat.name;
+    });
+  });
   }
 
   ngAfterViewInit(): void {
@@ -66,7 +74,7 @@ export class ClientDashboardPageComponent implements OnInit, AfterViewInit {
   }
 
   getCategoryName(id: number): string {
-    return this.categoryService.getById(id)?.nome || '';
+    return this.categoryMap[id] || '';
   }
 
   getStatusName(id: number): string {
