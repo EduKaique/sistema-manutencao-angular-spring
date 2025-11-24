@@ -14,7 +14,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { provideNativeDateAdapter } from '@angular/material/core';
 
 import { EmployeService } from '../../services/employe.service';
-import { Employee, Role } from '../../../../shared/models/employee';
+import { Employee } from '../../../../shared/models/employee';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-employee-form',
@@ -42,13 +43,14 @@ export class EmployeeFormComponent implements OnInit {
   professionalInfoForm: FormGroup;
 
   isEdit = false;
-  roles = Object.values(Role);
+  //roles = Object.values(Role);
 
   constructor(
     private fb: FormBuilder,
     private employeeService: EmployeService,
     private dialogref: MatDialogRef<EmployeeFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Employee
+    @Inject(MAT_DIALOG_DATA) public data: Employee,
+    private snackBar: MatSnackBar
   ) {
     this.personalInfoForm = this.fb.group({
       nome: ['', Validators.required],
@@ -59,39 +61,81 @@ export class EmployeeFormComponent implements OnInit {
     });
 
     this.professionalInfoForm = this.fb.group({
-      cargo: ['', Validators.required],
       salario: ['', [Validators.required, Validators.min(0.01)]],
       senha: ['', [Validators.required]]
     });
   }
 
-  ngOnInit(): void {
+ngOnInit(): void {
     if (this.data) {
       this.isEdit = true;
-      this.personalInfoForm.patchValue(this.data);
-      this.professionalInfoForm.patchValue(this.data);
+      
+      this.personalInfoForm.patchValue({
+        nome: this.data.name,
+        cpf: this.data.cpf,
+        dataNascimento: this.data.birthDate,
+        email: this.data.email,
+        celular: this.data.phone
+      });
+
+      this.professionalInfoForm.patchValue({
+        salario: this.data.wage
+      });
+
+      const senhaControl = this.professionalInfoForm.get('senha');
+      if (senhaControl) {
+        senhaControl.clearValidators();
+        senhaControl.updateValueAndValidity();
+      }
     }
   }
 
-  onSubmit(): void {
-    if (this.personalInfoForm.invalid || this.professionalInfoForm.invalid) {
-      return;
+onSubmit(): void {
+  if (this.personalInfoForm.invalid || this.professionalInfoForm.invalid) {
+    this.personalInfoForm.markAllAsTouched();
+    this.professionalInfoForm.markAllAsTouched();
+    return;
+  }
+
+  // Prepara os dados
+  const employeeData: Employee = {
+    id: this.data?.id,
+    name: this.personalInfoForm.value.nome,
+    email: this.personalInfoForm.value.email,
+    cpf: this.personalInfoForm.value.cpf,
+    phone: this.personalInfoForm.value.celular,
+    birthDate: this.personalInfoForm.value.dataNascimento,
+    wage: this.professionalInfoForm.value.salario,
+    password: this.professionalInfoForm.value.senha,
+    active: true
+  };
+
+  const request$ = this.isEdit 
+    ? this.employeeService.updateEmployee(employeeData) 
+    : this.employeeService.addEmployee(employeeData);
+
+  request$.subscribe({
+    next: () => {
+      this.dialogref.close(true);
+    },
+    error: (err) => {
+      console.error('Objeto de erro completo:', err); 
+      let errorMessage = 'Ocorreu um erro ao salvar.';
+
+      if (err.error && typeof err.error === 'string') {
+        errorMessage = err.error;
+      } else if (err.error && err.error.message) {
+        errorMessage = err.error.message;
+      }
+
+      this.snackBar.open(errorMessage, 'Fechar', {
+        duration: 5000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        panelClass: ['error-snackbar']
+      });
     }
-
-    const employeeData: Employee = {
-      ...this.personalInfoForm.value,
-      ...this.professionalInfoForm.value,
-    };
-
-    if (this.isEdit) {
-      this.employeeService.updateEmployee(employeeData).subscribe(() => {
-      this.dialogref.close(true);
-    });
-    } else {
-      this.employeeService.addEmployee(employeeData).subscribe(() => {
-      this.dialogref.close(true);
-    });
-  }   
+  });
 }
 
   onCancel(): void {

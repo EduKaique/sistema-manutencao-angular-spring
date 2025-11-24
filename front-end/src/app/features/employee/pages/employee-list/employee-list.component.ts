@@ -31,7 +31,6 @@ import { WarningDialogComponent } from '../../../../shared/components/warning-di
 export class EmployeeListComponent implements OnInit {
   displayedColumns: string[] = [
     'nome',
-    'cargo',
     'email',
     'celular',
     'salario',
