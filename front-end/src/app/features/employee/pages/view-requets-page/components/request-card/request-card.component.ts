@@ -24,10 +24,10 @@ export class RequestCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.categoryService.getAllCategories().subscribe(categories => {
-    this.categoryMap = categories.reduce<Record<number, string>>((acc, c) => {
-      acc[c.id] = c.name;
-      return acc;
-    }, {});
+      this.categoryMap = categories.reduce<Record<number, string>>((acc, c) => {
+        acc[c.id] = c.name;
+        return acc;
+      }, {});
   });
 
     this.clientMap = CLIENT_MOCKS.reduce<Record<number, string>>((acc, c) => {

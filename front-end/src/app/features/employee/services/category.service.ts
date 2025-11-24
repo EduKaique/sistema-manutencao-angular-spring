@@ -1,16 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Category } from '../../../shared/models/category';
+import { API_URL } from '../../../core/configs/api.token';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
 
-  private apiUrl = 'http://localhost:8080/api/categories';
-
-  constructor(private http: HttpClient) {}
+  private http = inject(HttpClient);
+  private apiBaseUrl = inject(API_URL);
+  private apiUrl = `${this.apiBaseUrl}/categories`;
+  constructor() {}
 
   getAllCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(this.apiUrl);
