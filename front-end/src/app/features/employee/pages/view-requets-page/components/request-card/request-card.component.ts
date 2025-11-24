@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Request } from '../../../../../../shared/models/request';
+import { MaintenanceRequestResponseDTO as Request } from '../../../../../../shared/models/maintenance-request.models';
 import { DatePipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { CategoryService } from '../../../../services/category.service';

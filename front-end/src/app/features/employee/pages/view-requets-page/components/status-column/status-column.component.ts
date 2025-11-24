@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Request } from '../../../../../../shared/models/request';
+import { MaintenanceRequestResponseDTO as Request } from '../../../../../../shared/models/maintenance-request.models';
 import { RequestCardComponent } from '../request-card/request-card.component';
 import { StatusService } from '../../../../../../core/services/status.service';
 import { Status } from '../../../../../../shared/models/status';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-status-column',
@@ -16,16 +17,16 @@ export class StatusColumnComponent {
   @Input({ required: true }) title!: string;
   @Input({ required: true }) requests: Request[] = [];
 
-  constructor(private statusService: StatusService) {}
+  private statusService = inject(StatusService);
 
-  status: Status | undefined;
+  statuses = toSignal(this.statusService.getAll(), { initialValue: [] });
 
   private readonly fallbackHeaderColor = '#e0e0e0';
 
   get headerColor(): string {
-    const status = this.statusService
-      .getAll()
-      .find((s) => s.nome?.toUpperCase() === this.title?.toUpperCase());
-    return status?.cor ?? this.fallbackHeaderColor;
+    const status = this.statuses().find(
+      (s) => s.name?.toUpperCase() === this.title?.toUpperCase()
+    );
+    return status?.color ?? this.fallbackHeaderColor;
   }
 }

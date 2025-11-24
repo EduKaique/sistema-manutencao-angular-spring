@@ -5,6 +5,8 @@ import { StatusService } from '../../../../../core/services/status.service';
 import { Status } from '../../../../../shared/models/status';
 import { CategoryService } from '../../../../employee/services/category.service';
 import { Category } from '../../../../../shared/models/category';
+import { map } from 'rxjs/internal/operators/map';
+import { Observable } from 'rxjs/internal/Observable';
 @Component({
   selector: 'app-request-description',
   imports: [CommonModule],
@@ -25,9 +27,10 @@ export class RequestDescriptionComponent implements OnInit {
     this.loadCategoryName();
   }
 
-  getStatus(statusId: number): Status | undefined {
-    return this.statusService.getById(statusId);
+  getStatus(id: number): Observable<Status | undefined> {
+    return this.statusService.getById(id);
   }
+
 
   loadCategoryName(): void {
     this.categoryService.getAllCategories().subscribe(categories => {

@@ -19,7 +19,6 @@ export class StatusService {
     return this.http.get<Status[]>(this.apiUrl);
   }
 
-  // filtrar usando getAll()
   getById(id: number): Observable<Status | undefined> {
     return this.getAll().pipe(
       map((statuses) => statuses.find((s) => s.id === id))

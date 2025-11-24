@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+  import { Injectable } from '@angular/core';
 import { Request } from '../../shared/models/request';
 import { RequestHistory } from '../../shared/models/request-history';
 import { RequestHistoryService } from './request-history.service';
 import { StatusService } from './status.service';
 import { REQUESTS } from '../../shared/mocks/request.mock';
+import { firstValueFrom } from 'rxjs';
 
 const LS_CHAVE = 'requests';
 
@@ -46,33 +47,45 @@ export class RequestService {
     return requests.find((request) => request.id === id);
   }
 
-  atualizar(request: Request): void {
-    const requests = this.listarTodos();
-    requests.forEach((obj, index, objs) => {
-      if (request.id === obj.id) {
-        const oldStatusId = obj.statusId;
-        const newStatusId = request.statusId;
-        if (oldStatusId !== newStatusId) {
-          const oldStatus = this.statusService.getById(oldStatusId);
-          const newStatus = this.statusService.getById(newStatusId);
+  async atualizar(request: Request): Promise<void> {
+  const requests = this.listarTodos();
 
-          const description = `Status atualizado de ${oldStatus?.nome} para ${newStatus?.nome}`;
-          const employee = 1;
-          const entry: RequestHistory = {
-            id: 0,
-            title: description,
-            date: new Date(),
-            requestId: request.id,
-            userId: employee,
-            statusId: request.statusId,
-          };
-          this.requestHistoryService.addHistory(entry);
-        }
-        objs[index] = request;
+  for (const [index, obj] of requests.entries()) {
+    if (request.id === obj.id) {
+
+      const oldStatusId = obj.statusId;
+      const newStatusId = request.statusId;
+
+      if (oldStatusId !== newStatusId) {
+
+        const oldStatus = await firstValueFrom(
+          this.statusService.getById(oldStatusId)
+        );
+
+        const newStatus = await firstValueFrom(
+          this.statusService.getById(newStatusId)
+        );
+
+        const description = `Status atualizado de ${oldStatus?.name} para ${newStatus?.color}`;
+
+        const entry: RequestHistory = {
+          id: 0,
+          title: description,
+          date: new Date(),
+          requestId: request.id,
+          userId: 1,
+          statusId: request.statusId,
+        };
+
+        this.requestHistoryService.addHistory(entry);
       }
-    });
-    localStorage[LS_CHAVE] = JSON.stringify(requests);
+
+      requests[index] = request;
+    }
   }
+
+  localStorage[LS_CHAVE] = JSON.stringify(requests);
+}
 
   remover(id: number): void {
     let requests: Request[] = this.listarTodos();

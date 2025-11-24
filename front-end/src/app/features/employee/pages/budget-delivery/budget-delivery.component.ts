@@ -23,7 +23,8 @@ import { Request as RequestModel } from '../../../../shared/models/request';
 
 // Services (ajuste os paths se necessário)
 import { StatusService } from '../../../../core/services/status.service';
-import { RequestService } from '../../../../core/services/request.service';
+import { MaintenanceRequestService } from '../../../../core/services/maintenance-request.service';
+import { MaintenanceRequestResponseDTO } from '../../../../shared/models/maintenance-request.models';
 
 
 @Component({
@@ -55,33 +56,35 @@ export class BudgetDeliveryComponent implements OnInit {
 
   // Services e rota
   private statusService = inject(StatusService);
-  private requestService = inject(RequestService);
+  private maintenanceRequestService = inject(MaintenanceRequestService);
   private route = inject(ActivatedRoute);
 
 
   // Dados vindos dos services (padrão do dashboard: arrays)
   statuses: Status[] = [];
-  requests: RequestModel[] = [];
+  requests: MaintenanceRequestResponseDTO[] = [];
 
 
   // Lifecycle
   ngOnInit(): void {
-    // Carrega arrays dos services (como no dashboard)
-    this.statuses = this.statusService.getAll();
-    this.requests = this.requestService.listarTodos();
+  this.statusService.getAll().subscribe(statuses => {
+    this.statuses = statuses;
+  });
 
+  this.maintenanceRequestService.getAllEmployeeRequests().subscribe(requests => {
+    this.requests = requests;
+  });
 
-    // Lê o id da rota e sincroniza a tela
-    this.route.paramMap.subscribe(pm => {
-      const id = pm.get('id') ?? pm.get('requestId');
-      if (id) {
-        const req = this.requests.find(r => String(r.id) === String(id));
-        if (req) {
-          this.preencherTelaComRequest(req);
-        }
+  this.route.paramMap.subscribe(pm => {
+    const id = pm.get('id') ?? pm.get('requestId');
+    if (id && this.requests) {
+      const req = this.requests.find(r => String(r.id) === String(id));
+      if (req) {
+        this.preencherTelaComRequest(req);
       }
-    });
-  }
+    }
+  });
+}
 
 
   // Navegação topo
