@@ -70,7 +70,7 @@
       <form [formGroup]="professionalInfoForm">
         <ng-template matStepLabel>Informações Profissionais</ng-template>
 
-        <mat-form-field appearance="outline" class="full-width">
+       <!-- <mat-form-field appearance="outline" class="full-width">
           <mat-label>Cargo</mat-label>
           <mat-select formControlName="cargo" required>
             <mat-option *ngFor="let role of roles" [value]="role">{{ role }}</mat-option>
@@ -78,7 +78,7 @@
           <mat-error *ngIf="professionalInfoForm.get('cargo')?.hasError('required')">
             O cargo é obrigatório.
           </mat-error>
-        </mat-form-field>
+        </mat-form-field>-->
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Salário</mat-label>
@@ -91,9 +91,10 @@
           </mat-error>
         </mat-form-field>
 
-          <mat-form-field appearance="outline" class="full-width">
+        <mat-form-field appearance="outline" class="full-width" *ngIf="!isEdit">
           <mat-label>Senha</mat-label>
-          <input matInput type="password" formControlName="senha" placeholder="" required>
+          <input matInput type="password" formControlName="senha" placeholder="">
+          
           <mat-error *ngIf="professionalInfoForm.get('senha')?.hasError('required')">
             A senha é obrigatória.
           </mat-error>
