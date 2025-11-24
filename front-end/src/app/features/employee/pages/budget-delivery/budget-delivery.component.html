@@ -218,7 +218,7 @@
           (selectionChange)="atualizarTotal()"
         >
           <mat-option *ngFor="let s of servicosDisponiveis" [value]="s">
-            {{ s.nome }} — R$ {{ s.valor | number:'1.2-2' }}
+            {{ s.nome }} — R$ {{ s.valorServico | number:'1.2-2' }}
           </mat-option>
         </mat-select>
       </mat-form-field>

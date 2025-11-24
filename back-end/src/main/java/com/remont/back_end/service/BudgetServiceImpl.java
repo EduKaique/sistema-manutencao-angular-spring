@@ -7,7 +7,7 @@ import com.remont.back_end.model.Budget;
 import com.remont.back_end.model.MaintenanceRequest;
 import com.remont.back_end.model.ServiceItem;
 import com.remont.back_end.repository.BudgetRepository;
-import com.remont.back_end.repository.BudgetServiceRepository;
+import com.remont.back_end.repository.ServiceBudgetRepository;
 import com.remont.back_end.repository.MaintenanceRequestRepository;
 import com.remont.back_end.repository.ServiceItemRepository;
 import org.springframework.stereotype.Service;
@@ -24,12 +24,12 @@ public class BudgetServiceImpl implements BudgetService {
 
     private final BudgetRepository budgetRepository;
     private final ServiceItemRepository serviceItemRepository;
-    private final BudgetServiceRepository linkRepository;
+    private final ServiceBudgetRepository linkRepository;
     private final MaintenanceRequestRepository maintenanceRequestRepository;
 
     public BudgetServiceImpl(BudgetRepository budgetRepository,
                              ServiceItemRepository serviceItemRepository,
-                             BudgetServiceRepository linkRepository,
+                             ServiceBudgetRepository linkRepository,
                              MaintenanceRequestRepository maintenanceRequestRepository) {
         this.budgetRepository = budgetRepository;
         this.serviceItemRepository = serviceItemRepository;
@@ -105,7 +105,7 @@ public class BudgetServiceImpl implements BudgetService {
             throw new ResourceNotFoundException("Orçamento não encontrado id=" + budgetId);
         }
 
-        List<com.remont.back_end.model.BudgetService> links = linkRepository.findByBudget_Id(budgetId);
+        List<com.remont.back_end.model.ServiceBudget> links = linkRepository.findByBudget_Id(budgetId);
 
         return links.stream()
                 .map(link -> {
@@ -128,7 +128,7 @@ public class BudgetServiceImpl implements BudgetService {
             return; 
         }
 
-        com.remont.back_end.model.BudgetService link = new com.remont.back_end.model.BudgetService(serviceItem, budget);
+        com.remont.back_end.model.ServiceBudget link = new com.remont.back_end.model.ServiceBudget(serviceItem, budget);
         linkRepository.save(link);
 
         recalcTotal(budget);
@@ -150,7 +150,7 @@ public class BudgetServiceImpl implements BudgetService {
     }
 
     private void recalcTotal(Budget budget) {
-        List<com.remont.back_end.model.BudgetService> items = linkRepository.findByBudget_Id(budget.getId());
+        List<com.remont.back_end.model.ServiceBudget> items = linkRepository.findByBudget_Id(budget.getId());
 
         BigDecimal total = items.stream()
                 .map(link -> link.getServiceItem().getValorServico())

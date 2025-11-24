@@ -43,6 +43,6 @@ public class Budget {
     public void onUpdate() { this.updatedAt = LocalDateTime.now(); }
 
     @OneToMany(mappedBy = "budget", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<BudgetService> items = new ArrayList<>();
+    private List<ServiceBudget> items = new ArrayList<>();
 
 }

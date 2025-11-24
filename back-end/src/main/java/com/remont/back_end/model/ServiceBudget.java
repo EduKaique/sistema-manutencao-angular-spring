@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore; // Importante para evitar lo
 
 @Entity
 @Table(name = "servicos_orcamento")
-public class BudgetService {
+public class ServiceBudget {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,9 +20,9 @@ public class BudgetService {
     @JsonIgnore 
     private Budget budget;
 
-    public BudgetService() {}
+    public ServiceBudget() {}
     
-    public BudgetService(ServiceItem serviceItem, Budget budget) {
+    public ServiceBudget(ServiceItem serviceItem, Budget budget) {
         this.serviceItem = serviceItem;
         this.budget = budget;
     }

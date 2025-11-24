@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotNull;
 
 //  DTO para a tabela intermediária servicos_orcamento
 
-public class BudgetServiceDTO {
+public class ServiceBudgetDTO {
     
     private Long id;
     
@@ -15,9 +15,9 @@ public class BudgetServiceDTO {
     private Long orcamentoId;
 
     // Construtores
-    public BudgetServiceDTO() {}
+    public ServiceBudgetDTO() {}
     
-    public BudgetServiceDTO(Long id, Long servicoId, Long orcamentoId) {
+    public ServiceBudgetDTO(Long id, Long servicoId, Long orcamentoId) {
         this.id = id;
         this.servicoId = servicoId;
         this.orcamentoId = orcamentoId;

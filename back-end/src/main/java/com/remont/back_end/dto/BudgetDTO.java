@@ -1,7 +1,7 @@
 package com.remont.back_end.dto;
 
 import com.remont.back_end.model.Budget;
-import com.remont.back_end.model.BudgetService; // Importante para o map
+import com.remont.back_end.model.ServiceBudget; // Importante para o map
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -35,7 +35,7 @@ public class BudgetDTO {
         List<Long> extractedIds = null;
         if (budget.getItems() != null) {
             extractedIds = budget.getItems().stream()
-                    .map(BudgetService::getServiceItem) 
+                    .map(ServiceBudget::getServiceItem) 
                     .map(item -> item.getId())          
                     .collect(Collectors.toList());
         }
