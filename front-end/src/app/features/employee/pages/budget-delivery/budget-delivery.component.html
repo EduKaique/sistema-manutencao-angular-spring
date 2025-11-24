@@ -1,173 +1,190 @@
-<!-- Ações superiores: Voltar (esquerda) e Finalizar Solicitação (direita) -->
-<div class="top-actions">
-  <a class="voltar-pagina-inicial" (click)="onVoltarPaginaInicial()">
-    <mat-icon class="voltar-icon">arrow_back</mat-icon>
-    <span>Voltar para Página Inicial</span>
-  </a>
-
-  <button
-    mat-flat-button
-    color="primary"
-    class="finalizar-solicitacao-btn"
-    *ngIf="canFinalizarSolicitacao()"
-    (click)="abrirDialogFinalizacao(finalizacaoDialogTemplate)"
-  >
-    <mat-icon>check</mat-icon>
-    Finalizar Solicitação
-  </button>
+<!-- Loading State (Opcional, simples) -->
+<div *ngIf="isLoading" style="display: flex; justify-content: center; padding: 20px;">
+  <span>Carregando solicitação...</span>
 </div>
 
-<div class="main-content">
-  <!-- Card Detalhes da Solicitação -->
-  <mat-card class="detalhes-card">
-    <div class="detalhes-header">
-      <div class="detalhes-header-left">
-        <mat-icon class="detalhes-icon" color="primary">search</mat-icon>
-        <span class="detalhes-title">Detalhes da Solicitação</span>
-        <span class="detalhes-id">#{{ request.id }}</span>
-      </div>
-      <span class="detalhes-date">{{ request.requestDate | date:'dd/MM/yyyy \'às\' HH:mm:ss' }}</span>
-      <div class="detalhes-status">
-        <span class="detalhes-status-label">Status</span>
-        <span class="detalhes-status-badge">{{ request.status }}</span>
-      </div>
-    </div>
+<!-- Conteúdo Principal (Só exibe quando carregar) -->
+<div *ngIf="!isLoading && request">
+  <!-- Ações superiores -->
+  <div class="top-actions">
+    <a class="voltar-pagina-inicial" (click)="onVoltarPaginaInicial()">
+      <mat-icon class="voltar-icon">arrow_back</mat-icon>
+      <span>Voltar para Página Inicial</span>
+    </a>
 
-    <div class="detalhes-info-row">
-      <div class="detalhes-info">
-        <span class="detalhes-info-label">Item</span>
-        <span class="detalhes-info-value">{{ request.equipmentName }}</span>
-      </div>
-      <div class="detalhes-info">
-        <span class="detalhes-info-label">Categoria</span>
-        <span class="detalhes-info-value">{{ request.categoryName }}</span>
-      </div>
-      <div class="detalhes-info">
-        <span class="detalhes-info-label">Autor da Solicitação</span>
-        <div class="detalhes-info-autor">
-          <span class="detalhes-info-value">{{ request.client }}</span>
-          <mat-icon class="detalhes-autor-icon" color="primary">person</mat-icon>
+    <button
+      mat-flat-button
+      color="primary"
+      class="finalizar-solicitacao-btn"
+      *ngIf="canFinalizarSolicitacao()"
+      (click)="abrirDialogFinalizacao(finalizacaoDialogTemplate)"
+    >
+      <mat-icon>check</mat-icon>
+      Finalizar Solicitação
+    </button>
+  </div>
+
+  <div class="main-content">
+    <!-- Card Detalhes da Solicitação -->
+    <mat-card class="detalhes-card">
+      <div class="detalhes-header">
+        <div class="detalhes-header-left">
+          <mat-icon class="detalhes-icon" color="primary">search</mat-icon>
+          <span class="detalhes-title">Detalhes da Solicitação</span>
+          <span class="detalhes-id">#{{ request.id }}</span>
+        </div>
+        <span class="detalhes-date">{{ request.requestDate | date:'dd/MM/yyyy \'às\' HH:mm:ss' }}</span>
+        
+        <!-- Badge de Status usando a cor vinda do backend -->
+        <div class="detalhes-status">
+          <span class="detalhes-status-label">Status</span>
+          <span class="detalhes-status-badge" 
+                [style.backgroundColor]="request.status.cor" 
+                [style.color]="'#fff'">
+            {{ request.status.nome }}
+          </span>
         </div>
       </div>
-    </div>
 
-    <div class="detalhes-defeito">
-      <span class="detalhes-defeito-label">Descrição do Defeito</span>
-      <span class="detalhes-defeito-value">
-        {{ request.defectDescription }}
-      </span>
-    </div>
-  </mat-card>
-
-  <div class="cards-row">
-    <mat-card class="tecnico-card">
-      <div class="tecnico-header">
-        <mat-icon class="tecnico-icon" color="primary">groups</mat-icon>
-        <span class="tecnico-title">Técnico Responsável</span>
+      <div class="detalhes-info-row">
+        <div class="detalhes-info">
+          <span class="detalhes-info-label">Item</span>
+          <span class="detalhes-info-value">{{ request.equipmentName }}</span>
+        </div>
+        <div class="detalhes-info">
+          <span class="detalhes-info-label">Categoria</span>
+          <span class="detalhes-info-value">{{ request.categoryName }}</span>
+        </div>
+        <div class="detalhes-info">
+          <span class="detalhes-info-label">Autor da Solicitação</span>
+          <div class="detalhes-info-autor">
+            <span class="detalhes-info-value">{{ request.client.name }}</span>
+            <mat-icon class="detalhes-autor-icon" color="primary">person</mat-icon>
+          </div>
+        </div>
       </div>
 
-      <ng-container *ngIf="!responsavel; else responsavelPreenchido">
-        <div class="tecnico-content">Nenhum Técnico Atribuído</div>
-        <button mat-stroked-button color="primary" class="atribuir-btn" (click)="abrirDialog(dialogTemplate)">
-          Atribuir Responsável
-        </button>
-      </ng-container>
+      <div class="detalhes-defeito">
+        <span class="detalhes-defeito-label">Descrição do Defeito</span>
+        <span class="detalhes-defeito-value">
+          {{ request.defectDescription }}
+        </span>
+      </div>
+    </mat-card>
 
-      <ng-template #responsavelPreenchido>
-        <div class="tecnico-content">
-          <div><b>Nome:</b> {{ responsavel.nome }}</div>
-          <div><b>Cargo:</b> {{ responsavel.cargo }}</div>
-          <div><b>Atribuído em:</b> {{ dataAtribuicao }}</div>
+    <div class="cards-row">
+      <!-- Card Técnico Responsável -->
+      <mat-card class="tecnico-card">
+        <div class="tecnico-header">
+          <mat-icon class="tecnico-icon" color="primary">groups</mat-icon>
+          <span class="tecnico-title">Técnico Responsável</span>
         </div>
-        <button mat-stroked-button color="primary" class="atribuir-btn" (click)="abrirDialog(dialogTemplate)">
-          <mat-icon>sync_alt</mat-icon>
-          Trocar Responsável
-        </button>
-      </ng-template>
-    </mat-card>
 
-    <!-- Card Orçamento/Manutenção com abas -->
-    <mat-card class="orcamento-manutencao-card">
-      <mat-tab-group class="orcamento-tabs" [(selectedIndex)]="selectedTab">
-        <!-- Aba Orçamentos -->
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <mat-icon class="tab-icon" color="primary">attach_money</mat-icon>
-            Orçamentos
-          </ng-template>
+        <ng-container *ngIf="!responsavel; else responsavelPreenchido">
+          <div class="tecnico-content">Nenhum Técnico Atribuído</div>
+          <button mat-stroked-button color="primary" class="atribuir-btn" (click)="abrirDialog(dialogTemplate)">
+            Atribuir Responsável
+          </button>
+        </ng-container>
 
-          <div class="orcamento-content">
-            <ng-container *ngIf="temOrcamento; else orcamentoVazio">
-              <div class="orcamento-total-label">Valor Total do Orçamento</div>
-              <div class="orcamento-total">R$ {{ valorOrcamento | number:'1.2-2' }}</div>
-              <div class="orcamento-servicos-label">Serviços Inclusos</div>
-              <div class="orcamento-servicos">
-                {{ servicosInclusos }}
-              </div>
-            </ng-container>
-
-            <ng-template #orcamentoVazio>
-              <div class="orcamento-empty">Nenhum Orçamento Efetuado</div>
-              <button
-                mat-flat-button
-                color="primary"
-                class="orcamento-btn"
-                [disabled]="false"
-                (click)="abrirDialogOrcamento(orcamentoDialogTemplate)"
-              >
-                Efetuar Orçamento
-              </button>
-            </ng-template>
+        <ng-template #responsavelPreenchido>
+          <div class="tecnico-content">
+            <div><b>Nome:</b> {{ responsavel!.name }}</div>
+            <!-- Exibe cargo se existir na model, senão omite -->
+            <div *ngIf="responsavel!.role"><b>Cargo:</b> {{ responsavel!.role }}</div>
+            <div *ngIf="dataAtribuicao"><b>Atribuído em:</b> {{ dataAtribuicao }}</div>
           </div>
-        </mat-tab>
+          <button mat-stroked-button color="primary" class="atribuir-btn" (click)="abrirDialog(dialogTemplate)">
+            <mat-icon>sync_alt</mat-icon>
+            Trocar Responsável
+          </button>
+        </ng-template>
+      </mat-card>
 
-        <!-- Aba Manutenção -->
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <mat-icon class="tab-icon" color="primary">groups</mat-icon>
-            Manutenção
-          </ng-template>
-
-          <div class="manutencao-content" [class.tem-manutencao]="temManutencao">
-            <ng-container *ngIf="temManutencao; else manutencaoVazio">
-              <div class="manutencao-descricao">
-                <b>Descrição da Manutenção:</b>
-                <span>{{ descricaoManutencao }}</span>
-              </div>
-              <div class="manutencao-orientacao">
-                <b>Orientações para o Cliente:</b>
-                <span>{{ orientacaoCliente }}</span>
-              </div>
-
-              <!-- Botão editar manutenção -->
-              <button
-                mat-flat-button
-                color="primary"
-                class="manutencao-btn"
-                (click)="abrirDialogManutencao(manutencaoDialogTemplate)"
-              >
-                <mat-icon>edit</mat-icon>
-                Editar Manutenção
-              </button>
-            </ng-container>
-
-            <ng-template #manutencaoVazio>
-              <div class="orcamento-empty">Nenhuma Manutenção Efetuada</div>
-              <button
-                mat-flat-button
-                color="primary"
-                class="manutencao-btn"
-                [disabled]="false"
-                (click)="abrirDialogManutencao(manutencaoDialogTemplate)"
-              >
-                <mat-icon>build</mat-icon>
-                Efetuar Manutenção
-              </button>
+      <!-- Card Orçamento/Manutenção com abas -->
+      <mat-card class="orcamento-manutencao-card">
+        <mat-tab-group class="orcamento-tabs" [(selectedIndex)]="selectedTab">
+          <!-- Aba Orçamentos -->
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="tab-icon" color="primary">attach_money</mat-icon>
+              Orçamentos
             </ng-template>
-          </div>
-        </mat-tab>
-      </mat-tab-group>
-    </mat-card>
+
+            <div class="orcamento-content">
+              <ng-container *ngIf="temOrcamento; else orcamentoVazio">
+                <div class="orcamento-total-label">Valor Total do Orçamento</div>
+                <div class="orcamento-total">R$ {{ valorOrcamento | number:'1.2-2' }}</div>
+                <div class="orcamento-servicos-label">Serviços Inclusos</div>
+                <div class="orcamento-servicos">
+                  <!-- Se vier do backend como array de objetos, o .join no TS resolve para string -->
+                  {{ servicosInclusos }}
+                </div>
+              </ng-container>
+
+              <ng-template #orcamentoVazio>
+                <div class="orcamento-empty">Nenhum Orçamento Efetuado</div>
+                <button
+                  mat-flat-button
+                  color="primary"
+                  class="orcamento-btn"
+                  [disabled]="false"
+                  (click)="abrirDialogOrcamento(orcamentoDialogTemplate)"
+                >
+                  Efetuar Orçamento
+                </button>
+              </ng-template>
+            </div>
+          </mat-tab>
+
+          <!-- Aba Manutenção -->
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="tab-icon" color="primary">groups</mat-icon>
+              Manutenção
+            </ng-template>
+
+            <div class="manutencao-content" [class.tem-manutencao]="temManutencao">
+              <ng-container *ngIf="temManutencao; else manutencaoVazio">
+                <div class="manutencao-descricao">
+                  <b>Descrição da Manutenção:</b>
+                  <span>{{ descricaoManutencao }}</span>
+                </div>
+                <div class="manutencao-orientacao">
+                  <b>Orientações para o Cliente:</b>
+                  <span>{{ orientacaoCliente }}</span>
+                </div>
+
+                <!-- Botão editar manutenção -->
+                <button
+                  mat-flat-button
+                  color="primary"
+                  class="manutencao-btn"
+                  (click)="abrirDialogManutencao(manutencaoDialogTemplate)"
+                >
+                  <mat-icon>edit</mat-icon>
+                  Editar Manutenção
+                </button>
+              </ng-container>
+
+              <ng-template #manutencaoVazio>
+                <div class="orcamento-empty">Nenhuma Manutenção Efetuada</div>
+                <button
+                  mat-flat-button
+                  color="primary"
+                  class="manutencao-btn"
+                  [disabled]="false"
+                  (click)="abrirDialogManutencao(manutencaoDialogTemplate)"
+                >
+                  <mat-icon>build</mat-icon>
+                  Efetuar Manutenção
+                </button>
+              </ng-template>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card>
+    </div>
   </div>
 </div>
 
@@ -178,8 +195,12 @@
 
     <mat-form-field appearance="outline" class="dialog-field">
       <mat-label>Atribuir Solicitação Para:</mat-label>
+      <!-- INTEGRAÇÃO: Iterando sobre a lista de funcionários da API -->
       <mat-select [(ngModel)]="selectedFuncionario" placeholder="Pesquise/Selecione um Funcionário">
         <mat-option [value]="null">Nenhum</mat-option>
+        <mat-option *ngFor="let func of funcionariosDisponiveis" [value]="func">
+          {{ func.name }}
+        </mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -209,6 +230,7 @@
     <div class="orcamento-dialog-body">
       <mat-form-field appearance="outline" class="orcamento-dialog-field full">
         <mat-label>*Serviços Inclusos na Manutenção</mat-label>
+        <!-- INTEGRAÇÃO: Iterando sobre serviços da API e usando propriedades corretas (name/value) -->
         <mat-select
           [(ngModel)]="servicosSelecionados"
           multiple
@@ -216,7 +238,7 @@
           (selectionChange)="atualizarTotal()"
         >
           <mat-option *ngFor="let s of servicosDisponiveis" [value]="s">
-            {{ s.nome }} — R$ {{ s.valor | number:'1.2-2' }}
+            {{ s.nome }} — R$ {{ s.valor_serviço | number:'1.2-2' }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -309,14 +331,12 @@
       <mat-icon>check</mat-icon>
     </div>
     <div class="finalizacao-title">Solicitação finalizada com sucesso!</div>
-    <div class="finalizacao-date">Data: {{ dataFinalizacao }}</div>
     <button
       mat-flat-button
       color="primary"
       class="finalizacao-back-btn"
-      (click)="voltarPaginaInicialPosFinalizacao()"
     >
       Voltar para Página Inicial
     </button>
   </div>
-</ng-template>  
+</ng-template>

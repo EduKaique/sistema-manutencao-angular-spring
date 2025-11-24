@@ -8,3 +8,8 @@ export interface Budget {
   createdAt: string;     
   updatedAt: string;      
 }
+
+export interface BudgetCreateDTO {
+  serviceIds: number[]; 
+  totalValue?: number; 
+}

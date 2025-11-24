@@ -1,14 +1,10 @@
-// src/app/core/features/maintenance/services/maintenance-request.service.ts
-
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_URL } from '../configs/api.token'; 
-import {MaintenanceRequestCreateDTO, 
-  MaintenanceRequestResponseDTO, 
-  ClientRequestDetailDTO, 
-  EmployeeRequestDetailDTO,
-  RejectionDTO} from '../../shared/models/maintenance-request.models';
+import {MaintenanceRequestCreateDTO, MaintenanceRequestResponseDTO, ClientRequestDetailDTO, EmployeeRequestDetailDTO, RejectionDTO} from '../../shared/models/maintenance-request.models';
+import { MaintenanceRecordDTO } from '../../shared/models/maintenance-record.model'
+import { BudgetCreateDTO } from '../../shared/models/budget.model';
 
 
 @Injectable({
@@ -58,6 +54,27 @@ export class MaintenanceRequestService {
   getRequestByIdForEmployee(id: number): Observable<EmployeeRequestDetailDTO> {
     return this.http.get<EmployeeRequestDetailDTO>(`${this.apiUrl}/employee/${id}`);
   }
+  
+   /**
+   * Atribuir ou Redirecionar responsável.
+   * Rota: POST /requests/employee/{id}/redirect?targetEmployeeId=X
+   */
+  redirectMaintenance(requestId: number, targetEmployeeId: number): Observable<MaintenanceRequestResponseDTO> {
+    const url = `${this.apiUrl}/employee/${requestId}/redirect`;
+    
+    const params = new HttpParams().set('targetEmployeeId', targetEmployeeId.toString());
+
+    return this.http.post<MaintenanceRequestResponseDTO>(url, null, { params });
+  }
+
+  /**
+   * Efetuar Orçamento.
+   * Rota: POST /requests/employee/{id}/budget
+   */
+  createBudget(requestId: number, budgetData: BudgetCreateDTO): Observable<MaintenanceRequestResponseDTO> {
+    const url = `${this.apiUrl}/employee/${requestId}/budget`;
+    return this.http.post<MaintenanceRequestResponseDTO>(url, budgetData);
+  }
 
   /**
    * Aprova o orçamento da solicitação.
@@ -76,5 +93,13 @@ export class MaintenanceRequestService {
     return this.http.post<void>(`${this.apiUrl}/client/${requestId}/reject`, payload);
   }
 
+  /**
+   * Efetuar Manutenção.
+   * Rota: POST /requests/employee/{id}/maintenance
+   */
+  executeMaintenance(requestId: number, maintenanceData: MaintenanceRecordDTO): Observable<MaintenanceRequestResponseDTO> {
+    const url = `${this.apiUrl}/employee/${requestId}/maintenance`;
+    return this.http.post<MaintenanceRequestResponseDTO>(url, maintenanceData);
+  }
 
 }

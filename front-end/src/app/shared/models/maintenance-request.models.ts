@@ -1,5 +1,6 @@
 import { Budget } from "./budget.model";
 import { Client } from "./client";
+import { MaintenanceRecordDTO } from "./maintenance-record.model";
 import { RequestHistory } from "./request-history";
 import { Status } from "./status";
 
@@ -18,12 +19,6 @@ export interface MaintenanceRequestResponseDTO {
   statusColor: string; 
   categoryName: string;
   clientName: string;
-}
-
-export interface MaintenanceRecordDTO {
-  id: number;
-  description: string;
-  finishedAt?: string;
 }
 
 export interface ClientRequestDetailDTO {
