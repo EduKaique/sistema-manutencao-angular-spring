@@ -24,28 +24,28 @@
       <div class="detalhes-header-left">
         <mat-icon class="detalhes-icon" color="primary">search</mat-icon>
         <span class="detalhes-title">Detalhes da Solicitação</span>
-        <span class="detalhes-id">#{{ detalhes.id }}</span>
+        <span class="detalhes-id">#{{ request.id }}</span>
       </div>
-      <span class="detalhes-date">{{ detalhes.data | date:'dd/MM/yyyy \'às\' HH:mm:ss' }}</span>
+      <span class="detalhes-date">{{ request.requestDate | date:'dd/MM/yyyy \'às\' HH:mm:ss' }}</span>
       <div class="detalhes-status">
         <span class="detalhes-status-label">Status</span>
-        <span class="detalhes-status-badge">{{ detalhes.status }}</span>
+        <span class="detalhes-status-badge">{{ request.status }}</span>
       </div>
     </div>
 
     <div class="detalhes-info-row">
       <div class="detalhes-info">
         <span class="detalhes-info-label">Item</span>
-        <span class="detalhes-info-value">{{ detalhes.item }}</span>
+        <span class="detalhes-info-value">{{ request.equipmentName }}</span>
       </div>
       <div class="detalhes-info">
         <span class="detalhes-info-label">Categoria</span>
-        <span class="detalhes-info-value">{{ detalhes.categoria }}</span>
+        <span class="detalhes-info-value">{{ request.categoryName }}</span>
       </div>
       <div class="detalhes-info">
         <span class="detalhes-info-label">Autor da Solicitação</span>
         <div class="detalhes-info-autor">
-          <span class="detalhes-info-value">{{ detalhes.autor }}</span>
+          <span class="detalhes-info-value">{{ request.client }}</span>
           <mat-icon class="detalhes-autor-icon" color="primary">person</mat-icon>
         </div>
       </div>
@@ -54,13 +54,12 @@
     <div class="detalhes-defeito">
       <span class="detalhes-defeito-label">Descrição do Defeito</span>
       <span class="detalhes-defeito-value">
-        {{ detalhes.defeito }}
+        {{ request.defectDescription }}
       </span>
     </div>
   </mat-card>
 
   <div class="cards-row">
-    <!-- Card Técnico Responsável -->
     <mat-card class="tecnico-card">
       <div class="tecnico-header">
         <mat-icon class="tecnico-icon" color="primary">groups</mat-icon>
@@ -181,7 +180,6 @@
       <mat-label>Atribuir Solicitação Para:</mat-label>
       <mat-select [(ngModel)]="selectedFuncionario" placeholder="Pesquise/Selecione um Funcionário">
         <mat-option [value]="null">Nenhum</mat-option>
-        <mat-option *ngFor="let f of funcionarios" [value]="f">{{ f.nome }} - {{ f.cargo }}</mat-option>
       </mat-select>
     </mat-form-field>
 

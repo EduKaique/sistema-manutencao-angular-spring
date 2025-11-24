@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8080/api'
+  apiUrl: 'https://refactored-space-fiesta-6qrxj44wpjw245xv-8080.app.github.dev/api'
 };

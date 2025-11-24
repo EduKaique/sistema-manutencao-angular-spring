@@ -1,16 +1,20 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Employee, Role } from '../../../shared/models/employee';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_URL } from '../../../core/configs/api.token';
 
-const API_URL = 'http://localhost:8080/api/employees';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeService {
 
-  constructor(private http: HttpClient) { }
+  private http = inject(HttpClient);
+  private apiBaseUrl = inject(API_URL);
+
+  private readonly apiUrl = `${this.apiBaseUrl}/employees`;
+
 
   /**
    * Retorna a lista de cargos disponíveis baseada no Enum Role.
@@ -28,28 +32,28 @@ export class EmployeService {
    * Retorna a lista completa de funcionários cadastrados no banco.
    */
   getEmployees(): Observable<Employee[]> {
-    return this.http.get<Employee[]>(API_URL);
+    return this.http.get<Employee[]>(this.apiUrl);
   }
 
   /**
    * Busca os detalhes de um funcionário específico pelo ID.
    */
   getEmployeeById(id: number): Observable<Employee> {
-    return this.http.get<Employee>(`${API_URL}/${id}`);
+    return this.http.get<Employee>(`${this.apiUrl}/${id}`);
   }
 
   /**
    * Envia um novo funcionário (POST) para o backend.
    */
   addEmployee(employee: Employee): Observable<Employee> {
-    return this.http.post<Employee>(API_URL, employee);
+    return this.http.post<Employee>(this.apiUrl, employee);
   }
 
   /**
    * Atualiza os dados de um funcionário existente (PUT).
    */
   updateEmployee(employee: Employee): Observable<Employee> {
-    return this.http.put<Employee>(`${API_URL}/${employee.id}`, employee);
+    return this.http.put<Employee>(`${this.apiUrl}/${employee.id}`, employee);
   }
 
   /**
@@ -57,6 +61,6 @@ export class EmployeService {
    * Realiza uma exclusão lógica (inativação).
    */
   deleteEmployee(id: number): Observable<void> {
-    return this.http.delete<void>(`${API_URL}/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

@@ -8,6 +8,7 @@ import { StatusService } from '../../../../../core/services/status.service';
 import { Status } from '../../../../../shared/models/status';
 import { DatePipe } from '@angular/common';
 import { EmployeService } from '../../../../employee/services/employe.service';
+import { ClientRequestDetailDTO } from '../../../../../shared/models/maintenance-request.models';
 
 type RequestHistoryView = RequestHistory & { status?: Status };
 
@@ -19,19 +20,9 @@ type RequestHistoryView = RequestHistory & { status?: Status };
   styleUrl: './request-history.component.css',
 })
 export class RequestHistoryComponent implements OnDestroy {
-  private _requestId!: number;
-  
-  @Input() set requestId(value: number) {
-    this._requestId = value;
-    this.subscribeHistory();
-  }
-
-  get requestId() {
-    return this._requestId;
-  }
+  @Input({ required: true }) history: RequestHistory[] = [];
 
   private historySubscription?: Subscription;
-  history: RequestHistoryView[] = [];
 
   constructor(
     private requestHistoryService: RequestHistoryService,
@@ -45,28 +36,28 @@ export class RequestHistoryComponent implements OnDestroy {
     this.historySubscription = undefined;
   }
 
-  if (!this.requestId) return;
+  
 
-  this.historySubscription = this.requestHistoryService
-    .getHistoryObsByRequestId(this.requestId)
-    .pipe(
-      switchMap((history) =>
-        forkJoin(
-          history.map((entry) =>
-            this.statusService.getById(entry.statusId).pipe(
-              map((status) => ({
-                ...entry,
-                date: new Date(entry.date),
-                status: status ?? undefined,
-              }))
-            )
-          )
-        )
-      )
-    )
-    .subscribe((historyWithStatus) => {
-      this.history = historyWithStatus;
-    });
+  // this.historySubscription = this.requestHistoryService
+  //   .getHistoryObsByRequestId(this.requestId)
+  //   .pipe(
+  //     switchMap((history) =>
+  //       forkJoin(
+  //         history.map((entry) =>
+  //           this.statusService.getById(entry.statusId).pipe(
+  //             map((status) => ({
+  //               ...entry,
+  //               date: new Date(entry.date),
+  //               status: status ?? undefined,
+  //             }))
+  //           )
+  //         )
+  //       )
+  //     )
+  //   )
+  //   .subscribe((historyWithStatus) => {
+  //     this.history = historyWithStatus;
+  //   });
 }
 
 
@@ -84,11 +75,11 @@ export class RequestHistoryComponent implements OnDestroy {
     if (title.includes('aprovada')) return of('Orçamento aprovado');
     if (title.includes('troca')) return of('Troca de responsável');
     
-    if (title.includes('orçamento realizado')) {
-       return this.getUser(entry.userId).pipe(
-         map(userName => `Orçamento realizado por ${userName}`)
-       );
-    }
+    // if (title.includes('orçamento realizado')) {
+    //    return this.getUser(entry.userId).pipe(
+    //      map(userName => `Orçamento realizado por ${userName}`)
+    //    );
+    // }
 
     return of(entry.title);
   }

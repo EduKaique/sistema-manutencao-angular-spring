@@ -5,16 +5,16 @@
   </div>
 
   <div class="history-list">
-    <ng-container *ngFor="let entry of history; let i = index">
+    <ng-container *ngFor="let item of history; let i = index">
       <div class="history-item">
-        <div class="date" *ngIf="i === 0 || (entry.date | date:'dd/MM/yyyy') !== (history[i - 1].date | date:'dd/MM/yyyy')">
-          <strong>{{ entry.date | date:'EEEE, dd \'de\' MMMM' }}</strong> 
+        <div class="date" *ngIf="i === 0 || (item.occurrenceDate | date:'dd/MM/yyyy') !== (history[i - 1].occurrenceDate | date:'dd/MM/yyyy')">
+          <strong>{{ item.occurrenceDate | date:'EEEE, dd \'de\' MMMM' }}</strong> 
         </div>  
       <div class="history-body">
-          <span class="time"> {{ entry.date | date:'HH:mm' }}</span>
+          <span class="time"> {{ item.occurrenceDate | date:'HH:mm' }}</span>
           <div class="info">
-            <div class="responsible">{{ getUser(entry.userId) }}</div>
-            <div class="desc">{{ getDescription(entry) | async}}</div>
+            <div class="responsible">{{ item.userName }}</div>
+            <div class="desc">{{ getDescription(item) | async}}</div>
           </div>
       </div>
       </div>

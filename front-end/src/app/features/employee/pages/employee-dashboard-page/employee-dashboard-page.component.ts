@@ -38,7 +38,7 @@ export class EmployeeDashboardPageComponent {
 
     return statuses.map(status => ({
       status,
-      requests: requests.filter(req => req.statusName === status.name),
+      requests: requests.filter(req => req.statusName === status.nome),
     }));
   });
 

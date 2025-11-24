@@ -1,21 +1,21 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Request } from '../../../../../shared/models/request';
+import { ClientRequestDetailDTO } from '../../../../../shared/models/maintenance-request.models';
 import { StatusService } from '../../../../../core/services/status.service';
 import { Status } from '../../../../../shared/models/status';
 import { CategoryService } from '../../../../employee/services/category.service';
 import { Category } from '../../../../../shared/models/category';
 import { map } from 'rxjs/internal/operators/map';
 import { Observable } from 'rxjs/internal/Observable';
+import { MatIcon } from '@angular/material/icon';
 @Component({
   selector: 'app-request-description',
-  imports: [CommonModule],
+  imports: [CommonModule, MatIcon],
   templateUrl: './request-description.component.html',
   styleUrl: './request-description.component.css',
 })
 export class RequestDescriptionComponent implements OnInit {
-  @Input() request!: Request;
-  status?: Status & { textColor: string };
+  @Input() request!: ClientRequestDetailDTO;
   categoryName: string = '';
 
   constructor(
@@ -27,15 +27,10 @@ export class RequestDescriptionComponent implements OnInit {
     this.loadCategoryName();
   }
 
-  getStatus(id: number): Observable<Status | undefined> {
-    return this.statusService.getById(id);
-  }
-
 
   loadCategoryName(): void {
     this.categoryService.getAllCategories().subscribe(categories => {
-      const category = categories.find(c => c.id === this.request.categoryId);
-      this.categoryName = category ? category.name : 'Categoria não encontrada';
+      this.categoryName = this.request.categoryName;
     });
   }
 

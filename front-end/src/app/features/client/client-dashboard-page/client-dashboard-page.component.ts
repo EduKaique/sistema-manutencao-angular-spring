@@ -1,18 +1,21 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatIcon } from '@angular/material/icon';
 import { NewRequestPageComponent } from '../new-request-page/new-request-page.component';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { RequestService } from '../../../core/services/request.service';
-import { Request } from '../../../shared/models/request';
+import { MaintenanceRequestService as RequestService } from '../../../core/services/maintenance-request.service';
+import { MaintenanceRequestResponseDTO as Request } from '../../../shared/models/maintenance-request.models';
 import { CommonModule } from '@angular/common';
 import { StatusService } from '../../../core/services/status.service';
 import { HeaderComponent } from '../../../core/layout/header/header.component';
 import { CategoryService } from '../../employee/services/category.service';
 import { MatSort } from '@angular/material/sort';
 import { BudgetService } from '../../../core/services/budget.service';
+import { Category } from '../../../shared/models/category';
+import { ToastService } from '../../../core/services/toast.service';
 
 @Component({
   selector: 'app-client-dashboard-page',
@@ -24,6 +27,7 @@ import { BudgetService } from '../../../core/services/budget.service';
     MatTableModule,
     CommonModule,
     HeaderComponent,
+    MatIcon,
   ],
   templateUrl: './client-dashboard-page.component.html',
   styleUrl: './client-dashboard-page.component.css',
@@ -33,12 +37,14 @@ export class ClientDashboardPageComponent implements OnInit, AfterViewInit {
     'equipmentName',
     'categoryId',
     'requestDate',
-    //'lastAtualization',
-    'statusId',
+    'status',
     'acoes',
   ];
   dataSource = new MatTableDataSource<Request>();
   requests: Request[] = [];
+  categories: Category[] = [];
+  private toast = inject(ToastService);
+  
 
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -48,24 +54,24 @@ export class ClientDashboardPageComponent implements OnInit, AfterViewInit {
     private statusService: StatusService,
     private router: Router,
     private categoryService: CategoryService,
-    private budgetService: BudgetService
+    private budgetService: BudgetService,
   ) {}
 
   categoryMap: Record<number, string> = {};
 
   ngOnInit(): void {
-    this.requests = this.requestService.listarTodos().map(req => ({
-      ...req,
-      requestDate: new Date(req.requestDate),
-    }));
-    this.dataSource.data = this.requests;
-
-    this.categoryService.getAllCategories().subscribe(categories => {
-    categories.forEach(cat => {
-      this.categoryMap[cat.id] = cat.name;
-    });
-  });
+    this.loadRequests();
   }
+
+  loadRequests() {
+    this.requestService.getAllClientRequests().subscribe({
+      next: (data) => {
+        this.dataSource.data = data;
+      },
+      error: (err) => console.error('Erro ao buscar solicitações', err)
+    });
+  }
+
 
   ngAfterViewInit(): void {
     this.sort.active = 'requestDate';
@@ -80,7 +86,7 @@ export class ClientDashboardPageComponent implements OnInit, AfterViewInit {
   getStatusName(id: number): string {
     let result = '';
     this.statusService.getById(id).subscribe(status => {
-      result = status?.name || '';
+      result = status?.nome || '';
     });
     return result;
   }
@@ -88,7 +94,7 @@ export class ClientDashboardPageComponent implements OnInit, AfterViewInit {
   getStatusColor(id: number): string {
     let result = '';
     this.statusService.getById(id).subscribe(status => {
-      result = status?.color || '';
+      result = status?.cor || '';
     });
     return result;
   }
@@ -126,12 +132,8 @@ export class ClientDashboardPageComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         console.log('Solicitação enviada', result);
-        this.requests = this.requestService.listarTodos().map(req => ({
-          ...req,
-          requestDate: new Date(req.requestDate),
-        }));
-        this.dataSource.data = this.requests;
-      }
+        this.loadRequests();
+      } 
     });
   }
 
@@ -140,18 +142,11 @@ export class ClientDashboardPageComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  listarTodos(): Request[] {
-    return this.requestService.listarTodos();
-  }
-
   remover(request: Request): void {
+    console.log('Tentando remover solicitação:', request);
     if (confirm('Deseja realmente excluir essa solicitação?')) {
-      this.requestService.remover(request.id!);
-      this.requests = this.requestService.listarTodos().map(req => ({
-        ...req,
-        requestDate: new Date(req.requestDate),
-      }));
-      this.dataSource.data = this.requests;
+      // this.requestService.remover(request.id!);
+      this.loadRequests();
     }
   }
 

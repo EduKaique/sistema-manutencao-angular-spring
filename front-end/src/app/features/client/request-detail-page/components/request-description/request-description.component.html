@@ -1,18 +1,13 @@
 <article class ="card" *ngIf="request">
     <div class="card-header">
         <div class="card-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <mask id="mask0_260_2853" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="28" height="28">
-                    <rect width="28" height="28" fill="#D9D9D9"/>
-                </mask>
-                <g mask="url(#mask0_260_2853)">
-                    <path d="M20.0083 24.15L12.95 17.0333C12.5611 17.1889 12.1674 17.3056 11.7688 17.3833C11.3701 17.4611 10.9472 17.5 10.5 17.5C8.55556 17.5 6.90278 16.8194 5.54167 15.4583C4.18056 14.0972 3.5 12.4444 3.5 10.5C3.5 9.8 3.59722 9.13403 3.79167 8.50208C3.98611 7.87014 4.25833 7.27222 4.60833 6.70833L8.86667 10.9667L10.9667 8.86667L6.70833 4.60833C7.27222 4.25833 7.87014 3.98611 8.50208 3.79167C9.13403 3.59722 9.8 3.5 10.5 3.5C12.4444 3.5 14.0972 4.18056 15.4583 5.54167C16.8194 6.90278 17.5 8.55556 17.5 10.5C17.5 10.9472 17.4611 11.3701 17.3833 11.7688C17.3056 12.1674 17.1889 12.5611 17.0333 12.95L24.15 20.0083C24.3833 20.2417 24.5 20.5236 24.5 20.8542C24.5 21.1847 24.3833 21.4667 24.15 21.7L21.7 24.15C21.4667 24.3833 21.1847 24.5 20.8542 24.5C20.5236 24.5 20.2417 24.3833 20.0083 24.15ZM20.8542 21.6708L21.6417 20.8833L14.175 13.4167C14.525 13.0278 14.7778 12.5757 14.9333 12.0604C15.0889 11.5451 15.1667 11.025 15.1667 10.5C15.1667 9.33333 14.7924 8.31736 14.0437 7.45208C13.2951 6.58681 12.3667 6.06667 11.2583 5.89167L13.4167 8.05C13.65 8.28333 13.7667 8.55556 13.7667 8.86667C13.7667 9.17778 13.65 9.45 13.4167 9.68333L9.68333 13.4167C9.45 13.65 9.17778 13.7667 8.86667 13.7667C8.55556 13.7667 8.28333 13.65 8.05 13.4167L5.89167 11.2583C6.06667 12.3667 6.58681 13.2951 7.45208 14.0437C8.31736 14.7924 9.33333 15.1667 10.5 15.1667C11.0056 15.1667 11.5111 15.0889 12.0167 14.9333C12.5222 14.7778 12.9792 14.5347 13.3875 14.2042L20.8542 21.6708Z" fill="#3B598E"/>
-                </g>
-            </svg>
-        <span class="card-title">Detalhes da solicitação</span>
+            <mat-icon style="color: #3B598E;">build</mat-icon>
+            <span class="card-title">Detalhes da solicitação</span>
         </div>
-        <div class="status" *ngIf="getStatus(request.statusId) | async as status"
-        [style.background-color]="status?.color" [style.color]="'#ffffff'"> Status: {{ status?.name }}
+
+        <div class="status-badge" 
+            [style.backgroundColor]="request.status.cor">
+            {{ request.status.nome }}
         </div>
     </div> 
     <div class="card-details">
@@ -20,7 +15,7 @@
         <p class="category"><span class="value">{{ categoryName }}</span></p>
         <p class="request-date"><span class="value">{{ formatDate(request.requestDate) }}</span></p>
         <div>
-            <p class="card-description"><span class="value">{{ request.equipmentDescription }}</span></p>
+            <p class="card-description"><span class="value">{{ request.defectDescription }}</span></p>
         </div>
     </div>
 </article>

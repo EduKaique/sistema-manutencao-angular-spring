@@ -24,7 +24,8 @@ import { Request as RequestModel } from '../../../../shared/models/request';
 // Services (ajuste os paths se necessário)
 import { StatusService } from '../../../../core/services/status.service';
 import { MaintenanceRequestService } from '../../../../core/services/maintenance-request.service';
-import { MaintenanceRequestResponseDTO } from '../../../../shared/models/maintenance-request.models';
+import { EmployeeRequestDetailDTO, MaintenanceRequestResponseDTO } from '../../../../shared/models/maintenance-request.models';
+import { ToastService } from '../../../../core/services/toast.service';
 
 
 @Component({
@@ -48,21 +49,19 @@ import { MaintenanceRequestResponseDTO } from '../../../../shared/models/mainten
   ]
 })
 export class BudgetDeliveryComponent implements OnInit {
-  // Router/Dialogs
-  private router = inject(Router);
-  private dialog = inject(MatDialog);
-  private cdr = inject(ChangeDetectorRef);
+
+  constructor(private router: Router, private dialog: MatDialog, private cdr: ChangeDetectorRef,
+    private statusService: StatusService, private maintenanceRequestService: MaintenanceRequestService,
+    private route: ActivatedRoute, private toast: ToastService,
+  ) { }
 
 
-  // Services e rota
-  private statusService = inject(StatusService);
-  private maintenanceRequestService = inject(MaintenanceRequestService);
-  private route = inject(ActivatedRoute);
 
 
   // Dados vindos dos services (padrão do dashboard: arrays)
   statuses: Status[] = [];
-  requests: MaintenanceRequestResponseDTO[] = [];
+  request!: EmployeeRequestDetailDTO;
+  isLoading = true;
 
 
   // Lifecycle
@@ -71,36 +70,37 @@ export class BudgetDeliveryComponent implements OnInit {
     this.statuses = statuses;
   });
 
-  this.maintenanceRequestService.getAllEmployeeRequests().subscribe(requests => {
-    this.requests = requests;
-  });
-
-  this.route.paramMap.subscribe(pm => {
-    const id = pm.get('id') ?? pm.get('requestId');
-    if (id && this.requests) {
-      const req = this.requests.find(r => String(r.id) === String(id));
-      if (req) {
-        this.preencherTelaComRequest(req);
-      }
+  const id = this.route.snapshot.paramMap.get('id');
+  if (id) {
+    this.loadRequestDetails(Number(id));
     }
-  });
-}
+  }
+
+  loadRequestDetails(id: number): void {
+    this.maintenanceRequestService.getRequestByIdForEmployee(id).subscribe({
+      next: (data) => {
+        this.request = data;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error loading request details:', err);
+        this.toast.error('Erro', 'Falha ao carregar detalhes da solicitação!');
+        this.isLoading = false;
+      },
+    });
+  }
 
 
   // Navegação topo
   onVoltarPaginaInicial() {
-    this.router.navigate(['/client-dashboard']);
+    this.router.navigate(['/employee/dashboard']);
   }
 
 
   // Responsável
   responsavel: any = null;
   dataAtribuicao: string = '';
-  funcionarios = [
-    { nome: 'Carlos Mendel', cargo: 'Técnico em Informática' },
-    { nome: 'Maria Souza', cargo: 'Técnica em Redes' },
-    { nome: 'João Silva', cargo: 'Técnico em Suporte' }
-  ];
+  
   selectedFuncionario: any = null;
   dialogRef: any;
 
@@ -130,19 +130,6 @@ export class BudgetDeliveryComponent implements OnInit {
   cancelarDialog() {
     this.dialogRef.close();
   }
-
-
-  // Detalhes (preenchidos automaticamente)
-  detalhes = {
-    id: '001',
-    data: new Date('2025-08-27T12:18:54'),
-    status: 'ABERTA',
-    item: 'Notebook Dell Inspiron 15',
-    categoria: 'Notebook',
-    autor: 'Nilson Nativas',
-    defeito: 'O equipamento liga, mas a tela permanece preta (sem imagem). O LED indicador de energia acende e é possível ouvir o som da ventoinha em funcionamento, mas não há qualquer sinal de vídeo. O problema persiste mesmo após reiniciar o dispositivo várias vezes.'
-  };
-
 
   // Abas
   selectedTab = 0;
@@ -270,7 +257,7 @@ export class BudgetDeliveryComponent implements OnInit {
 
 
   abrirDialogFinalizacao(template: TemplateRef<any>) {
-    this.detalhes.status = 'PAGA';
+    // this.detalhes.status = 'PAGA';
     this.dataFinalizacao = new Date().toLocaleString('pt-BR', {
       day: '2-digit', month: '2-digit', year: 'numeric',
       hour: '2-digit', minute: '2-digit', second: '2-digit'
@@ -291,55 +278,7 @@ export class BudgetDeliveryComponent implements OnInit {
     if (this.finalizacaoDialogRef) {
       this.finalizacaoDialogRef.close();
     }
-    this.router.navigate(['/client-dashboard']);
+    this.router.navigate(['/employee/dashboard']);
   }
-
-
-  // Preenche a tela com dados da Request (mesmo mapeamento que te passei)
-  private preencherTelaComRequest(req: any) {
-    // Status label
-    const st = this.statuses.find(s => s.id === (req as any).statusId);
-    const statusLabel = (st as any)?.nome ?? (st as any)?.name ?? this.detalhes.status;
-
-
-    // Detalhes
-    this.detalhes = {
-      id: String(req.id ?? this.detalhes.id),
-      data: new Date(req.createdAt ?? req.data ?? this.detalhes.data),
-      status: statusLabel ?? this.detalhes.status,
-      item: req.item ?? req.title ?? this.detalhes.item,
-      categoria: req.categoria ?? req.category ?? this.detalhes.categoria,
-      autor: req.autor ?? req.author?.name ?? this.detalhes.autor,
-      defeito: req.defeito ?? req.description ?? this.detalhes.defeito
-    };
-
-
-    // Responsável
-    const resp = req.responsavel ?? req.assignee ?? null;
-    this.responsavel = resp;
-    this.dataAtribuicao =
-      req.assignedAt
-        ? new Date(req.assignedAt).toLocaleString('pt-BR', {
-            day: '2-digit', month: '2-digit', year: 'numeric',
-            hour: '2-digit', minute: '2-digit', second: '2-digit'
-          })
-        : (resp ? this.dataAtribuicao : '');
-
-
-    // Orçamento
-    const orc = req.orcamento ?? req.budget ?? null;
-    this.temOrcamento = !!orc;
-    this.valorOrcamento = orc?.total ?? this.valorOrcamento;
-    this.servicosInclusos = orc?.servicos?.map((s: any) => s.nome ?? s.name).join(', ') ?? this.servicosInclusos;
-
-
-    // Manutenção
-    const man = req.manutencao ?? req.maintenance ?? null;
-    this.temManutencao = !!man;
-    this.descricaoManutencao = man?.descricao ?? man?.description ?? this.descricaoManutencao;
-    this.orientacaoCliente = man?.orientacao ?? man?.instructions ?? this.orientacaoCliente;
-
-
-    this.cdr.markForCheck();
-  }
+  
 }

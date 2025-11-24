@@ -1,8 +1,8 @@
 export interface RequestHistory {
   id: number;
-  title: string; 
-  date: Date;
-  requestId: number; 
-  userId: number; 
-  statusId: number;
+  title: string;
+  occurrenceDate: string;  
+  userName: string;
+  statusName: string;
+  statusColor: string;
 }
