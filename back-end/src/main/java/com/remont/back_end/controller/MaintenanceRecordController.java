@@ -32,10 +32,17 @@ public class MaintenanceRecordController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "MaintenanceRecord não encontrado: " + id));
     }
 
-    @PostMapping
-    public MaintenanceRecord create(@RequestBody MaintenanceRecord MaintenanceRecord) {
-        return maintenanceRecordService.createRecord(MaintenanceRecord);
+    @GetMapping("/by-request/{requestId}")
+    public MaintenanceRecord getByRequestId(@PathVariable Long requestId) {
+        return maintenanceRecordService.getRecordByRequestId(requestId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "MaintenanceRecord não encontrado para request: " + requestId));
     }
+
+    @PostMapping("/{requestId}")
+    public MaintenanceRecord create(@PathVariable Long requestId, 
+    @RequestBody MaintenanceRecord record) {
+    return maintenanceRecordService.createRecord(record, requestId);
+}
 
     @PutMapping("/{id}")
     public MaintenanceRecord update(@PathVariable Long id, @RequestBody MaintenanceRecord MaintenanceRecord) {

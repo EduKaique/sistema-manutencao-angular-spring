@@ -10,7 +10,9 @@ public interface MaintenanceRecordService {
 
     Optional<MaintenanceRecord> getRecordById(Long id);
 
-    MaintenanceRecord createRecord(MaintenanceRecord MaintenanceRecord);
+    Optional<MaintenanceRecord> getRecordByRequestId(Long requestId);
+
+    MaintenanceRecord createRecord(MaintenanceRecord MaintenanceRecord, Long requestId);
 
     MaintenanceRecord updateRecord(Long id, MaintenanceRecord MaintenanceRecord);
 

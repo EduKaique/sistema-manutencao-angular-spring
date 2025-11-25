@@ -253,10 +253,10 @@ public class MaintenanceRequestServiceImpl implements MaintenanceRequestService 
         record.setClientGuidelines(dto.getClientGuidelines());             
         record.setFinishedAt(LocalDateTime.now()); 
         record.setEmployee(employee);           
-        record.setMaintenanceRequest(request);
-        maintenanceRecordService.createRecord(record);
+        
+        MaintenanceRecord savedRecord = maintenanceRecordService.createRecord(record, requestId);
 
-        request.setMaintenanceRecord(record);
+        request.setMaintenanceRecord(savedRecord);
 
         request.setStatus(StatusEnum.ARRUMADA);
         request.setAssignedEmployee(employee); 

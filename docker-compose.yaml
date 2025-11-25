@@ -40,7 +40,6 @@ services:
       - MYSQL_DATABASE=remont_db
       - MYSQL_ROOT_PASSWORD=root
     volumes:
-      - "./conf.d:/etc/mysql/conf.d:ro"
       - mysql-data:/var/lib/mysql
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:

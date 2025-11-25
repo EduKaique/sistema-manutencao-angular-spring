@@ -5,6 +5,7 @@ import { RequestHistoryService } from './request-history.service';
 import { StatusService } from './status.service';
 import { REQUESTS } from '../../shared/mocks/request.mock';
 
+
 const LS_CHAVE = 'requests';
 
 @Injectable({
@@ -80,3 +81,4 @@ export class RequestService {
     localStorage[LS_CHAVE] = JSON.stringify(requests);
   }
 }
+

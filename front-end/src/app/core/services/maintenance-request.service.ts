@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_URL } from '../configs/api.token'; 
 import {MaintenanceRequestCreateDTO, MaintenanceRequestResponseDTO} from '../../shared/models/maintenance-request.models';
+import { MaintenanceRecord } from '../../shared/models/maintenance-record';
 
 
 @Injectable({
@@ -39,5 +40,48 @@ export class MaintenanceRequestService {
     return this.http.get<MaintenanceRequestResponseDTO[]>(`${this.ENDPOINT}/employee`);
   }
 
+  // ===== Métodos de MaintenanceRecord =====
+
+  /**
+   * Busca todos os registros de manutenção
+   */
+  getAllMaintenanceRecords(): Observable<MaintenanceRecord[]> {
+    return this.http.get<MaintenanceRecord[]>(`${this.apiBaseUrl}/maintenance-records`);
+  }
+
+  /**
+   * Busca um registro de manutenção por ID
+   */
+  getMaintenanceRecordById(id: number): Observable<MaintenanceRecord> {
+    return this.http.get<MaintenanceRecord>(`${this.apiBaseUrl}/maintenance-records/${id}`);
+  }
+
+  /**
+   * Cria um novo registro de manutenção vinculado a uma solicitação
+   */
+  createMaintenanceRecord(record: MaintenanceRecord, requestId: number): Observable<MaintenanceRecord> {
+    return this.http.post<MaintenanceRecord>(`${this.apiBaseUrl}/maintenance-records/${requestId}`, record);
+  }
+
+  /**
+   * Atualiza um registro de manutenção existente
+   */
+  updateMaintenanceRecord(id: number, record: MaintenanceRecord): Observable<MaintenanceRecord> {
+    return this.http.put<MaintenanceRecord>(`${this.apiBaseUrl}/maintenance-records/${id}`, record);
+  }
+
+  /**
+   * Remove um registro de manutenção
+   */
+  deleteMaintenanceRecord(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiBaseUrl}/maintenance-records/${id}`);
+  }
+
+  /**
+   * Busca o registro de manutenção associado a uma solicitação específica
+   */
+  getMaintenanceRecordByRequestId(requestId: number): Observable<MaintenanceRecord> {
+    return this.http.get<MaintenanceRecord>(`${this.apiBaseUrl}/maintenance-records/by-request/${requestId}`);
+  }
 
 }
