@@ -4,7 +4,7 @@ Projeto desenvolvido para a disciplina de Desenvolvimento Web 2 do curso de Tecn
 
 O objetivo é criar um sistema completo para gerenciamento de ordens de serviço de manutenção, utilizando uma arquitetura moderna com frontend desacoplado do backend.
 
-## ✨ Tecnologias Utilizadas
+##  Tecnologias Utilizadas
 
 Este projeto foi construído com as seguintes tecnologias:
 
@@ -12,12 +12,12 @@ Este projeto foi construído com as seguintes tecnologias:
 -   **Backend:** [Spring Boot 3 - Java 21](https://spring.io/projects/spring-boot)
 -   **Banco de Dados:** [MySQL](https://www.mysql.com/)
 
-## 📋 Pré-requisitos
+##  Pré-requisitos
 
 Antes de começar, você vai precisar ter instalado em sua máquina:
 *   [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 
-## 🚀 Rodando o Projeto
+##  Rodando o Projeto
 
 Siga os passos abaixo para executar o projeto localmente.
 
@@ -28,7 +28,7 @@ cd ./sistema-manutencao-angular-spring
 ```
 
 ### 2. Subir o docker
-- Suba a docker compose da aplicação (front, back e mysql).
+Suba a docker compose da aplicação (front, back e mysql).
     ```bash
     docker compose up -d
     ```
