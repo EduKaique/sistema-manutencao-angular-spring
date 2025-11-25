@@ -31,7 +31,7 @@
     <ng-container matColumnDef="status">
     <th mat-header-cell *matHeaderCellDef> Status </th>
     <td mat-cell *matCellDef="let element">
-      <span class="status-badge label_medium" [style.backgroundColor]="element.statusColor">
+      <span class="status-badge label_large" [style.backgroundColor]="element.statusColor">
         {{ element.statusName }}
       </span>
     </td>
@@ -45,22 +45,25 @@
     <ng-container matColumnDef="acoes">
     <th mat-header-cell *matHeaderCellDef> Ações </th>
     <td mat-cell *matCellDef="let element">
-        
-        <ng-container *ngIf="getBudgetStatus(element.id) === 'ABERTA'">
-            <button class="btn-custom" (click)="verServico(element.id)">Ver Solicitação</button>
-            <button class="btn-custom2" (click)="remover(element)">Excluir</button>
+
+        <ng-container *ngIf="element.statusName === 'ABERTA' || element.statusName === 'PAGA' || element.statusName === 'FINALIZADA' || element.statusName === 'REDIRECIONADA'">
+            <button class="back-link label_large" (click)="verServico(element.id)" style="width: 100%;">Ver Solicitação</button>
         </ng-container>
 
-        <ng-container *ngIf="getBudgetStatus(element.id) === 'ORÇADA'">
-            <button class="btn-custom" (click)="verServico(element.id)">Aprovar ou Recusar</button>
+        <ng-container *ngIf="element.statusName === 'ORÇADA'">
+            <button class="back-link label_large" (click)="verServico(element.id)" style="width: 100%;">Aprovar ou Recusar</button>
         </ng-container>
 
-        <ng-container *ngIf="getBudgetStatus(element.id) === 'REJEITADA'">
-            <button class="btn-custom" (click)="verServico(element.id)">Resgatar Solicitação</button>
+        <ng-container *ngIf="element.statusName === 'REJEITADA'">
+            <button class="back-link label_large" (click)="verServico(element.id)" style="width: 100%;">Resgatar Solicitação</button>
         </ng-container>
 
-        <ng-container *ngIf="getBudgetStatus(element.id) === 'APROVADA'">
-            <button class="btn-custom" (click)="verServico(element.id)">Ver Detalhes</button>
+        <ng-container *ngIf="element.statusName === 'APROVADA'">
+            <button class="back-link label_large" (click)="verServico(element.id)" style="width: 100%;">Ver Detalhes</button>
+        </ng-container>
+
+        <ng-container *ngIf="element.statusName === 'ARRUMADA'">
+            <button class="back-link label_large" (click)="verServico(element.id)" style="width: 100%;">Pagar Solicitação</button>
         </ng-container>
 
         </td>

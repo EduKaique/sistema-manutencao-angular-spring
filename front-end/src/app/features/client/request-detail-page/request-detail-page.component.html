@@ -15,7 +15,7 @@
   <div class="content-wrapper">
     <div class="details-section">
       <app-request-description [request]="request!"></app-request-description>
-      <app-approve-reject-panel [request]="request!" (statusChance)="loadRequestDetails(this.currentRequestId)"></app-approve-reject-panel>
+      <app-approve-reject-panel [request]="request!" (statusChanged)="loadRequestDetails($event)"></app-approve-reject-panel>
     </div>
     <app-request-history style="height: 100%;" [history]="request!.history"></app-request-history>
   </div>

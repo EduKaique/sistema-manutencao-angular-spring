@@ -16,6 +16,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { EmployeService } from '../../services/employe.service';
 import { Employee } from '../../../../shared/models/employee';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { provideNgxMask, NgxMaskDirective } from 'ngx-mask';
 
 @Component({
   selector: 'app-employee-form',
@@ -30,10 +31,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatStepperModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatIconModule
-  ],
+    MatIconModule,
+    NgxMaskDirective
+],
     providers: [
-    provideNativeDateAdapter()
+    provideNativeDateAdapter(),
+    provideNgxMask() 
   ],
   templateUrl: './employee-form.component.html',
   styleUrls: ['./employee-form.component.css']

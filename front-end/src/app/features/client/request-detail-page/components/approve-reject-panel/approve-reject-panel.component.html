@@ -2,12 +2,9 @@
   <div class="header">
     <div class="title-section">
       <h2 class="heading_3">Orçamento #{{request.id}}</h2>
-      <div class="status-section">
-        
-        <button *ngIf="request.status.nome === 'REJEITADA'" class="rescue-button" (click)="resgatarServico()">
-          Resgatar Orçamento
-        </button>
-      </div>
+      <button *ngIf="request.status.nome === 'REJEITADA'" class="button-primary label_large" (click)="resgatarServico()">
+        Resgatar Orçamento
+      </button>
     </div>
   </div>
   @if (request.budgets.length === 0) {
@@ -35,9 +32,9 @@
       <p>{{budget.services}}</p>
     </div>
 
-    <div class="actions" *ngIf="request.status.nome === 'ORÇADA'">
-      <button class="btn-reject reject-button" (click)="openRejectModal()">Recusar</button>
-      <button class="btn-approve approve-button" (click)="onApprove()">Aprovar Orçamento</button>
+    <div class="action-buttons" *ngIf="request.status.nome === 'ORÇADA'">
+      <button class="reject-button label_large" (click)="openRejectModal()">Recusar</button>
+      <button class="approve-button label_large" (click)="onApprove()">Aprovar Orçamento</button>
     </div>
 
     <div *ngIf="request.status.nome === 'REJEITADA'" class="rejection-info">
@@ -47,14 +44,14 @@
 
     <div *ngIf="request.status.nome === 'APROVADA'" class="approval-info">
       <p class="approval-status">Orçamento Aprovado</p>
-      <p class="approval-message">O serviço foi aprovado e será iniciado em breve.</p>
+      <p class="approval-message">Orçamento aprovado no valor de {{ budget.total | currency:'BRL' }}.</p>
     </div>
   </section>
 
 
   <app-reject-modal
     *ngIf="showRejectModal"
-    (confirm)="confirmRejection()"
+    (confirm)="confirmRejection($event)"
     (cancel)="onRejectCancel()">
   </app-reject-modal>
 }

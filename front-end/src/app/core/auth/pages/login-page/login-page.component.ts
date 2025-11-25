@@ -16,6 +16,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { InputPrimaryComponent } from '../../../../shared/components/input-primary/input-primary.component';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { Toast } from 'ngx-toastr';
+import { ToastService } from '../../../services/toast.service';
 
 @Component({
   selector: 'app-login-page',
@@ -38,7 +40,8 @@ export class LoginPageComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private toast: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -70,20 +73,19 @@ export class LoginPageComponent implements OnInit {
         this.isLoading = false; 
 
         if (user) {
-          console.log('Login bem-sucedido!', user);
           if (user.userAccess === 'employee') {
             this.router.navigate(['/employee/dashboard']); 
           } else if (user.userAccess === 'client') {
             this.router.navigate(['/client/dashboard']); 
           }
         } else {
-          console.error('Email ou senha incorretos.');
+          this.toast.error('Erro', 'Login falhou. E-mail ou senha incorretos.');
           this.loginError = 'O e-mail ou a senha informados estão incorretos.';
         }
       },
       error: (err) => {
         this.isLoading = false; 
-        console.error('Ocorreu um erro no login:', err);
+        this.toast.error('Erro', 'Login falhou');
         this.loginError =
           'Ocorreu um erro inesperado. Tente novamente mais tarde.';
       },

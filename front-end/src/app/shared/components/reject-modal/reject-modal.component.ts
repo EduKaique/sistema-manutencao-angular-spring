@@ -17,6 +17,7 @@ export class RejectModalComponent {
   onConfirm() {
     if (this.rejectionReason.trim()) {
       this.confirm.emit(this.rejectionReason);
+      console.log('Emitted rejection reason:', this.rejectionReason);
     }
   }
 }

@@ -19,9 +19,10 @@
 }
 
 .title-section {
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .title-section h2 {
@@ -284,8 +285,6 @@
   height: 40px;
   border: none;
   border-radius: 8px;
-  font-weight: 600;
-  font-size: 14px;
   cursor: pointer;
   color: white;
   transition: opacity 0.2s;
@@ -297,10 +296,12 @@
 
 .reject-button {
   background-color: #FF5E5B;
+  width: 100%;
 }
 
 .approve-button {
   background-color: #25A46B;
+  width: 100%;
 }
 
 .no-budget {

@@ -16,7 +16,7 @@ import { ToastService } from '../../../../../core/services/toast.service';
 })
 export class ApproveRejectPanelComponent {
   @Input() request!: ClientRequestDetailDTO;
-  @Output() statusChanged = new EventEmitter<void>();
+  @Output() statusChanged = new EventEmitter<number>();
 
   showRejectModal = false;
   rejectionReason = '';
@@ -27,18 +27,16 @@ export class ApproveRejectPanelComponent {
 
 
   onApprove() {
-    if (confirm('Tem certeza que deseja APROVAR este orçamento? O serviço será iniciado.')) {
-      this.requestService.approveBudget(this.request.id).subscribe({
-        next: () => {
-          this.toast.success('Sucesso', 'Orçamento aprovado! O técnico iniciará o serviço.');
-          this.statusChanged.emit(); 
-        },
-        error: (err) => {
-          console.error(err);
-          this.toast.error('Erro', 'Não foi possível aprovar o orçamento.');
-        }
-      });
-    }
+    this.requestService.approveBudget(this.request.id).subscribe({
+      next: () => {
+        this.toast.success('Sucesso', 'Orçamento aprovado! O técnico iniciará o serviço em breve.');
+        this.statusChanged.emit(this.request.id); 
+      },
+      error: (err) => {
+        console.error(err);
+        this.toast.error('Erro', 'Não foi possível aprovar o orçamento.');
+      }
+    });
   }
 
   openRejectModal() {
@@ -46,7 +44,9 @@ export class ApproveRejectPanelComponent {
     this.showRejectModal = true;
   }
 
-  confirmRejection() {
+  confirmRejection(rejectionReason: string) {
+    this.rejectionReason = rejectionReason;
+    console.log('Motivo da recusa:', this.rejectionReason);
     if (!this.rejectionReason.trim()) {
       this.toast.warn('Atenção', 'Informe o motivo da recusa.');
       return;
@@ -56,7 +56,7 @@ export class ApproveRejectPanelComponent {
       next: () => {
         this.toast.success('Recusado', 'Orçamento recusado com sucesso.');
         this.showRejectModal = false;
-        this.statusChanged.emit(); 
+        this.statusChanged.emit(this.request.id); 
       },
       error: (err) => {
         console.error(err);
@@ -67,14 +67,16 @@ export class ApproveRejectPanelComponent {
 
   resgatarServico() {
     if (!this.request) return;
-    this.budgetService.updateStatus(this.request.id, 'APROVADA');
     
-    Swal.fire({
-      title: 'Resgatado!',
-      text: 'Serviço foi resgatado e aprovado!',
-      icon: 'success',
-      confirmButtonText: 'OK',
-      confirmButtonColor: '#25A46B'
+    this.requestService.rescueRequest(this.request.id).subscribe({
+      next: () => {
+        this.toast.success('Resgatado', 'Serviço resgatado com sucesso.');
+        this.statusChanged.emit(this.request.id);
+      },
+      error: (err) => {
+        console.error(err);
+        this.toast.error('Erro', 'Falha ao resgatar serviço.');
+      }
     });
   }
 

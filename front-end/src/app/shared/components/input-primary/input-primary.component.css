@@ -46,3 +46,18 @@ input:focus-visible{
     color: var(--color-text-secondary);
     cursor: pointer;
 }
+
+input.error-state .input-content {
+  border-color: #e74c3c; 
+}
+
+input.error-state .label_medium {
+  color: #e74c3c;
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 0.75rem; 
+  margin-top: 4px;
+  display: block;
+}

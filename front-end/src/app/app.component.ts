@@ -5,7 +5,7 @@ import { HeaderComponent } from './core/layout/header/header.component';
 import { SideBarComponent } from './core/layout/side-bar/side-bar.component';
 import { AuthService } from './core/auth/services/auth.service';
 import { Observable } from 'rxjs'; 
-import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { NgxSpinnerModule } from 'ngx-spinner';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, HeaderComponent, SideBarComponent, AsyncPipe, NgxSpinnerModule],
@@ -18,7 +18,7 @@ export class AppComponent {
 
   public isEmployee$: Observable<boolean>;
 
-  constructor(private authService: AuthService, private spinnerService: NgxSpinnerService) {
+  constructor(private authService: AuthService) {
     this.isEmployee$ = this.authService.isEmployee$;
 
   }

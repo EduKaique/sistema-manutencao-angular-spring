@@ -9,7 +9,8 @@ import com.remont.back_end.dto.RequestHistoryDTO;
 import com.remont.back_end.dto.MaintenanceRequestCreateDTO;
 import com.remont.back_end.dto.MaintenanceRequestResponseDTO;
 import com.remont.back_end.exception.ResourceNotFoundException;
-import com.remont.back_end.model.*; 
+import com.remont.back_end.model.*;
+import com.remont.back_end.repository.CategoryEquipmentRepository;
 import com.remont.back_end.repository.ClientRepository;
 import com.remont.back_end.repository.EmployeeRepository;
 import com.remont.back_end.repository.MaintenanceRequestRepository;
@@ -28,7 +29,6 @@ public class MaintenanceRequestServiceImpl implements MaintenanceRequestService 
     @Autowired
     private MaintenanceRequestRepository maintenanceRequestRepository;
 
-    //TODO: Trocar para client service e employee service
     @Autowired
     private ClientRepository clientRepository;
     @Autowired
@@ -37,7 +37,7 @@ public class MaintenanceRequestServiceImpl implements MaintenanceRequestService 
     @Autowired
     private RequestHistoryService historyService;
     @Autowired
-    private CategoryEquipmentService categoryService;
+    private CategoryEquipmentRepository categoryRepository;
     @Autowired
     private BudgetService budgetService; 
     @Autowired
@@ -51,7 +51,7 @@ public class MaintenanceRequestServiceImpl implements MaintenanceRequestService 
         Client client = clientRepository.findById(Objects.requireNonNull(clientId))
                 .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado"));
 
-        CategoryEquipment category = categoryService.getCategoryById(Objects.requireNonNull(createDTO.getCategoryId()))
+        CategoryEquipment category = categoryRepository.findById(createDTO.getCategoryId())
                 .orElseThrow(() -> new ResourceNotFoundException("Categoria não encontrada"));
                     
 
@@ -65,7 +65,7 @@ public class MaintenanceRequestServiceImpl implements MaintenanceRequestService 
 
 
         MaintenanceRequest savedRequest = maintenanceRequestRepository.save(request);
-        historyService.addHistory(request, client, StatusEnum.ABERTA, "Solicitação Aberta");
+        historyService.addHistory(savedRequest, client, StatusEnum.ABERTA, "Solicitação Aberta");
         return convertToResponseDTO(savedRequest);
     }
 

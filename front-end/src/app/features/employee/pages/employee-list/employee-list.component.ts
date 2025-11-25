@@ -10,7 +10,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { CurrencyPipe, CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
 import { WarningDialogComponent } from '../../../../shared/components/warning-dialog/warning-dialog.component';
 
 @Component({
@@ -25,7 +24,6 @@ import { WarningDialogComponent } from '../../../../shared/components/warning-di
     CurrencyPipe,
     MatFormFieldModule,
     MatInputModule,
-    FormsModule,
   ],
 })
 export class EmployeeListComponent implements OnInit {
@@ -56,7 +54,6 @@ export class EmployeeListComponent implements OnInit {
       },
       error: (err) => {
         console.error('Erro ao buscar funcionários', err);
-        // Se der 403, é falta do Interceptor (Token)
         if (err.status === 403) {
           this.snackBar.open('Sessão expirada ou sem permissão. Faça login novamente.', 'OK', { duration: 5000 });
         }
