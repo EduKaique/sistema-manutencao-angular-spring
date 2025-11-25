@@ -38,6 +38,19 @@ a {
     cursor: pointer;
 }
 
+
+.back-link {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    color: var(--color-primary-default);
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+}
+
 .button-primary {
     display: inline-flex;
     align-items: center;
@@ -367,6 +380,7 @@ table.mat-mdc-table {
     height: 48px !important;
 }
 
+
 th.mat-mdc-header-cell {
     background-color: #1D263B !important;
     color: #ffffff;
@@ -376,6 +390,15 @@ th.mat-mdc-header-cell {
     padding: 8px 24px;
     border-bottom: solid #4a545e;
     text-align: center;
+}
+
+.mat-sort-header-container {
+    justify-content: center;
+    color: #ffffff;
+}
+
+.mat-sort-header-arrow {
+    color: #ffffff !important;
 }
 
 td.mat-mdc-cell {

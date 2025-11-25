@@ -1,90 +1,48 @@
-import { Component, Input, OnDestroy } from '@angular/core';
-import { Subscription, Observable, of, forkJoin } from 'rxjs'; // Adicionado Observable e of
-import { map, catchError, switchMap } from 'rxjs/operators'; // Adicionado operadores
-import { CommonModule } from '@angular/common';
-import { RequestHistoryService } from '../../../../../core/services/request-history.service';
-import { RequestHistory } from '../../../../../shared/models/request-history';
-import { StatusService } from '../../../../../core/services/status.service';
-import { Status } from '../../../../../shared/models/status';
-import { DatePipe } from '@angular/common';
-import { EmployeService } from '../../../../employee/services/employe.service';
-import { ClientRequestDetailDTO } from '../../../../../shared/models/maintenance-request.models';
+import { Component, Input } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
+import { Observable, of } from 'rxjs';
 
-type RequestHistoryView = RequestHistory & { status?: Status };
+// Ajuste os imports dos models conforme seu projeto
+import { RequestHistory } from '../../../../../shared/models/request-history';
 
 @Component({
   selector: 'app-request-history',
-  standalone: true, // Garanti que é standalone
+  standalone: true,
   imports: [CommonModule, DatePipe],
   templateUrl: './request-history.component.html',
   styleUrl: './request-history.component.css',
 })
-export class RequestHistoryComponent implements OnDestroy {
-  @Input({ required: true }) history: RequestHistory[] = [];
+export class RequestHistoryComponent {
+  
+  private _history: RequestHistory[] = [];
 
-  private historySubscription?: Subscription;
-
-  constructor(
-    private requestHistoryService: RequestHistoryService,
-    private statusService: StatusService,
-    private employeeService: EmployeService
-  ) {}
-
-  private subscribeHistory() {
-  if (this.historySubscription) {
-    this.historySubscription.unsubscribe();
-    this.historySubscription = undefined;
+  get history(): RequestHistory[] {
+    return this._history;
   }
+
+  @Input({ required: true })
+  set history(value: RequestHistory[]) {
+    if (value) {
+      this._history = [...value].sort((a, b) => {
+        const dateA = new Date(a.occurrenceDate).getTime();
+        const dateB = new Date(b.occurrenceDate).getTime();
+        return dateB - dateA;
+      });
+    } else {
+      this._history = [];
+    }
+  }
+
+  constructor() {}
 
   
-
-  // this.historySubscription = this.requestHistoryService
-  //   .getHistoryObsByRequestId(this.requestId)
-  //   .pipe(
-  //     switchMap((history) =>
-  //       forkJoin(
-  //         history.map((entry) =>
-  //           this.statusService.getById(entry.statusId).pipe(
-  //             map((status) => ({
-  //               ...entry,
-  //               date: new Date(entry.date),
-  //               status: status ?? undefined,
-  //             }))
-  //           )
-  //         )
-  //       )
-  //     )
-  //   )
-  //   .subscribe((historyWithStatus) => {
-  //     this.history = historyWithStatus;
-  //   });
-}
-
-
-  getUser(userId: number): Observable<string> {
-    return this.employeeService.getEmployeeById(userId).pipe(
-      map(employee => employee.name),
-      catchError(() => of('Usuário desconhecido'))
-    );
-  }
-
-  getDescription(entry: RequestHistoryView): Observable<string> {
-    const title = entry.title.toLowerCase();
+  getDescription(entry: RequestHistory): Observable<string> {
+    const title = entry.title ? entry.title.toLowerCase() : '';
 
     if (title.includes('criada')) return of('Solicitação aberta');
     if (title.includes('aprovada')) return of('Orçamento aprovado');
     if (title.includes('troca')) return of('Troca de responsável');
     
-    // if (title.includes('orçamento realizado')) {
-    //    return this.getUser(entry.userId).pipe(
-    //      map(userName => `Orçamento realizado por ${userName}`)
-    //    );
-    // }
-
     return of(entry.title);
-  }
-
-  ngOnDestroy(): void {
-    this.historySubscription?.unsubscribe();
   }
 }

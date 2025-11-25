@@ -3,20 +3,19 @@
   <div *ngIf="history.length === 0" class="no-history">
     Nenhum histórico encontrado para esta solicitação.
   </div>
-
-  <div class="history-list">
+  <div class="history-list" *ngIf="history.length > 0">
     <ng-container *ngFor="let item of history; let i = index">
       <div class="history-item">
         <div class="date" *ngIf="i === 0 || (item.occurrenceDate | date:'dd/MM/yyyy') !== (history[i - 1].occurrenceDate | date:'dd/MM/yyyy')">
           <strong>{{ item.occurrenceDate | date:'EEEE, dd \'de\' MMMM' }}</strong> 
         </div>  
-      <div class="history-body">
-          <span class="time"> {{ item.occurrenceDate | date:'HH:mm' }}</span>
+        <div class="history-body">
+          <span class="time">{{ item.occurrenceDate | date:'HH:mm' }}</span>
           <div class="info">
             <div class="responsible">{{ item.userName }}</div>
-            <div class="desc">{{ getDescription(item) | async}}</div>
+            <div class="desc">{{ getDescription(item) | async }}</div>
           </div>
-      </div>
+        </div>
       </div>
     </ng-container>
   </div>

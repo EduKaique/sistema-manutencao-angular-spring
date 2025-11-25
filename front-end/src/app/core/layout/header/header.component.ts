@@ -1,13 +1,12 @@
-import { Component, HostListener, ElementRef } from '@angular/core';
+import { Component, HostListener, ElementRef, OnInit, Input } from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
-import { AuthService } from '../../auth/services/auth.service';
+import { AuthService, UserState } from '../../auth/services/auth.service';
 import { SidebarStateService } from '../../services/sidebar-state.service';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { CommonModule, AsyncPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
-
 @Component({
   selector: 'app-header',
   imports: [CommonModule, MatToolbar, MatIconModule, AsyncPipe, MatButtonModule, MatBadgeModule],
@@ -19,7 +18,7 @@ export class HeaderComponent {
 
   public isEmployee$: Observable<boolean>;
 
-   painelVisivel = false;
+  painelVisivel = false;
   
   notificacoes = [
     { id: 1, titulo: 'Novo funcionário cadastrado', descricao: 'Brenda foi adicionada à equipe.', lida: false },
@@ -33,11 +32,16 @@ export class HeaderComponent {
     private elementRef: ElementRef
   ) {
     this.isEmployee$ = this.authService.isEmployee$;
+    this.authService.currentUser$.subscribe(user => {
+      if (user) {
+        this.nomeDeUsuario = user.name;
+      }
+    });
   }
+
 
     @HostListener('document:click', ['$event'])
     onClickOutside(event: Event) {
-    // Verifica se o painel está visível E se o clique não ocorreu dentro do componente do header
     if (this.painelVisivel && !this.elementRef.nativeElement.contains(event.target)) {
       this.painelVisivel = false;
     }

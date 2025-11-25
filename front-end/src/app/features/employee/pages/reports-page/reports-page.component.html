@@ -21,19 +21,39 @@
       </div>
     </div>
     <div class="button-group">
-      <button class="label_large button-secondary">
-        <mat-icon aria-hidden="false" fontIcon="filter_list"></mat-icon>
-        Filtros
-      </button>
-      <button class="label_large button-primary">
-        <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
-        Exportar Relatório
-      </button>
+      @if (isReportsTotalView) {
+        <mat-form-field>
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+            <input matStartDate formControlName="start" placeholder="Start date">
+            <input matEndDate formControlName="end" placeholder="End date">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+
+          @if (start.hasError('matStartDateInvalid')) {
+            <mat-error>Invalid start date</mat-error>
+          }
+          @if (end.hasError('matEndDateInvalid')) {
+            <mat-error>Invalid end date</mat-error>
+          }
+        </mat-form-field>
+
+        <button class="label_large button-primary" (click)="generateRevenueByDateReport()">
+          <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
+          Exportar Relatório
+        </button>
+      } @else {
+        <button class="label_large button-primary" (click)="generateCategoriesReport()">
+          <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
+          Exportar Relatório
+        </button>
+      }
     </div>
   </section>
   @if (isReportsTotalView) {
   <section>
-    <div class="financial-summary">
+    <div class="financial-summary report">
       <div class="summary-item">
         <span
           class="label label_medium"
@@ -62,94 +82,39 @@
         <p class="amount heading_1">$3,580.24</p>
       </div>
     </div>
-    <div class="chart-section">
-      <div class="chart-container">
-        <img
-          src="assets/illustrations/under-development.svg"
-          alt="Em desenvolvimento"
-          class="under-development-image"
-        />
-        <h3 class="body_medium">
-          Gráfico de receitas e despesas em desenvolvimento.
-        </h3>
-      </div>
-      <div class="chart-container" style="width: 32.2%">
-        <img
-          src="assets/illustrations/under-development.svg"
-          alt="Em desenvolvimento"
-          class="under-development-image"
-        />
-        <h3 class="body_medium">
-          Gráfico de receitas e despesas em desenvolvimento.
-        </h3>
-      </div>
-    </div>
+    <table  mat-table [dataSource]="datasource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef style="width: 100%;"> Data </th>
+        <td mat-cell *matCellDef="let element" style="width: 100%;" class="body_large"> {{element.date | date:'dd/MM/yyyy'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="totalRevenue">
+        <th mat-header-cell *matHeaderCellDef  style="width: 100%;"> Receita Total </th>
+        <td mat-cell *matCellDef="let element" style="width: 100%;" class="body_large"> {{element.totalRevenue | currency:'BRL'}} </td>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </table>
+    <mat-paginator
+      [pageSize]="5"
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons>
+    </mat-paginator>
   </section>
   } @else {
   <section class="list-section">
-    <div class="financial-summary">
-      <div class="summary-item">
+    <div class="financial-summary category">
+      @for (category of revenueByCategory; track category.categoryName) {
+      <div class="summary-item category">
         <span class="label label_medium">
           <mat-icon aria-hidden="false" fontIcon="category"></mat-icon>
-          Categoria 1
+          {{ category.categoryName }}
         </span>
-        <p class="amount heading_1">$1.000,00</p>
+        <p class="amount heading_1">{{ category.totalRevenue | currency:'BRL' }}</p>
       </div>
-      <div class="summary-item">
-        <span
-          class="label label_medium"
-        >
-          <mat-icon aria-hidden="false" fontIcon="category"></mat-icon>
-          Categoria 2
-        </span>
-        <p class="amount heading_1">$2,765.43</p>
-      </div>
-      <div class="summary-item">
-        <span class="label label_medium">
-          <mat-icon aria-hidden="false" fontIcon="category"></mat-icon>
-          Categoria 3
-        </span>
-        <p class="amount heading_1">$1.470,24</p>
-      </div>
-      <div class="summary-item">
-        <span class="label label_medium">
-          <mat-icon aria-hidden="false" fontIcon="category"></mat-icon>
-          Categoria 4
-        </span>
-        <p class="amount heading_1">$525.24</p>
-      </div>
-    </div>
-    <div class="financial-summary">
-      <div class="summary-item">
-        <span class="label label_medium">
-          <mat-icon aria-hidden="false" fontIcon="category"></mat-icon>
-          Categoria 5
-        </span>
-        <p class="amount heading_1">$1.000,00</p>
-      </div>
-      <div class="summary-item">
-        <span
-          class="label label_medium"
-        >
-          <mat-icon aria-hidden="false" fontIcon="category"></mat-icon>
-          Categoria 6
-        </span>
-        <p class="amount heading_1">$2,765.43</p>
-      </div>
-      <div class="summary-item">
-        <span class="label label_medium">
-          <mat-icon aria-hidden="false" fontIcon="category"></mat-icon>
-          Categoria 7
-        </span>
-        <p class="amount heading_1">$1.470,24</p>
-      </div>
-      <div class="summary-item">
-        <span class="label label_medium">
-          <mat-icon aria-hidden="false" fontIcon="category"></mat-icon>
-          Categoria 8
-        </span>
-        <p class="amount heading_1">$525.24</p>
-      </div>
+    }
     </div>
   </section>
   }

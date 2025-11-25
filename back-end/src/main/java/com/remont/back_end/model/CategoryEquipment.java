@@ -18,6 +18,9 @@ public class CategoryEquipment {
 
     private String icon;
 
+    @Column(nullable = false)
+    private boolean active = true;
+
     public CategoryEquipment() {
     }
 
@@ -33,6 +36,9 @@ public class CategoryEquipment {
 
     public String getIcon() { return icon; }
     public void setIcon(String icon) { this.icon = icon; }
+
+    public boolean isActive() { return active; }
+    public void setActive(boolean active) { this.active = active; }
 
     @Override
     public boolean equals(Object o) {

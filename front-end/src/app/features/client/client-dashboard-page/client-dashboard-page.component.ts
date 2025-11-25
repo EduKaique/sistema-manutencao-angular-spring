@@ -16,6 +16,8 @@ import { MatSort } from '@angular/material/sort';
 import { BudgetService } from '../../../core/services/budget.service';
 import { Category } from '../../../shared/models/category';
 import { ToastService } from '../../../core/services/toast.service';
+import { MatSortModule } from '@angular/material/sort';
+
 
 @Component({
   selector: 'app-client-dashboard-page',
@@ -28,6 +30,7 @@ import { ToastService } from '../../../core/services/toast.service';
     CommonModule,
     HeaderComponent,
     MatIcon,
+    MatSortModule,
   ],
   templateUrl: './client-dashboard-page.component.html',
   styleUrl: './client-dashboard-page.component.css',
@@ -67,6 +70,9 @@ export class ClientDashboardPageComponent implements OnInit, AfterViewInit {
     this.requestService.getAllClientRequests().subscribe({
       next: (data) => {
         this.dataSource.data = data;
+        if (this.sort) {
+          this.dataSource.sort = this.sort;
+        }
       },
       error: (err) => console.error('Erro ao buscar solicitações', err)
     });
@@ -74,9 +80,13 @@ export class ClientDashboardPageComponent implements OnInit, AfterViewInit {
 
 
   ngAfterViewInit(): void {
-    this.sort.active = 'requestDate';
-    this.sort.direction = 'desc';
     this.dataSource.sort = this.sort;
+
+    setTimeout(() => {
+      this.sort.active = 'requestDate';
+      this.sort.direction = 'desc';
+      this.sort.sortChange.emit();
+    });
   }
 
   getCategoryName(id: number): string {

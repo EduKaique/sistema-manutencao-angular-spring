@@ -20,7 +20,7 @@ public class RequestHistoryController {
     @GetMapping("/{id}/history")
     @PreAuthorize("hasAnyRole('CLIENT', 'EMPLOYEE')")
     public ResponseEntity<List<RequestHistoryDTO>> getRequestHistory(@PathVariable Long id) {
-        // TODO: Idealmente validar se o CLIENT logado é dono dessa requestl
+        
         return ResponseEntity.ok(historyService.getHistoryByRequestId(id));
     }
 }

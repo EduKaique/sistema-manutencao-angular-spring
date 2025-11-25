@@ -52,7 +52,7 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         
         configuration.setAllowedOrigins(Arrays.asList(
-            "http://localhost:4200",
+            "http://localhost:4200/",
             "https://special-couscous-5j47wxx5j49h7qrj-4200.app.github.dev/"
         ));
         

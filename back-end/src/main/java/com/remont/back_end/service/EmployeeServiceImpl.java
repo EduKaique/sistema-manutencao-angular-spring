@@ -8,6 +8,8 @@ import com.remont.back_end.repository.UserRepository;
 import com.remont.back_end.exception.ResourceNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -125,12 +127,27 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     @Transactional
     public void deleteEmployee(Long id) {
-        Employee employee = employeeRepository.findById(Objects.requireNonNull(id))
+        Employee employeeToDelete = employeeRepository.findById(Objects.requireNonNull(id))
                 .orElseThrow(() -> new ResourceNotFoundException("Funcionário não encontrado com id: " + id));
 
-        employee.setActive(false);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null) {
+            String currentUserEmail = authentication.getName();
+            
+            if (employeeToDelete.getEmail().equals(currentUserEmail)) {
+                throw new IllegalStateException("Ação negada: O funcionário não pode remover a si mesmo.");
+            }
+        }
 
-        employeeRepository.save(employee);
+        long activeCount = employeeRepository.countByActiveTrue();
+        
+        if (activeCount <= 1) {
+            throw new IllegalStateException("Ação negada: Existe apenas um funcionário ativo no sistema. Cadastre outro antes de remover este.");
+        }
+
+        employeeToDelete.setActive(false);
+
+        employeeRepository.save(employeeToDelete);
     }
     /**
      * Converte Entidade para um DTO.
@@ -156,7 +173,6 @@ public class EmployeeServiceImpl implements EmployeeService {
      */
     private Employee mapToEntity(EmployeeDTO dto) {
         Employee employee = new Employee();
-        // O ID não é setado aqui, pois será gerado pelo banco
         employee.setName(dto.getName());
         employee.setEmail(dto.getEmail());
         employee.setCpf(dto.getCpf());

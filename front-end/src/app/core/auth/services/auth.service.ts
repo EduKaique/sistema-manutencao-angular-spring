@@ -11,7 +11,7 @@ interface LoginResponseApi {
   userRole: string;
 }
 
-type UserState = {
+export type UserState = {
   id?: number;
   name: string;
   email?: string;

@@ -88,11 +88,18 @@ export class MaintenanceRequestService {
    * Recusa o orçamento da solicitação.
    * POST requests/client/{id}/reject
    */
-  rejectBudget(requestId: number, reason: string): Observable<void> {
-    const payload: RejectionDTO = { reason };
+  rejectBudget(requestId: number, rejectionReason: string): Observable<void> {
+    const payload: RejectionDTO = { rejectionReason };
     return this.http.post<void>(`${this.apiUrl}/client/${requestId}/reject`, payload);
   }
 
+  /**  
+   * Resgatar Solicitação.
+   * Rota: POST /requests/client/{id}/rescue
+   */
+  rescueRequest(requestId: number): Observable<MaintenanceRequestResponseDTO> {
+    return this.http.post<MaintenanceRequestResponseDTO>(`${this.apiUrl}/client/${requestId}/rescue`, {});
+  }
 
   /**
    * Efetuar Manutenção.

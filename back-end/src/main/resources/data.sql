@@ -31,14 +31,14 @@ INSERT IGNORE INTO clients (user_id, cpf, phone_number, zip_code, street, number
 (7, '44444444444', '41999999994', '80000000', 'Rua 24 Horas', '400', 'Centro', 'Curitiba', 'PR');
 
 
-INSERT IGNORE INTO services (nome, valor_servico) VALUES 
-('Diagnóstico', 50.00),
-('Limpeza interna', 80.00),
-('Limpeza externa', 40.00),
-('Troca de componentes', 120.00),
-('Conserto geral', 200.00),
-('Atualização de software', 60.00),
-('Reparo de placa lógica', 350.00),
-('Substituição de conectores', 90.00),
-('Teste de funcionamento completo', 30.00),
-('Reparo urgente (prioridade)', 150.00);
+INSERT IGNORE INTO services (id, nome, valor_servico) VALUES 
+(1, 'Diagnóstico', 50.00),
+(2, 'Limpeza interna', 80.00),
+(3, 'Limpeza externa', 40.00),
+(4, 'Troca de componentes', 120.00),
+(5, 'Conserto geral', 200.00),
+(6, 'Atualização de software', 60.00),
+(7, 'Reparo de placa lógica', 350.00),
+(8, 'Substituição de conectores', 90.00),
+(9, 'Teste de funcionamento completo', 30.00),
+(10, 'Reparo urgente (prioridade)', 150.00);

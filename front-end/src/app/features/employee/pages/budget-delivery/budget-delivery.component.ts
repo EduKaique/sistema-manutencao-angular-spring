@@ -25,6 +25,7 @@ import { ServiceItemDTO } from '../../../../shared/models/service-item.model';
 import { BudgetCreateDTO } from '../../../../shared/models/budget.model';
 import { ToastService } from '../../../../core/services/toast.service';
 import { serviceItemService } from '../../../../core/services/service-item.service';
+import { AuthService } from '../../../../core/auth/services/auth.service';
 
 @Component({
   selector: 'app-budget-delivery',
@@ -47,6 +48,7 @@ import { serviceItemService } from '../../../../core/services/service-item.servi
   ]
 })
 export class BudgetDeliveryComponent implements OnInit {
+  nomeDeUsuario: string = '';
 
   constructor(
     private router: Router, 
@@ -58,7 +60,15 @@ export class BudgetDeliveryComponent implements OnInit {
     private serviceItemService: serviceItemService,
     private route: ActivatedRoute, 
     private toast: ToastService,
-  ) { }
+    private authService: AuthService
+  ) { 
+    this.authService.currentUser$.subscribe(user => {
+      if (user) {
+        this.nomeDeUsuario = user.name;
+      }
+    });
+
+  }
 
   statuses: Status[] = [];
   request!: EmployeeRequestDetailDTO;
@@ -116,8 +126,6 @@ export class BudgetDeliveryComponent implements OnInit {
   }
 
   loadRequestDetails(id: number): void {
-    // isLoading não é setado como true aqui para evitar "flicker" (piscar) na tela
-    // se quisermos apenas atualizar os dados silenciosamente.
     this.maintenanceRequestService.getRequestByIdForEmployee(id).subscribe({
       next: (data) => {
         this.request = data;
@@ -129,7 +137,8 @@ export class BudgetDeliveryComponent implements OnInit {
 
         if (this.request.budgets && this.request.budgets.length > 0) {
           this.temOrcamento = true;
-          this.valorOrcamento = this.request.budgets.reduce((acc: number, b: any) => acc + (b.totalValue || 0), 0);
+          this.valorOrcamento = this.request.budgets[0].total;
+          this.servicosInclusos = this.request.budgets[0].services;
         }
 
         if (this.request.maintenanceRecord) {
@@ -205,7 +214,7 @@ export class BudgetDeliveryComponent implements OnInit {
 
   atualizarTotal() {
     this.valorTotal = this.servicosSelecionados.reduce(
-      (acc, s) => acc + s.valor_servico,
+      (acc, s) => acc + s.valorServico,
       0
     );
     this.cdr.markForCheck();
@@ -227,8 +236,9 @@ export class BudgetDeliveryComponent implements OnInit {
           this.loadRequestDetails(this.request.id);
           this.temOrcamento = true;
           this.valorOrcamento = this.valorTotal;
-          this.servicosInclusos = this.servicosSelecionados.map(s => s.nome).join(', ');
-          
+          this.servicosInclusos = this.request.budgets[0].services;
+
+          this.dialogOrcamentoRef.close();
           this.fecharDialogOrcamento();
           this.cdr.markForCheck();
         },
@@ -240,6 +250,10 @@ export class BudgetDeliveryComponent implements OnInit {
   }
 
   abrirDialogManutencao(template: TemplateRef<any>) {
+    if (!this.permitidoCriarManutencao()) {
+      this.toast.warn('Atenção', 'Não é permitido registrar manutenção neste momento.');
+      return;
+    }
     this.manutencaoDescricaoInput = this.temManutencao
       ? this.descricaoManutencao
       : '';
@@ -266,8 +280,18 @@ export class BudgetDeliveryComponent implements OnInit {
     );
   }
 
+  permitidoCriarManutencao(): boolean {
+    if (this.temOrcamento) return true;
+    return this.request.status.nome === 'APROVADO'  || this.request.status.nome === 'REDIRECIONADA';
+  }
+
   confirmarManutencao() {
     if (!this.request) return;
+
+    if (this.responsavel?.name !==  this.nomeDeUsuario) {
+      this.toast.error('Erro ao Efetuar Manutenção', 'Você não é o funcionário designado para essa soliciação');
+      return;
+    }
 
     const maintenancePayload: MaintenanceRecordDTO = {
       id: this.request.maintenanceRecord ? this.request.maintenanceRecord.id : 0,

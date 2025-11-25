@@ -60,9 +60,17 @@ body {
 
 .payment-item {
   display: flex;
+  flex-direction: column;
+  margin: 12px 0;
+}
+
+.payment-item.total {
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin: 12px 0;
+  margin-top: 24px;
+  padding-top: 12px;
+  border-top: 2px solid #e0e0e0;
 }
 
 .payment-title {

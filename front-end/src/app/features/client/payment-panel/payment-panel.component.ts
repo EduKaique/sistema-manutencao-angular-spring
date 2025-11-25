@@ -32,7 +32,7 @@ export class PaymentPanelComponent implements OnInit {
   modalSubtitulo = '';
   modalDadosAdicionais = '';
   modalTextoBotao = 'Voltar para Página Inicial';
-  modalRotaDestino = '/client/request-detail/' + this.currentRequestId;
+  modalRotaDestino = '/client/dashboard/';
 
   constructor(private requestService: MaintenanceRequestService, private toast: ToastService, private route: ActivatedRoute) {}
 

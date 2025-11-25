@@ -51,5 +51,5 @@ export interface EmployeeRequestDetailDTO {
 }
 
 export interface RejectionDTO {
-  reason: string;
+  rejectionReason: string;
 }

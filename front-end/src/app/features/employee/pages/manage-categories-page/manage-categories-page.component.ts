@@ -6,6 +6,7 @@ import { NewCategoryModalComponent } from '../../components/new-category-modal/n
 import { MatIcon } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { WarningDialogComponent } from '../../../../shared/components/warning-dialog/warning-dialog.component';
+import { ToastService } from '../../../../core/services/toast.service';
 
 @Component({
   selector: 'app-manage-categories-page',
@@ -18,7 +19,7 @@ export class ManageCategoriesPageComponent implements OnInit {
   isModalShowing = false;
   selectedCategory: Category | null = null;
 
-  constructor(private categoryService: CategoryService, private dialog: MatDialog) {}
+  constructor(private categoryService: CategoryService, private dialog: MatDialog, private toast: ToastService) {}
 
   ngOnInit(): void {
     this.getAllCategories();
@@ -27,7 +28,10 @@ export class ManageCategoriesPageComponent implements OnInit {
   getAllCategories(): void {
     this.categoryService.getAllCategories().subscribe({
       next: (data: Category[]) => (this.categories = data),
-      error: (err: unknown) => console.error('Erro ao carregar categorias', err)
+      error: (err: unknown) => {
+        console.error('Erro ao carregar categorias', err);
+        this.toast.error('Erro', 'Erro ao carregar categorias: ' + err);
+      }
     });
   }
 
@@ -47,16 +51,24 @@ export class ManageCategoriesPageComponent implements OnInit {
         next: () => {
           this.getAllCategories();
           this.isModalShowing = false;
+          this.toast.success('Sucesso', 'Categoria atualizada com sucesso');
         },
-        error: (err: unknown) => console.error('Erro ao atualizar categoria', err)
+        error: (err: unknown) => {
+          this.toast.error('Erro', 'Erro ao atualizar categoria: ' + err);
+          console.error('Erro ao atualizar categoria', err);
+        } 
       });
     } else {
       this.categoryService.addCategory(category).subscribe({
         next: () => {
           this.getAllCategories();
           this.isModalShowing = false;
+          this.toast.success('Sucesso', 'Categoria adicionada com sucesso');
         },
-        error: (err: unknown) => console.error('Erro ao adicionar categoria', err)
+        error: (err: unknown) => {
+          this.toast.error('Erro', 'Erro ao adicionar categoria: ' + err);
+          console.error('Erro ao atualizar categoria', err);
+        }
       });
     }
   }
@@ -77,6 +89,7 @@ export class ManageCategoriesPageComponent implements OnInit {
       if (result) {
         this.categoryService.deleteCategory(id).subscribe(() => {
           this.getAllCategories();
+          this.toast.success('Sucesso', 'Categoria excluída com sucesso');
         });
       }
     });

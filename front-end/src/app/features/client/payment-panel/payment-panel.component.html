@@ -24,18 +24,16 @@
       <div class="info-section" *ngIf="requests">
         <h3>Resumo do Pagamento</h3>
 
-        <div class="payment-item" *ngFor="let budget of requests?.budgets">
+        <div class="payment-item" *ngFor="let budget of requests.budgets">
           <div>
             <p class="payment-title">{{ budget.services }}</p>
           </div>
           <div class="payment-item total">
-            <div>
               <span class="payment-title-total"><strong>Total</strong></span>
-            </div>
-            <span class="payment-price-total"><strong>R$ {{budget.total}}</strong></span>
+              <span class="payment-price-total"><strong>R$ {{budget.total}}</strong></span>
           </div>
         </div>
-        <hr>
+        
         
       
 

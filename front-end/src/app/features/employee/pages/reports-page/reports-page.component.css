@@ -75,16 +75,27 @@ main {
     display: flex;
     justify-content: space-between;
     gap: 24px;
+    margin-bottom: 24px;
+}
+
+.financial-summary.category {
+    flex-wrap: wrap;
+    justify-content: flex-start;
 }
 
 .summary-item {
     display: flex;
+    flex-grow: 1;
     flex-direction: column;
     gap: 16px;
     background-color: var(--color-background-card);
     border-radius: 8px;
     padding: 24px;
     width: 100%;
+}
+
+.summary-item.category {
+    max-width: 296px;
 }
 
 .label {
