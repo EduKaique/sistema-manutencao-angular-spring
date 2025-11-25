@@ -17,7 +17,6 @@ interface Pagamento {
   templateUrl: './payment-panel.component.html',
   imports: [CommonModule, AppSuccessModalComponent, MatIcon, RouterModule],
   styleUrls: ['./payment-panel.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaymentPanelComponent implements OnInit {
   requests: ClientRequestDetailDTO | undefined;
@@ -49,6 +48,7 @@ export class PaymentPanelComponent implements OnInit {
     this.requestService.getRequestByIdForClient(id).subscribe({
       next: (data) => {
         this.requests = data;
+        console.log('Detalhes da solicitação carregados:', data);
         this.isLoading = false;
       },
       error: (err) => {
@@ -73,6 +73,7 @@ export class PaymentPanelComponent implements OnInit {
       next: () => {
         this.toast.success('Sucesso', 'Solicitação paga com sucesso!');
         this.loadRequestDetails(this.currentRequestId);
+        this.mostrarModal = true;
       },
       error: (err) => {
         console.error('Error paying request:', err);
@@ -80,7 +81,7 @@ export class PaymentPanelComponent implements OnInit {
       },
     });
     this.atualizarDataConfirmacao();
-    this.mostrarModal = true;
+    
   }
 
  

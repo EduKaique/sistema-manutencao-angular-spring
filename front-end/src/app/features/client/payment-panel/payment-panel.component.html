@@ -1,11 +1,11 @@
 <body>
-  <div class="card" *ngIf="requests">
+  <div class="card" >
     <div class="card-left">
       <a [routerLink]="['/client/request-detail', currentRequestId]" class="label_large back-link">
         <mat-icon>arrow_back</mat-icon>Voltar para Página Inicial
       </a>
 
-      <div class="info-section">
+      <div class="info-section" *ngIf="requests">
         <div class="info-item">
           <h3>Item</h3>
           <p>{{ requests.equipmentName }}</p>
@@ -16,12 +16,12 @@
         </div>
       </div>
 
-      <div class="info-section">
+      <div class="info-section" *ngIf="requests">
         <h3>Descrição do Defeito</h3>
-        <p>{{ requests.defectDescription }}</p>
+        <p>{{ requests!.defectDescription }}</p>
       </div>
 
-      <div class="info-section">
+      <div class="info-section" *ngIf="requests">
         <h3>Resumo do Pagamento</h3>
 
         <div class="payment-item" *ngFor="let budget of requests?.budgets">

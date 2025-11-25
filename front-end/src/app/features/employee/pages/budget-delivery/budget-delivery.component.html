@@ -17,7 +17,7 @@
       color="primary"
       class="finalizar-solicitacao-btn"
       *ngIf="canFinalizarSolicitacao()"
-      (click)="abrirDialogFinalizacao(finalizacaoDialogTemplate)"
+      (click)="finalizarSolicitacao(finalizacaoDialogTemplate)"
     >
       <mat-icon>check</mat-icon>
       Finalizar Solicitação
@@ -334,6 +334,7 @@
       mat-flat-button
       color="primary"
       class="finalizacao-back-btn"
+      (click)="onVoltarPaginaInicial()"
     >
       Voltar para Página Inicial
     </button>

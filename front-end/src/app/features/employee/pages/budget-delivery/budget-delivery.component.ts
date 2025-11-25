@@ -296,21 +296,28 @@ export class BudgetDeliveryComponent implements OnInit {
   }
 
   canFinalizarSolicitacao(): boolean {
-    return !!this.responsavel && this.temOrcamento && this.temManutencao;
+    return this.request.status.nome === 'PAGA';
   }
 
-  abrirDialogFinalizacao(template: TemplateRef<any>) {
-    this.dataFinalizacao = new Date().toLocaleString('pt-BR', {
-      day: '2-digit', month: '2-digit', year: 'numeric',
-      hour: '2-digit', minute: '2-digit', second: '2-digit'
-    });
-
-    this.finalizacaoDialogRef = this.dialog.open(template, {
-      disableClose: true,
-      panelClass: 'custom-dialog'
-    });
-
-    this.cdr.markForCheck();
+  finalizarSolicitacao(template: TemplateRef<any>) {
+    this.maintenanceRequestService.finalizeRequest(this.request.id)
+      .subscribe({
+        next: () => {
+          this.toast.success('Sucesso', 'Solicitação finalizada com sucesso!');
+          this.loadRequestDetails(this.request.id);
+          this.cdr.markForCheck();
+          this.dataFinalizacao = new Date().toLocaleString('pt-BR');
+          this.finalizacaoDialogRef = this.dialog.open(template, {
+            disableClose: false,
+            panelClass: 'custom-dialog'
+          });
+        },
+        error: (err) => {
+          console.error(err);
+          this.toast.error('Erro', 'Falha ao finalizar a solicitação.');
+        }
+      });
+    
   }
 
 }
