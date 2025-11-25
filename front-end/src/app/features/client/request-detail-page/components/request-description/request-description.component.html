@@ -11,8 +11,8 @@
             </svg>
         <span class="card-title">Detalhes da solicitação</span>
         </div>
-        <div class="status" *ngIf="getStatus(request.statusId) as status"
-        [style.background-color]="status.cor" [style.color]="'#ffffff'">Status: {{ status.nome }}
+        <div class="status" *ngIf="getStatus(request.statusId) | async as status"
+        [style.background-color]="status?.color" [style.color]="'#ffffff'"> Status: {{ status?.name }}
         </div>
     </div> 
     <div class="card-details">

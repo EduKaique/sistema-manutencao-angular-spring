@@ -15,5 +15,6 @@ export interface Employee {
     phone: string | null;
     birthDate: string;
     wage: number | null;
+    password : string;
     active: boolean;
 }

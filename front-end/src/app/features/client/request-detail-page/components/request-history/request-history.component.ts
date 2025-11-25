@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy } from '@angular/core';
-import { Subscription, Observable, of } from 'rxjs'; // Adicionado Observable e of
-import { map, catchError } from 'rxjs/operators'; // Adicionado operadores
+import { Subscription, Observable, of, forkJoin } from 'rxjs'; // Adicionado Observable e of
+import { map, catchError, switchMap } from 'rxjs/operators'; // Adicionado operadores
 import { CommonModule } from '@angular/common';
 import { RequestHistoryService } from '../../../../../core/services/request-history.service';
 import { RequestHistory } from '../../../../../shared/models/request-history';
@@ -40,20 +40,34 @@ export class RequestHistoryComponent implements OnDestroy {
   ) {}
 
   private subscribeHistory() {
-    if (this.historySubscription) {
-      this.historySubscription.unsubscribe();
-      this.historySubscription = undefined;
-    }
-    if (!this.requestId) return;
-    
-    this.historySubscription = this.requestHistoryService.getHistoryObsByRequestId(this.requestId).subscribe((history) => {
-      this.history = history.map((entry) => ({
-        ...entry,
-        date: new Date(entry.date),
-        status: this.statusService.getById(entry.statusId),
-      }));
-    });
+  if (this.historySubscription) {
+    this.historySubscription.unsubscribe();
+    this.historySubscription = undefined;
   }
+
+  if (!this.requestId) return;
+
+  this.historySubscription = this.requestHistoryService
+    .getHistoryObsByRequestId(this.requestId)
+    .pipe(
+      switchMap((history) =>
+        forkJoin(
+          history.map((entry) =>
+            this.statusService.getById(entry.statusId).pipe(
+              map((status) => ({
+                ...entry,
+                date: new Date(entry.date),
+                status: status ?? undefined,
+              }))
+            )
+          )
+        )
+      )
+    )
+    .subscribe((historyWithStatus) => {
+      this.history = historyWithStatus;
+    });
+}
 
 
   getUser(userId: number): Observable<string> {

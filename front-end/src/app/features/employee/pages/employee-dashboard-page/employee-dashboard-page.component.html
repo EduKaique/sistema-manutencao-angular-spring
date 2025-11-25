@@ -53,16 +53,16 @@
   </div>
 </div>
 
-  <div class="request-list">
-     @for (req of requests; track req.id) {
-      @if (req.statusId == 1) {
-        <app-request-card class="request-card" [request]="req">
-          <button (click)="makeQuote(req)">Efetuar Orçamento</button>
-        </app-request-card>
-      }
-    } @empty {
-      <p class="empty-state">Nenhuma solicitação neste status.</p>
+<div class="request-list">
+    @for (req of requests(); track req.id) {
+    @if (req.statusName == 'ABERTA') {
+      <app-request-card class="request-card" [request]="req">
+        <button (click)="makeQuote(req)">Efetuar Orçamento</button>
+      </app-request-card>
     }
-  </div>
+  } @empty {
+    <p class="empty-state">Nenhuma solicitação neste status.</p>
+  }
+</div>
 
 

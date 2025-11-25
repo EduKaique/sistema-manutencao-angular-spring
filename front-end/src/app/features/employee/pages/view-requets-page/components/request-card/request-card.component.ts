@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Request } from '../../../../../../shared/models/request';
+import { MaintenanceRequestResponseDTO as Request } from '../../../../../../shared/models/maintenance-request.models';
 import { DatePipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { CategoryService } from '../../../../services/category.service';
@@ -24,10 +24,10 @@ export class RequestCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.categoryService.getAllCategories().subscribe(categories => {
-    this.categoryMap = categories.reduce<Record<number, string>>((acc, c) => {
-      acc[c.id] = c.name;
-      return acc;
-    }, {});
+      this.categoryMap = categories.reduce<Record<number, string>>((acc, c) => {
+        acc[c.id] = c.name;
+        return acc;
+      }, {});
   });
 
     this.clientMap = CLIENT_MOCKS.reduce<Record<number, string>>((acc, c) => {

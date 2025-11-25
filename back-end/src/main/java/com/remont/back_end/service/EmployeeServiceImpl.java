@@ -10,6 +10,7 @@ import com.remont.back_end.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Objects;
@@ -21,13 +22,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
     private final UserRepository userRepository; 
-    
-    // private final PasswordEncoder passwordEncoder; 
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, UserRepository userRepository) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.employeeRepository = employeeRepository;
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -38,14 +39,20 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDTO createEmployee(EmployeeDTO employeeDTO) {
         
         Employee employee = mapToEntity(employeeDTO);
-
         if(userRepository.existsByEmail(employee.getEmail())) {
             throw new RuntimeException("Erro: Este e-mail já está em uso!");
         }
-        
-        Employee newEmployee = employeeRepository.save(employee);
-        
-        return mapToDTO(newEmployee);
+        if (employeeRepository.existsByCpf(employee.getCpf())) {
+            throw new RuntimeException("Erro: CPF já está em uso por outro usuário!");
+        }
+
+        try {
+            Employee newEmployee = employeeRepository.save(employee);
+            return mapToDTO(newEmployee);
+
+        } catch (org.springframework.dao.DataIntegrityViolationException e) {
+            throw new RuntimeException("Erro: O CPF ou E-mail informado já pertence a outro funcionário (verifique registros inativos)!");
+        }
     }
 
     /**
@@ -83,8 +90,13 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .orElseThrow(() -> new ResourceNotFoundException("Funcionário não encontrado com id: " + id));
 
         Optional<User> userByEmail = userRepository.findByEmail(employeeDTO.getEmail());
+        Optional<Employee> employeeByCpf = employeeRepository.findByCpf(employeeDTO.getCpf());
+
         if(userByEmail.isPresent() && !userByEmail.get().getId().equals(id)) {
             throw new RuntimeException("Erro: Email já está em uso por outro usuário!");
+        } 
+        if (employeeByCpf.isPresent() && !employeeByCpf.get().getId().equals(id)) {
+            throw new RuntimeException("Erro: CPF já está em uso por outro usuário!");
         }
 
         employee.setName(employeeDTO.getName());
@@ -95,9 +107,16 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setWage(employeeDTO.getWage());
         employee.setActive(employeeDTO.isActive());
 
-        Employee updatedEmployee = employeeRepository.save(employee);
-        
-        return mapToDTO(updatedEmployee);
+        if (employeeDTO.getPassword() != null && !employeeDTO.getPassword().isBlank()) {
+            employee.setPassword(passwordEncoder.encode(employeeDTO.getPassword()));
+        }
+
+        try {
+            Employee updatedEmployee = employeeRepository.save(employee);
+            return mapToDTO(updatedEmployee);
+        } catch (org.springframework.dao.DataIntegrityViolationException e) {
+            throw new RuntimeException("Erro: O CPF ou E-mail informado já pertence a outro funcionário!");
+        }
     }
 
     /**
@@ -145,12 +164,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setBirthDate(dto.getBirthDate());
         employee.setWage(dto.getWage());
         employee.setActive(dto.isActive());
-        // Se vier senha no DTO, usa ela. Se não vier, define uma padrão.
+        
         if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
-            employee.setPassword(dto.getPassword());
-        } else {
-            employee.setPassword("123456"); 
-        }
+            employee.setPassword(passwordEncoder.encode(dto.getPassword()));
+        } 
         return employee;
     }
 }

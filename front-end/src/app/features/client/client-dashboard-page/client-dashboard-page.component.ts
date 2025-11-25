@@ -78,11 +78,19 @@ export class ClientDashboardPageComponent implements OnInit, AfterViewInit {
   }
 
   getStatusName(id: number): string {
-    return this.statusService.getById(id)?.nome || '';
+    let result = '';
+    this.statusService.getById(id).subscribe(status => {
+      result = status?.name || '';
+    });
+    return result;
   }
 
   getStatusColor(id: number): string {
-    return this.statusService.getById(id)?.cor || '';
+    let result = '';
+    this.statusService.getById(id).subscribe(status => {
+      result = status?.color || '';
+    });
+    return result;
   }
 
   getBudgetStatus(requestId: number): string {

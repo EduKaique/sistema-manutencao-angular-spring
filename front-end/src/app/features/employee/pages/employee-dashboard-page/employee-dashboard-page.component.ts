@@ -2,15 +2,16 @@ import { Component, computed, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { RequestCardComponent } from '../view-requets-page/components/request-card/request-card.component';
-import { Request as RequestModel } from '../../../../shared/models/request';
+import { MaintenanceRequestResponseDTO as Request } from '../../../../shared/models/maintenance-request.models';
 import { StatusService } from '../../../../core/services/status.service';
 import { Status } from '../../../../shared/models/status';
-import { RequestService } from '../../../../core/services/request.service';
+import { MaintenanceRequestService } from '../../../../core/services/maintenance-request.service';
 import { MatIconModule } from '@angular/material/icon';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 interface GroupedRequests {
   status: Status;
-  requests: RequestModel[];
+  requests: Request[];
 }
 @Component({
   selector: 'app-employee-dashboard-page',
@@ -26,18 +27,18 @@ interface GroupedRequests {
 })
 export class EmployeeDashboardPageComponent {
   private statusService = inject(StatusService);
-  private requestService = inject(RequestService);
+  private requestService = inject(MaintenanceRequestService);
 
-  statuses = this.statusService.getAll();
-  requests = this.requestService.listarTodos();
+  statuses = toSignal(this.statusService.getAll(), { initialValue: [] });
+  requests = toSignal(this.requestService.getAllEmployeeRequests(), { initialValue: [] });
 
   groupedRequests = computed<GroupedRequests[]>(() => {
-    const statuses = this.statuses;
-    const requests = this.requests;
+    const statuses = this.statuses();   
+    const requests = this.requests();   
 
-    return statuses.map((status) => ({
-      status: status,
-      requests: requests.filter((req) => req.statusId === status.id),
+    return statuses.map(status => ({
+      status,
+      requests: requests.filter(req => req.statusName === status.name),
     }));
   });
 
@@ -52,6 +53,6 @@ export class EmployeeDashboardPageComponent {
   }
   getOpenRequestCount(): number {
     const requests = this.requests;
-    return requests.filter(req => req.statusId === 1).length;
+    return requests().filter(req => req.statusName === 'ABERTA').length;
   }
 }

@@ -1,26 +1,27 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Status } from '../../shared/models/status';
+import { API_URL } from '../configs/api.token';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StatusService {
-  private statusList: Status[] = [
-    { id: 1, nome: 'ABERTA', cor: '#627877' },
-    { id: 2, nome: 'ORÇADA', cor: '#7C3804' },
-    { id: 3, nome: 'REJEITADA', cor: '#FF5E5B' },
-    { id: 4, nome: 'APROVADA', cor: '#FFAE36' },
-    { id: 5, nome: 'REDIRECIONADA', cor: '#8A84E2' },
-    { id: 6, nome: 'ARRUMADA', cor: '#2B3E61' },
-    { id: 7, nome: 'PAGA', cor: '#EC7505' },
-    { id: 8, nome: 'FINALIZADA', cor: '#136947' },
-  ];
+  private http = inject(HttpClient);
+  private apiBaseUrl = inject(API_URL);
+  private apiUrl = `${this.apiBaseUrl}/status-enum`;
 
-  getAll(): Status[] {
-    return this.statusList;
+  constructor() {}
+
+  getAll(): Observable<Status[]> {
+    return this.http.get<Status[]>(this.apiUrl);
   }
 
-  getById(id: number): Status | undefined {
-    return this.statusList.find((status) => status.id === id);
+  getById(id: number): Observable<Status | undefined> {
+    return this.getAll().pipe(
+      map((statuses) => statuses.find((s) => s.id === id))
+    );
   }
 }
