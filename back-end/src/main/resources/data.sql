@@ -1,10 +1,10 @@
 
-INSERT IGNORE INTO category (id, name, icon) VALUES
-(1, 'Notebook', 'laptop'),
-(2, 'Desktop', 'computer'),
-(3, 'Impressora', 'printer'),
-(4, 'Mouse', 'mouse'),
-(5, 'Teclado', 'keyboard');
+INSERT IGNORE INTO category (id, name, icon, active) VALUES
+(1, 'Notebook', 'laptop', 1),
+(2, 'Desktop', 'computer', 1),
+(3, 'Impressora', 'printer', 1),
+(4, 'Mouse', 'mouse', 1),
+(5, 'Teclado', 'keyboard', 1);
 
 -- Admin (Senha: 9876)
 INSERT IGNORE INTO users (id, name, email, password, role) VALUES (1, 'Admin', 'admin@remont.com', 'v8HE2LXv/pO01KY6YD/9Ng==$F+AHe/3jYWuxf7KYlxH6YtCfZkSmDAJDYgA4m/tDfQc=', 'ROLE_EMPLOYEE');
