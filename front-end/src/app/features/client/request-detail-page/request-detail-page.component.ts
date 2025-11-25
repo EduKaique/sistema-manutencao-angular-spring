@@ -25,7 +25,7 @@ import { ToastService } from '../../../core/services/toast.service';
   styleUrl: './request-detail-page.component.css',
 })
 export class RequestDetailPageComponent implements OnInit {
-  request: ClientRequestDetailDTO | undefined;
+  request!: ClientRequestDetailDTO;
   currentRequestId!: number;
   toast = inject(ToastService);
 
@@ -58,6 +58,11 @@ export class RequestDetailPageComponent implements OnInit {
       },
     });
   }
+
+  goToPaymentPage(): void {
+    this.router.navigate(['/client/request-detail', this.currentRequestId, 'payment']);
+  }
+
 
   backToDashboard(): void {
     this.router.navigate(['/client/dashboard']);

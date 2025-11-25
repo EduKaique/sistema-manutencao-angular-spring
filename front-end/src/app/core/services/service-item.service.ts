@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_URL } from '../configs/api.token'; 
-import { ServiceItemDTO } from '../models/service-item.model'
+import { ServiceItemDTO } from '../../shared/models/service-item.model';
 
 
 @Injectable({
@@ -11,6 +11,7 @@ import { ServiceItemDTO } from '../models/service-item.model'
 export class serviceItemService {
   private http = inject(HttpClient);
   private apiBaseUrl = inject(API_URL);
+  
   
   private readonly apiUrl = `${this.apiBaseUrl}/services`;
 

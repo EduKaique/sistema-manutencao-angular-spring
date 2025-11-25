@@ -20,7 +20,7 @@
   <section *ngFor="let budget of request.budgets" class="budget-details">
     <div class="price-highlight">
       <h3>Valor do Serviço</h3>
-      <p class="heading_3 price">R$ {{ budget.total | currency:'BRL' }}</p>
+      <p class="heading_3 price"> {{ budget.total | currency:'BRL' }}</p>
     </div>
 
     <div class="info-row">
@@ -35,7 +35,7 @@
       <p>{{budget.services}}</p>
     </div>
 
-    <div class="actions" *ngIf="request.status.nome === 'ORCAMENTO' || request.status.nome === 'AGUARDANDO APROVAÇÃO'">
+    <div class="actions" *ngIf="request.status.nome === 'ORÇADA'">
       <button class="btn-reject reject-button" (click)="openRejectModal()">Recusar</button>
       <button class="btn-approve approve-button" (click)="onApprove()">Aprovar Orçamento</button>
     </div>

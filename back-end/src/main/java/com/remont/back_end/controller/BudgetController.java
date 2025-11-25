@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/budgets")
-@CrossOrigin(origins = "*")
 public class BudgetController {
 
     private final BudgetService budgetService;

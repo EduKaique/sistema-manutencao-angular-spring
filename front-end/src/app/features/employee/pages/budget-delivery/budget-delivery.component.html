@@ -91,7 +91,6 @@
           <div class="tecnico-content">
             <div><b>Nome:</b> {{ responsavel!.name }}</div>
             <!-- Exibe cargo se existir na model, senão omite -->
-            <div *ngIf="responsavel!.role"><b>Cargo:</b> {{ responsavel!.role }}</div>
             <div *ngIf="dataAtribuicao"><b>Atribuído em:</b> {{ dataAtribuicao }}</div>
           </div>
           <button mat-stroked-button color="primary" class="atribuir-btn" (click)="abrirDialog(dialogTemplate)">
@@ -238,7 +237,7 @@
           (selectionChange)="atualizarTotal()"
         >
           <mat-option *ngFor="let s of servicosDisponiveis" [value]="s">
-            {{ s.nome }} — R$ {{ s.valor_serviço | number:'1.2-2' }}
+            {{ s.nome }} — R$ {{ s.valor_servico | number:'1.2-2' }}
           </mat-option>
         </mat-select>
       </mat-form-field>

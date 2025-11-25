@@ -205,7 +205,7 @@ export class BudgetDeliveryComponent implements OnInit {
 
   atualizarTotal() {
     this.valorTotal = this.servicosSelecionados.reduce(
-      (acc, s) => acc + s.valor_serviço,
+      (acc, s) => acc + s.valor_servico,
       0
     );
     this.cdr.markForCheck();

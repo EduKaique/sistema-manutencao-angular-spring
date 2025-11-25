@@ -93,6 +93,7 @@ export class MaintenanceRequestService {
     return this.http.post<void>(`${this.apiUrl}/client/${requestId}/reject`, payload);
   }
 
+
   /**
    * Efetuar Manutenção.
    * Rota: POST /requests/employee/{id}/maintenance
@@ -100,6 +101,22 @@ export class MaintenanceRequestService {
   executeMaintenance(requestId: number, maintenanceData: MaintenanceRecordDTO): Observable<MaintenanceRequestResponseDTO> {
     const url = `${this.apiUrl}/employee/${requestId}/maintenance`;
     return this.http.post<MaintenanceRequestResponseDTO>(url, maintenanceData);
+  }
+
+  /**
+   * Efetuar Pagamento.
+   * Rota: POST /requests/client/{id}/pay
+   */
+  payRequest(requestId: number): Observable<MaintenanceRequestResponseDTO> { 
+    return this.http.post<MaintenanceRequestResponseDTO>(`${this.apiUrl}/client/${requestId}/pay`, {});
+  }
+
+  /**  
+   * Finaliza a solicitação.
+   * Rota: POST /requests/employee/{id}/finalize
+   */
+  finalizeRequest(requestId: number): Observable<MaintenanceRequestResponseDTO> {
+    return this.http.post<MaintenanceRequestResponseDTO>(`${this.apiUrl}/employee/${requestId}/finalize`, {});
   }
 
 }

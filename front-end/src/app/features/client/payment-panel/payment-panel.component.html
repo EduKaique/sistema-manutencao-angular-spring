@@ -1,40 +1,43 @@
 <body>
-  <div class="card">
+  <div class="card" *ngIf="requests">
     <div class="card-left">
-      <a href="/" class="back-link">{{ backLink }}</a>
+      <a [routerLink]="['/client/request-detail', currentRequestId]" class="label_large back-link">
+        <mat-icon>arrow_back</mat-icon>Voltar para Página Inicial
+      </a>
 
       <div class="info-section">
         <div class="info-item">
           <h3>Item</h3>
-          <p>{{ item }}</p>
+          <p>{{ requests.equipmentName }}</p>
         </div>
         <div class="info-item">
           <h3>Categoria</h3>
-          <p>{{ categoria }}</p>
+          <p>{{ requests.categoryName }}</p>
         </div>
       </div>
 
       <div class="info-section">
         <h3>Descrição do Defeito</h3>
-        <p>{{ defeito }}</p>
+        <p>{{ requests.defectDescription }}</p>
       </div>
 
       <div class="info-section">
         <h3>Resumo do Pagamento</h3>
 
-        <div class="payment-item" *ngFor="let p of pagamentos">
+        <div class="payment-item" *ngFor="let budget of requests?.budgets">
           <div>
-            <p class="payment-title">{{ p.titulo }}</p>
+            <p class="payment-title">{{ budget.services }}</p>
           </div>
-          <span class="payment-price">R$ {{ p.preco.toFixed(2).replace('.',',') }}</span>
+          <div class="payment-item total">
+            <div>
+              <span class="payment-title-total"><strong>Total</strong></span>
+            </div>
+            <span class="payment-price-total"><strong>R$ {{budget.total}}</strong></span>
+          </div>
         </div>
         <hr>
-        <div class="payment-item total">
-        <div>
-          <span class="payment-title-total"><strong>Total</strong></span>
-        </div>
-        <span class="payment-price-total"><strong>R$ {{ total.toFixed(2).replace('.',',') }}</strong></span>
-      </div>
+        
+      
 
       </div>
     </div>
@@ -58,7 +61,7 @@
         </button>
       </div>
 
-      <button class="pay-now" (click)="payNow()">
+      <button class="pay-now" (click)="payRequest()">
         PAGAR AGORA
       </button>
     </div>
