@@ -30,10 +30,6 @@ export class RequestCardComponent implements OnInit {
       }, {});
   });
 
-    this.clientMap = CLIENT_MOCKS.reduce<Record<number, string>>((acc, c) => {
-      acc[c.clientid] = c.name;
-      return acc;
-    }, {});
   }
 
   verServico(id: number) {

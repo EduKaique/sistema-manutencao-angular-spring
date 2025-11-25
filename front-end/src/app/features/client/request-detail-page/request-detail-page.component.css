@@ -1,3 +1,10 @@
+.header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 24px;
+}
+
 
 .main-content {
     display: flex;
@@ -27,7 +34,6 @@
     display: flex;
     align-items: center;
     gap: 4px;
-    margin: 16px 0;
 }
 
 .back-link:hover {

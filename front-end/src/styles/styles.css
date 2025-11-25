@@ -1,4 +1,5 @@
 @import url("./variables.css");
+@import "ngx-toastr/toastr";
 
 * {
     margin: 0;
@@ -38,6 +39,10 @@ a {
 }
 
 .button-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     width: 200px;
     height: 48px;
     padding: var(--spacing-2xs);
@@ -196,4 +201,196 @@ button:disabled, .button-primary:disabled {
 .mat-step-icon-state-edit {
   background-color: var(--color-secondary-default) !important;
   color: white !important;
+}
+
+#toast-container {
+  z-index: 99999 !important;
+}
+
+.status-badge {
+    color: white; 
+    padding: 4px 8px; 
+    border-radius: 16px; 
+    font-size: 1rem;
+}
+
+/* CSS Manual para ball-scale-multiple */
+.la-ball-scale-multiple,
+.la-ball-scale-multiple > div {
+    position: relative;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+.la-ball-scale-multiple {
+    display: block;
+    font-size: 0;
+    color: #fff;
+}
+.la-ball-scale-multiple.la-dark {
+    color: #333;
+}
+.la-ball-scale-multiple > div {
+    display: inline-block;
+    float: none;
+    background-color: currentColor;
+    border: 0 solid currentColor;
+}
+.la-ball-scale-multiple {
+    width: 32px;
+    height: 32px;
+}
+.la-ball-scale-multiple > div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+    opacity: 0;
+    -webkit-animation: ball-scale-multiple 1s 0s linear infinite;
+       -moz-animation: ball-scale-multiple 1s 0s linear infinite;
+         -o-animation: ball-scale-multiple 1s 0s linear infinite;
+            animation: ball-scale-multiple 1s 0s linear infinite;
+}
+.la-ball-scale-multiple > div:nth-child(2) {
+    -webkit-animation-delay: .2s;
+       -moz-animation-delay: .2s;
+         -o-animation-delay: .2s;
+            animation-delay: .2s;
+}
+.la-ball-scale-multiple > div:nth-child(3) {
+    -webkit-animation-delay: .4s;
+       -moz-animation-delay: .4s;
+         -o-animation-delay: .4s;
+            animation-delay: .4s;
+}
+.la-ball-scale-multiple.la-sm {
+    width: 16px;
+    height: 16px;
+}
+.la-ball-scale-multiple.la-sm > div {
+    width: 16px;
+    height: 16px;
+}
+.la-ball-scale-multiple.la-2x {
+    width: 64px;
+    height: 64px;
+}
+.la-ball-scale-multiple.la-2x > div {
+    width: 64px;
+    height: 64px;
+}
+.la-ball-scale-multiple.la-3x {
+    width: 96px;
+    height: 96px;
+}
+.la-ball-scale-multiple.la-3x > div {
+    width: 96px;
+    height: 96px;
+}
+@-webkit-keyframes ball-scale-multiple {
+    0% {
+        opacity: 0;
+        -webkit-transform: scale(0);
+                transform: scale(0);
+    }
+    5% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        -webkit-transform: scale(1);
+                transform: scale(1);
+    }
+}
+@-moz-keyframes ball-scale-multiple {
+    0% {
+        opacity: 0;
+        -moz-transform: scale(0);
+             transform: scale(0);
+    }
+    5% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        -moz-transform: scale(1);
+             transform: scale(1);
+    }
+}
+@-o-keyframes ball-scale-multiple {
+    0% {
+        opacity: 0;
+        -o-transform: scale(0);
+           transform: scale(0);
+    }
+    5% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        -o-transform: scale(1);
+           transform: scale(1);
+    }
+}
+@keyframes ball-scale-multiple {
+    0% {
+        opacity: 0;
+        -webkit-transform: scale(0);
+           -moz-transform: scale(0);
+             -o-transform: scale(0);
+                transform: scale(0);
+    }
+    5% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        -webkit-transform: scale(1);
+           -moz-transform: scale(1);
+             -o-transform: scale(1);
+                transform: scale(1);
+    }
+}
+
+table.mat-mdc-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border-radius: 8px 8px 8px 8px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.mat-mdc-header-row {
+    height: 48px !important;
+}
+
+th.mat-mdc-header-cell {
+    background-color: #1D263B !important;
+    color: #ffffff;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 14px;
+    padding: 8px 24px;
+    border-bottom: solid #4a545e;
+    text-align: center;
+}
+
+td.mat-mdc-cell {
+    padding: 12px 24px;
+    font-size: 14px;
+    color: #444;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+}
+
+tr.mat-mdc-footer-row,
+tr.mat-mdc-row {
+    height: auto;
+}
+
+tr.mat-mdc-row:hover {
+    background-color: #f9f9f9;
 }

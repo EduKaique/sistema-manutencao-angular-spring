@@ -18,7 +18,7 @@ export const clientRoutes: Routes = [
     component: ApproveRejectPanelComponent,
   },
   {
-    path: 'payment',
+    path: 'request-detail/:id/payment',
     component: PaymentPanelComponent,
   },
 ];

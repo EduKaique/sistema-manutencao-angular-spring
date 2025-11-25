@@ -26,6 +26,7 @@ public class MaintenanceRequestController {
 
     @Autowired
     private MaintenanceRequestService maintenanceRequestService;
+    
 
     @PostMapping
     @PreAuthorize("hasRole('CLIENT')")

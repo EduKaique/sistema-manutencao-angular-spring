@@ -3,68 +3,59 @@
     <div class="title-section">
       <h2 class="heading_3">Orçamento #{{request.id}}</h2>
       <div class="status-section">
-        <span class="status" 
-          [class.rejected]="request.status === 'REJEITADA'"
-          [class.approved]="request.status === 'APROVADA'"
-          [class.pending]="!request.status && hasBudget"
-          [class.no-budget]="!request.status && !hasBudget">
-          {{getStatusText()}}
-        </span>
-        <button *ngIf="request.status === 'REJEITADA'" class="rescue-button" (click)="resgatarServico()">
+        
+        <button *ngIf="request.status.nome === 'REJEITADA'" class="rescue-button" (click)="resgatarServico()">
           Resgatar Orçamento
         </button>
       </div>
     </div>
   </div>
+  @if (request.budgets.length === 0) {
+    <div class="empty-state">
+      <h6 class="heading_6">Nenhum Orçamento Efetuado</h6>
+      <small>Aguarde a análise do técnico.</small>
+    </div>
+  } @else {
 
-  <section class="budget-details" *ngIf="hasBudget">
+  <section *ngFor="let budget of request.budgets" class="budget-details">
     <div class="price-highlight">
       <h3>Valor do Serviço</h3>
-      <p class="heading_3 price">R$ {{budget?.valor | number:'1.2-2'}}</p>
+      <p class="heading_3 price"> {{ budget.total | currency:'BRL' }}</p>
     </div>
 
-    <div class="info-row" *ngIf="budget?.prazo">
+    <div class="info-row">
       <div class="info-block">
-        <h3>Prazo de Execução</h3>
-        <p class="deadline">{{budget.prazo}}</p>
+        <h3>Gerado em </h3>
+        <span class="date">{{ budget.createdAt | date:'dd/MM/yyyy' }}</span>
       </div>
     </div>
 
-    <div class="services-section" *ngIf="budget?.servicos">
+    <div class="services-section" *ngIf="budget?.services">
       <h3>Serviços Inclusos</h3>
-      <p>{{budget.servicos}}</p>
+      <p>{{budget.services}}</p>
     </div>
 
-    <div *ngIf="request.status === 'REJEITADA'" class="rejection-info">
+    <div class="actions" *ngIf="request.status.nome === 'ORÇADA'">
+      <button class="btn-reject reject-button" (click)="openRejectModal()">Recusar</button>
+      <button class="btn-approve approve-button" (click)="onApprove()">Aprovar Orçamento</button>
+    </div>
+
+    <div *ngIf="request.status.nome === 'REJEITADA'" class="rejection-info">
       <p class="rejection-status">Orçamento Reprovado</p>
       <p class="rejection-reason">{{request.rejectionReason}}</p>
     </div>
 
-    <div *ngIf="request.status === 'APROVADA'" class="approval-info">
+    <div *ngIf="request.status.nome === 'APROVADA'" class="approval-info">
       <p class="approval-status">Orçamento Aprovado</p>
       <p class="approval-message">O serviço foi aprovado e será iniciado em breve.</p>
     </div>
   </section>
 
-  <section class="no-budget" *ngIf="!hasBudget">
-    <div class="no-budget-message">
-      <h3>Aguardando Orçamento</h3>
-      <p>Esta solicitação ainda não possui orçamento cadastrado.</p>
-    </div>
-  </section>
-
-  <div class="action-buttons" *ngIf="!request.status && hasBudget">
-    <button class="reject-button" (click)="showRejectModal = true">
-      Rejeitar Serviço
-    </button>
-    <button class="approve-button" (click)="aprovar()">
-      Aprovar Serviço
-    </button>
-  </div>
 
   <app-reject-modal
     *ngIf="showRejectModal"
-    (confirm)="onRejectConfirm($event)"
+    (confirm)="confirmRejection()"
     (cancel)="onRejectCancel()">
   </app-reject-modal>
+}
 </main>

@@ -31,15 +31,15 @@ export class RequestService {
     requests.push(request);
     localStorage[LS_CHAVE] = JSON.stringify(requests);
 
-    const inicialEntry: RequestHistory = {
-      id: 0,
-      title: 'Solicitação criada',
-      date: request.requestDate,
-      requestId: request.id,
-      userId: 1, //usuario logado
-      statusId: request.statusId,
-    };
-    this.requestHistoryService.addHistory(inicialEntry);
+    // const inicialEntry: RequestHistory = {
+    //   id: 0,
+    //   title: 'Solicitação criada',
+    //   date: request.requestDate,
+    //   requestId: request.id,
+    //   userId: 1, //usuario logado
+    //   statusId: request.statusId,
+    // };
+    // this.requestHistoryService.addHistory(inicialEntry);
   }
 
   buscarPorId(id: number): Request | undefined {
@@ -68,16 +68,16 @@ export class RequestService {
 
         const description = `Status atualizado de ${oldStatus?.name} para ${newStatus?.color}`;
 
-        const entry: RequestHistory = {
-          id: 0,
-          title: description,
-          date: new Date(),
-          requestId: request.id,
-          userId: 1,
-          statusId: request.statusId,
-        };
+        // const entry: RequestHistory = {
+        //   id: 0,
+        //   title: description,
+        //   date: new Date(),
+        //   requestId: request.id,
+        //   userId: 1,
+        //   statusId: request.statusId,
+        // };
 
-        this.requestHistoryService.addHistory(entry);
+        // this.requestHistoryService.addHistory(entry);
       }
 
       requests[index] = request;

@@ -22,10 +22,6 @@ import org.springframework.security.core.AuthenticationException;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = {
-    "http://localhost:4200", 
-    "https://refactored-space-fiesta-6qrxj44wpjw245xv-4200.app.github.dev"
-})
 public class AuthController {
 
     @Autowired

@@ -20,7 +20,6 @@ import com.remont.back_end.service.EmployeeService;
 
 @RestController
 @RequestMapping("/api/employees")
-@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*") 
 public class EmployeeController {
 
     @Autowired

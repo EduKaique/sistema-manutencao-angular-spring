@@ -1,8 +1,6 @@
-import { ChangeDetectionStrategy, Component, TemplateRef, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, TemplateRef, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ChangeDetectorRef } from '@angular/core';
-
 
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,17 +13,18 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 
-
-// Tipos do seu projeto (ajuste os paths se necessário)
 import { Status } from '../../../../shared/models/status';
-import { Request as RequestModel } from '../../../../shared/models/request';
-
-
-// Services (ajuste os paths se necessário)
 import { StatusService } from '../../../../core/services/status.service';
 import { MaintenanceRequestService } from '../../../../core/services/maintenance-request.service';
-import { MaintenanceRequestResponseDTO } from '../../../../shared/models/maintenance-request.models';
+import { EmployeeRequestDetailDTO} from '../../../../shared/models/maintenance-request.models';
+import { MaintenanceRecordDTO } from '../../../../shared/models/maintenance-record.model';
+import { Employee } from '../../../../shared/models/employee';
+import { EmployeService } from '../../services/employe.service';
+import { ServiceItemDTO } from '../../../../shared/models/service-item.model';
 
+import { BudgetCreateDTO } from '../../../../shared/models/budget.model';
+import { ToastService } from '../../../../core/services/toast.service';
+import { serviceItemService } from '../../../../core/services/service-item.service';
 
 @Component({
   selector: 'app-budget-delivery',
@@ -48,62 +47,111 @@ import { MaintenanceRequestResponseDTO } from '../../../../shared/models/mainten
   ]
 })
 export class BudgetDeliveryComponent implements OnInit {
-  // Router/Dialogs
-  private router = inject(Router);
-  private dialog = inject(MatDialog);
-  private cdr = inject(ChangeDetectorRef);
 
+  constructor(
+    private router: Router, 
+    private dialog: MatDialog, 
+    private cdr: ChangeDetectorRef,
+    private statusService: StatusService, 
+    private maintenanceRequestService: MaintenanceRequestService,
+    private employeeService: EmployeService,
+    private serviceItemService: serviceItemService,
+    private route: ActivatedRoute, 
+    private toast: ToastService,
+  ) { }
 
-  // Services e rota
-  private statusService = inject(StatusService);
-  private maintenanceRequestService = inject(MaintenanceRequestService);
-  private route = inject(ActivatedRoute);
-
-
-  // Dados vindos dos services (padrão do dashboard: arrays)
   statuses: Status[] = [];
-  requests: MaintenanceRequestResponseDTO[] = [];
+  request!: EmployeeRequestDetailDTO;
+  isLoading = true;
 
+  funcionariosDisponiveis: Employee[] = [];
+  servicosDisponiveis: ServiceItemDTO[] = [];
 
-  // Lifecycle
-  ngOnInit(): void {
-  this.statusService.getAll().subscribe(statuses => {
-    this.statuses = statuses;
-  });
-
-  this.maintenanceRequestService.getAllEmployeeRequests().subscribe(requests => {
-    this.requests = requests;
-  });
-
-  this.route.paramMap.subscribe(pm => {
-    const id = pm.get('id') ?? pm.get('requestId');
-    if (id && this.requests) {
-      const req = this.requests.find(r => String(r.id) === String(id));
-      if (req) {
-        this.preencherTelaComRequest(req);
-      }
-    }
-  });
-}
-
-
-  // Navegação topo
-  onVoltarPaginaInicial() {
-    this.router.navigate(['/client-dashboard']);
-  }
-
-
-  // Responsável
-  responsavel: any = null;
+  responsavel: Employee | null = null;
   dataAtribuicao: string = '';
-  funcionarios = [
-    { nome: 'Carlos Mendel', cargo: 'Técnico em Informática' },
-    { nome: 'Maria Souza', cargo: 'Técnica em Redes' },
-    { nome: 'João Silva', cargo: 'Técnico em Suporte' }
-  ];
-  selectedFuncionario: any = null;
+  selectedFuncionario: Employee | null | undefined = undefined;
   dialogRef: any;
 
+  selectedTab = 0;
+
+  temOrcamento = false;
+  valorOrcamento = 0;
+  servicosInclusos = '';
+
+  temManutencao = false;
+  descricaoManutencao = '';
+  orientacaoCliente = 'N/A';
+
+  servicosSelecionados: ServiceItemDTO[] = [];
+  valorTotal = 0;
+  dialogOrcamentoRef: any;
+
+  manutencaoDescricaoInput = '';
+  manutencaoOrientacaoInput = '';
+  manutencaoDialogRef: any;
+
+  finalizacaoDialogRef: any;
+  dataFinalizacao = '';
+
+  ngOnInit(): void {
+    this.statusService.getAll().subscribe(statuses => {
+      this.statuses = statuses;
+      this.cdr.markForCheck();
+    });
+
+    this.employeeService.getEmployees().subscribe(emps => {
+      this.funcionariosDisponiveis = emps;
+      this.cdr.markForCheck();
+    });
+
+    this.serviceItemService.getAllServices().subscribe(servs => {
+      this.servicosDisponiveis = servs;
+      this.cdr.markForCheck();
+    });
+
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.loadRequestDetails(Number(id));
+    }
+  }
+
+  loadRequestDetails(id: number): void {
+    // isLoading não é setado como true aqui para evitar "flicker" (piscar) na tela
+    // se quisermos apenas atualizar os dados silenciosamente.
+    this.maintenanceRequestService.getRequestByIdForEmployee(id).subscribe({
+      next: (data) => {
+        this.request = data;
+        this.isLoading = false;
+
+        if (this.request.assignedEmployeeName) {
+           this.responsavel = { name: this.request.assignedEmployeeName } as Employee; 
+        }
+
+        if (this.request.budgets && this.request.budgets.length > 0) {
+          this.temOrcamento = true;
+          this.valorOrcamento = this.request.budgets.reduce((acc: number, b: any) => acc + (b.totalValue || 0), 0);
+        }
+
+        if (this.request.maintenanceRecord) {
+          this.temManutencao = true;
+          this.descricaoManutencao = this.request.maintenanceRecord.maintenanceDescription;
+          this.orientacaoCliente = this.request.maintenanceRecord.clientGuidelines;
+        }
+
+        this.cdr.markForCheck();
+      },
+      error: (err) => {
+        console.error('Error loading request details:', err);
+        this.toast.error('Erro', 'Falha ao carregar detalhes da solicitação!');
+        this.isLoading = false;
+        this.cdr.markForCheck();
+      },
+    });
+  }
+
+  onVoltarPaginaInicial() {
+    this.router.navigate(['/employee/dashboard']);
+  }
 
   abrirDialog(template: TemplateRef<any>) {
     this.selectedFuncionario = this.responsavel ?? undefined;
@@ -113,66 +161,32 @@ export class BudgetDeliveryComponent implements OnInit {
     });
   }
 
-
   atribuirResponsavel() {
-    this.responsavel = this.selectedFuncionario;
-    this.dataAtribuicao = this.selectedFuncionario
-      ? new Date().toLocaleString('pt-BR', {
-          day: '2-digit', month: '2-digit', year: 'numeric',
-          hour: '2-digit', minute: '2-digit', second: '2-digit'
-        })
-      : '';
-    this.dialogRef.close();
-    this.cdr.markForCheck();
-  }
+    if (!this.selectedFuncionario || !this.request) return;
 
+    const funcionarioId = this.selectedFuncionario.id; 
+
+    this.maintenanceRequestService.redirectMaintenance(this.request.id, funcionarioId)
+      .subscribe({
+        next: () => {
+          this.toast.success('Sucesso', 'Responsável atribuído com sucesso!');
+          this.loadRequestDetails(this.request.id);
+          this.responsavel = this.selectedFuncionario || null;
+          this.dataAtribuicao = new Date().toLocaleString('pt-BR'); 
+          
+          this.dialogRef.close();
+          this.cdr.markForCheck();
+        },
+        error: (err) => {
+          console.error(err);
+          this.toast.error('Erro', 'Não foi possível atribuir o responsável.');
+        }
+      });
+  }
 
   cancelarDialog() {
     this.dialogRef.close();
   }
-
-
-  // Detalhes (preenchidos automaticamente)
-  detalhes = {
-    id: '001',
-    data: new Date('2025-08-27T12:18:54'),
-    status: 'ABERTA',
-    item: 'Notebook Dell Inspiron 15',
-    categoria: 'Notebook',
-    autor: 'Nilson Nativas',
-    defeito: 'O equipamento liga, mas a tela permanece preta (sem imagem). O LED indicador de energia acende e é possível ouvir o som da ventoinha em funcionamento, mas não há qualquer sinal de vídeo. O problema persiste mesmo após reiniciar o dispositivo várias vezes.'
-  };
-
-
-  // Abas
-  selectedTab = 0;
-
-
-  // Orçamento
-  temOrcamento = false;
-  valorOrcamento = 520.0;
-  servicosInclusos =
-    'Diagnóstico técnico, Substituição do cabo flat da tela, Mão de obra, Limpeza interna + pasta térmica';
-
-
-  // Manutenção
-  temManutencao = false;
-  descricaoManutencao =
-    'Identifiquei que o problema estava em um dos módulos de memória RAM, que impedia a exibição de vídeo. Após substituir o módulo com defeito, o equipamento voltou a funcionar normalmente.';
-  orientacaoCliente = 'N/A';
-
-
-  // Dialog de Orçamento
-  servicosDisponiveis = [
-    { id: 1, nome: 'Diagnóstico técnico', valor: 100.0 },
-    { id: 2, nome: 'Substituição do cabo flat da tela', valor: 250.0 },
-    { id: 3, nome: 'Mão de obra', valor: 150.0 },
-    { id: 4, nome: 'Limpeza interna + pasta térmica', valor: 70.0 }
-  ];
-  servicosSelecionados: Array<{ id: number; nome: string; valor: number }> = [];
-  valorTotal = 0;
-  dialogOrcamentoRef: any;
-
 
   abrirDialogOrcamento(template: TemplateRef<any>) {
     this.servicosSelecionados = [];
@@ -183,39 +197,47 @@ export class BudgetDeliveryComponent implements OnInit {
     });
   }
 
-
   fecharDialogOrcamento() {
     if (this.dialogOrcamentoRef) {
       this.dialogOrcamentoRef.close();
     }
   }
 
-
   atualizarTotal() {
     this.valorTotal = this.servicosSelecionados.reduce(
-      (acc, s) => acc + s.valor,
+      (acc, s) => acc + s.valor_servico,
       0
     );
     this.cdr.markForCheck();
   }
 
-
   confirmarOrcamento() {
-    this.temOrcamento = true;
-    this.valorOrcamento = this.valorTotal;
-    this.servicosInclusos = this.servicosSelecionados
-      .map((s) => s.nome)
-      .join(', ');
-    this.fecharDialogOrcamento();
-    this.cdr.markForCheck();
+    if (!this.request) return;
+
+    const budgetPayload: BudgetCreateDTO = {
+      serviceIds: this.servicosSelecionados.map(s => s.id),
+      totalValue: this.valorTotal 
+    };
+
+    this.maintenanceRequestService.createBudget(this.request.id, budgetPayload)
+      .subscribe({
+        next: () => {
+          this.toast.success('Sucesso', 'Orçamento registrado!');
+          
+          this.loadRequestDetails(this.request.id);
+          this.temOrcamento = true;
+          this.valorOrcamento = this.valorTotal;
+          this.servicosInclusos = this.servicosSelecionados.map(s => s.nome).join(', ');
+          
+          this.fecharDialogOrcamento();
+          this.cdr.markForCheck();
+        },
+        error: (err) => {
+          console.error(err);
+          this.toast.error('Erro', 'Falha ao registrar orçamento.');
+        }
+      });
   }
-
-
-  // Dialog de Manutenção
-  manutencaoDescricaoInput = '';
-  manutencaoOrientacaoInput = '';
-  manutencaoDialogRef: any;
-
 
   abrirDialogManutencao(template: TemplateRef<any>) {
     this.manutencaoDescricaoInput = this.temManutencao
@@ -225,20 +247,17 @@ export class BudgetDeliveryComponent implements OnInit {
       ? this.orientacaoCliente
       : '';
 
-
     this.manutencaoDialogRef = this.dialog.open(template, {
       disableClose: true,
       panelClass: 'custom-dialog'
     });
   }
 
-
   fecharDialogManutencao() {
     if (this.manutencaoDialogRef) {
       this.manutencaoDialogRef.close();
     }
   }
-
 
   isManutencaoFormValid(): boolean {
     return (
@@ -247,99 +266,58 @@ export class BudgetDeliveryComponent implements OnInit {
     );
   }
 
-
   confirmarManutencao() {
-    this.temManutencao = true;
-    this.descricaoManutencao = this.manutencaoDescricaoInput.trim();
-    this.orientacaoCliente = this.manutencaoOrientacaoInput.trim();
+    if (!this.request) return;
 
-
-    this.fecharDialogManutencao();
-    this.cdr.markForCheck();
-  }
-
-
-  // Finalização
-  finalizacaoDialogRef: any;
-  dataFinalizacao = '';
-
-
-  canFinalizarSolicitacao(): boolean {
-    return !!this.responsavel && this.temOrcamento && this.temManutencao;
-  }
-
-
-  abrirDialogFinalizacao(template: TemplateRef<any>) {
-    this.detalhes.status = 'PAGA';
-    this.dataFinalizacao = new Date().toLocaleString('pt-BR', {
-      day: '2-digit', month: '2-digit', year: 'numeric',
-      hour: '2-digit', minute: '2-digit', second: '2-digit'
-    });
-
-
-    this.finalizacaoDialogRef = this.dialog.open(template, {
-      disableClose: true,
-      panelClass: 'custom-dialog'
-    });
-
-
-    this.cdr.markForCheck();
-  }
-
-
-  voltarPaginaInicialPosFinalizacao() {
-    if (this.finalizacaoDialogRef) {
-      this.finalizacaoDialogRef.close();
-    }
-    this.router.navigate(['/client-dashboard']);
-  }
-
-
-  // Preenche a tela com dados da Request (mesmo mapeamento que te passei)
-  private preencherTelaComRequest(req: any) {
-    // Status label
-    const st = this.statuses.find(s => s.id === (req as any).statusId);
-    const statusLabel = (st as any)?.nome ?? (st as any)?.name ?? this.detalhes.status;
-
-
-    // Detalhes
-    this.detalhes = {
-      id: String(req.id ?? this.detalhes.id),
-      data: new Date(req.createdAt ?? req.data ?? this.detalhes.data),
-      status: statusLabel ?? this.detalhes.status,
-      item: req.item ?? req.title ?? this.detalhes.item,
-      categoria: req.categoria ?? req.category ?? this.detalhes.categoria,
-      autor: req.autor ?? req.author?.name ?? this.detalhes.autor,
-      defeito: req.defeito ?? req.description ?? this.detalhes.defeito
+    const maintenancePayload: MaintenanceRecordDTO = {
+      id: this.request.maintenanceRecord ? this.request.maintenanceRecord.id : 0,
+      maintenanceDescription: this.manutencaoDescricaoInput.trim(),
+      clientGuidelines: this.manutencaoOrientacaoInput.trim()
     };
 
-
-    // Responsável
-    const resp = req.responsavel ?? req.assignee ?? null;
-    this.responsavel = resp;
-    this.dataAtribuicao =
-      req.assignedAt
-        ? new Date(req.assignedAt).toLocaleString('pt-BR', {
-            day: '2-digit', month: '2-digit', year: 'numeric',
-            hour: '2-digit', minute: '2-digit', second: '2-digit'
-          })
-        : (resp ? this.dataAtribuicao : '');
-
-
-    // Orçamento
-    const orc = req.orcamento ?? req.budget ?? null;
-    this.temOrcamento = !!orc;
-    this.valorOrcamento = orc?.total ?? this.valorOrcamento;
-    this.servicosInclusos = orc?.servicos?.map((s: any) => s.nome ?? s.name).join(', ') ?? this.servicosInclusos;
-
-
-    // Manutenção
-    const man = req.manutencao ?? req.maintenance ?? null;
-    this.temManutencao = !!man;
-    this.descricaoManutencao = man?.descricao ?? man?.description ?? this.descricaoManutencao;
-    this.orientacaoCliente = man?.orientacao ?? man?.instructions ?? this.orientacaoCliente;
-
-
-    this.cdr.markForCheck();
+    this.maintenanceRequestService.executeMaintenance(this.request.id, maintenancePayload)
+      .subscribe({
+        next: () => {
+          this.toast.success('Sucesso', 'Manutenção registrada!');
+          
+          this.loadRequestDetails(this.request.id);
+          this.temManutencao = true;
+          this.descricaoManutencao = maintenancePayload.maintenanceDescription;
+          this.orientacaoCliente = maintenancePayload.clientGuidelines;
+          
+          this.fecharDialogManutencao();
+          this.cdr.markForCheck();
+        },
+        error: (err) => {
+          console.error(err);
+          this.toast.error('Erro', 'Falha ao registrar manutenção.');
+        }
+      });
   }
+
+  canFinalizarSolicitacao(): boolean {
+    return this.request.status.nome === 'PAGA';
+  }
+
+  finalizarSolicitacao(template: TemplateRef<any>) {
+    this.maintenanceRequestService.finalizeRequest(this.request.id)
+      .subscribe({
+        next: () => {
+          this.toast.success('Sucesso', 'Solicitação finalizada com sucesso!');
+          this.loadRequestDetails(this.request.id);
+          this.cdr.markForCheck();
+          this.dataFinalizacao = new Date().toLocaleString('pt-BR');
+          this.finalizacaoDialogRef = this.dialog.open(template, {
+            disableClose: false,
+            panelClass: 'custom-dialog'
+          });
+        },
+        error: (err) => {
+          console.error(err);
+          this.toast.error('Erro', 'Falha ao finalizar a solicitação.');
+        }
+      });
+    
+  }
+
 }

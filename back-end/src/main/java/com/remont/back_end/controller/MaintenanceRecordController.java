@@ -11,7 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/maintenance-records")
-@CrossOrigin(origins = "http://localhost:4200")
 public class MaintenanceRecordController {
 
     private final MaintenanceRecordService maintenanceRecordService;

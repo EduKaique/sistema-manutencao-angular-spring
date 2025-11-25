@@ -63,9 +63,9 @@ public class MaintenanceRequestServiceImpl implements MaintenanceRequestService 
         request.setRequestDate(LocalDateTime.now());
         request.setStatus(StatusEnum.ABERTA);
 
-        historyService.addHistory(request, client, StatusEnum.ABERTA, "Solicitação Aberta");
 
         MaintenanceRequest savedRequest = maintenanceRequestRepository.save(request);
+        historyService.addHistory(request, client, StatusEnum.ABERTA, "Solicitação Aberta");
         return convertToResponseDTO(savedRequest);
     }
 

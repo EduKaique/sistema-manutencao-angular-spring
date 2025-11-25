@@ -4,16 +4,16 @@ import { HeaderComponent } from '../../../../core/layout/header/header.component
 import { InputPrimaryComponent } from '../../../../shared/components/input-primary/input-primary.component';
 import { MatIcon } from '@angular/material/icon';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { RequestService } from '../../../../core/services/request.service';
 import { StatusService } from '../../../../core/services/status.service';
 import { Status } from '../../../../shared/models/status';
-import { Request as RequestModel } from '../../../../shared/models/request';
+import { MaintenanceRequestResponseDTO as Request } from '../../../../shared/models/maintenance-request.models';
 import { StatusColumnComponent } from './components/status-column/status-column.component';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MaintenanceRequestService } from '../../../../core/services/maintenance-request.service';
 
 interface GroupedRequests {
   status: Status;
-  requests: RequestModel[];
+  requests: Request[];
 }
 
 @Component({
@@ -32,29 +32,29 @@ export class ViewRequestsPageComponent {
   isKanbanView = true;
 
   private statusService = inject(StatusService);
-  private requestService = inject(RequestService);
+  private requestService = inject(MaintenanceRequestService);
 
   statuses = toSignal(this.statusService.getAll(), { initialValue: [] as Status[] });
 
-  requests = this.requestService.listarTodos();
+  requests = toSignal(this.requestService.getAllEmployeeRequests(), { initialValue: [] as Request[] });
 
   groupedRequests = computed<GroupedRequests[]>(() => {
-    const statuses = this.statuses() ?? [];
-    const requests = this.requests ?? [];
+  const statuses = this.statuses() ?? [];
+  const requests = this.requests() ?? []; // agora requests() é ARRAY
 
-    return statuses.map((status) => ({
-      status,
-      requests: requests.filter((req) => req.statusId === status.id),
-    }));
-  });
+  return statuses.map((status) => ({
+    status,
+    requests: requests.filter((req: Request) => req.statusName === status.nome),
+  }));
+});
 
   dataSource = computed(
     () =>
-      new MatTableDataSource<RequestModel>(
+      new MatTableDataSource<Request>(
         this.groupedRequests().flatMap((g) =>
           g.requests.map((r) => ({
             ...r,
-            status: g.status.name, 
+            status: g.status.nome, 
           }))
         )
       )

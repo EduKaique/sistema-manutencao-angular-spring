@@ -25,8 +25,8 @@ export class StatusColumnComponent {
 
   get headerColor(): string {
     const status = this.statuses().find(
-      (s) => s.name?.toUpperCase() === this.title?.toUpperCase()
+      (s) => s.nome?.toUpperCase() === this.title?.toUpperCase()
     );
-    return status?.color ?? this.fallbackHeaderColor;
+    return status?.cor ?? this.fallbackHeaderColor;
   }
 }

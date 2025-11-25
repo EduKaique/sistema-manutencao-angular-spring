@@ -1,6 +1,11 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AppSuccessModalComponent } from '../../../shared/components/modal-mensagem/app-success-modal';
+import { MaintenanceRequestService } from '../../../core/services/maintenance-request.service';
+import { ToastService } from '../../../core/services/toast.service';
+import { ClientRequestDetailDTO } from '../../../shared/models/maintenance-request.models';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { MatIcon } from '@angular/material/icon';
 
 interface Pagamento {
   titulo: string;
@@ -10,26 +15,14 @@ interface Pagamento {
 @Component({
   selector: 'app-payment-panel',
   templateUrl: './payment-panel.component.html',
-  imports: [CommonModule, AppSuccessModalComponent],
+  imports: [CommonModule, AppSuccessModalComponent, MatIcon, RouterModule],
   styleUrls: ['./payment-panel.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PaymentPanelComponent {
-  backLink = '← Voltar para Página Inicial';
-  item = 'Notebook Dell Inspiron 15';
-  categoria = 'Notebook';
-  defeito = `O equipamento liga, mas a tela permanece preta (sem imagem). 
-  O LED indicador de energia acende e é possível ouvir o som da ventoinha 
-  em funcionamento, mas não há qualquer sinal de vídeo. 
-  O problema persiste mesmo após reiniciar o dispositivo várias vezes.`;
+export class PaymentPanelComponent implements OnInit {
+  requests: ClientRequestDetailDTO | undefined;
+  currentRequestId!: number;
 
-  pagamentos: Pagamento[] = [
-    { titulo: 'Diagnóstico técnico', preco: 100 },
-    { titulo: 'Substituição do cabo flat da tela', preco: 180 },
-    { titulo: 'Mão de obra', preco: 150 },
-    { titulo: 'Limpeza interna + pasta térmica', preco: 90 },
-  ];
-
+  isLoading = true;
   selectedMethod: 'cartao' | 'pix' | null = null;
   mostrarModal = false;
 
@@ -39,29 +32,61 @@ export class PaymentPanelComponent {
   modalSubtitulo = '';
   modalDadosAdicionais = '';
   modalTextoBotao = 'Voltar para Página Inicial';
-  modalRotaDestino = '/';
+  modalRotaDestino = '/client/request-detail/' + this.currentRequestId;
 
-  constructor() {}
+  constructor(private requestService: MaintenanceRequestService, private toast: ToastService, private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.currentRequestId = Number(id);
+      this.loadRequestDetails(this.currentRequestId);
+    }
+  }
+
+  loadRequestDetails(id: number): void {
+    this.requestService.getRequestByIdForClient(id).subscribe({
+      next: (data) => {
+        this.requests = data;
+        console.log('Detalhes da solicitação carregados:', data);
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error loading request details:', err);
+        this.toast.error('Erro', 'Falha ao carregar detalhes da solicitação!');
+        this.isLoading = false;
+      },
+    });
+  }
 
   selectMethod(method: 'cartao' | 'pix') {
     this.selectedMethod = method;
     console.log('Método selecionado:', method);
   }
 
-  payNow() {
+  payRequest(): void {
     if (!this.selectedMethod) {
       alert('Selecione uma forma de pagamento antes de continuar.');
       return;
     }
-
+    this.requestService.payRequest(this.currentRequestId).subscribe({
+      next: () => {
+        this.toast.success('Sucesso', 'Solicitação paga com sucesso!');
+        this.loadRequestDetails(this.currentRequestId);
+        this.mostrarModal = true;
+      },
+      error: (err) => {
+        console.error('Error paying request:', err);
+        this.toast.error('Erro', 'Falha ao processar o pagamento da solicitação!');
+      },
+    });
     this.atualizarDataConfirmacao();
-
-    this.mostrarModal = true;
+    
   }
 
-  get total() {
-    return this.pagamentos.reduce((soma, p) => soma + p.preco, 0);
-  }
+ 
+
+ 
 
   private atualizarDataConfirmacao(): void {
     const now = new Date();

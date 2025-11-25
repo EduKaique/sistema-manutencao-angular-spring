@@ -1,14 +1,4 @@
 
--- INSERT IGNORE INTO status (id, name, color) VALUES 
--- (1, 'ABERTA', '#627877'),
--- (2, 'ORÇADA', '#7C3804'),
--- (3, 'REJEITADA', '#FF5E5B'),
--- (4, 'APROVADA', '#FFAE36'),
--- (5, 'REDIRECIONADA', '#8A84E2'),
--- (6, 'ARRUMADA', '#2B3E61'),
--- (7, 'PAGA', '#EC7505'),
--- (8, 'FINALIZADA', '#136947');
-
 INSERT IGNORE INTO category (id, name, icon) VALUES
 (1, 'Notebook', 'laptop'),
 (2, 'Desktop', 'computer'),
@@ -39,3 +29,16 @@ INSERT IGNORE INTO clients (user_id, cpf, phone_number, zip_code, street, number
 (5, '22222222222', '41999999992', '80000000', 'Av. Brasil', '200', 'Batel', 'Curitiba', 'PR'),
 (6, '33333333333', '41999999993', '80000000', 'Rua XV', '300', 'Centro', 'Curitiba', 'PR'),
 (7, '44444444444', '41999999994', '80000000', 'Rua 24 Horas', '400', 'Centro', 'Curitiba', 'PR');
+
+
+INSERT IGNORE INTO services (nome, valor_servico) VALUES 
+('Diagnóstico', 50.00),
+('Limpeza interna', 80.00),
+('Limpeza externa', 40.00),
+('Troca de componentes', 120.00),
+('Conserto geral', 200.00),
+('Atualização de software', 60.00),
+('Reparo de placa lógica', 350.00),
+('Substituição de conectores', 90.00),
+('Teste de funcionamento completo', 30.00),
+('Reparo urgente (prioridade)', 150.00);

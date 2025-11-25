@@ -331,6 +331,10 @@
   line-height: 1.5;
 }
 
+.empty-state {
+  color: var(--color-text-secondary, #627877);
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 16px;

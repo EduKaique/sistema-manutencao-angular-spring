@@ -1,48 +1,57 @@
-<div class ="modal-overlay" role="dialog" aria-modal="true"> 
+<div class="modal-overlay" role="dialog" aria-modal="true"> 
     <div class="request-modal-container">
 
         <button class="close-button" aria-label="Fechar modal" (click)="confirmCloseRequest()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <mask id="mask0_67_3535" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
-                    <rect width="24" height="24" fill="#D9D9D9"/>
-                </mask>
-                <g mask="url(#mask0_67_3535)">
-                    <path d="M6.4 19L5 17.6L10.6 12L5 6.4L6.4 5L12 10.6L17.6 5L19 6.4L13.4 12L19 17.6L17.6 19L12 13.4L6.4 19Z" fill="#546666"/>
-                 </g>
-            </svg>
+          <mat-icon>close</mat-icon>
         </button>
 
         <h2>Nova solicitação de manutenção</h2>
 
-        <form #formRequest="ngForm" (ngSubmit)="send(formRequest)" class ="request-form-body">
+        <form #formRequest="ngForm" (ngSubmit)="send()" class="request-form-body">
+            
             <div class="form-group">
-                <label for="equipmentDescription" >Equipamento </label>
-                <input type="text" id="equipmentDescription" name="equipmentDescription" placeholder="Digite qual é o seu equipamento" 
-                [(ngModel)]="request.equipmentName" #equipmentName="ngModel" required/>
+                <label for="equipmentName">Equipamento</label>
+                <input 
+                    type="text" 
+                    id="equipmentName" 
+                    name="equipmentName" 
+                    placeholder="Digite qual é o seu equipamento" 
+                    [(ngModel)]="request.equipmentName" 
+                    #equipmentName="ngModel" 
+                    required/>
             </div>
 
             <div class="form-group">
-                <label for="equipmentCategory">Categoria </label>
-                <select id="equipmentCategory" name="equipmentCategory" 
-                [(ngModel)]="request.categoryId" #categoria="ngModel" required> 
-                    <option [ngValue]="undefined" disabled selected>Selecione a categoria</option>
-                    <option *ngFor="let category of categories" [ngValue]="category.id">{{ category.name }}</option>
+                <label for="categoryId">Categoria</label>
+                <select 
+                    id="categoryId" 
+                    name="categoryId" 
+                    [(ngModel)]="request.categoryId" 
+                    #categoria="ngModel" 
+                    required> 
+                    <option [ngValue]="null" disabled selected>Selecione a categoria</option>
+                    <option *ngFor="let category of categories" [ngValue]="category.id">
+                        {{ category.name }}
+                    </option>
                 </select>
             </div>
                 
             <div class="form-group">
-                <label for="effectDescription">Descrição do defeito </label>
-                <textarea id="effectDescription" name="effectDescription" placeholder="Descreva o defeito" 
-                [(ngModel)]="request.equipmentDescription" #descricaoDefeito="ngModel" required></textarea>
+                <label for="defectDescription">Descrição do defeito</label>
+                <textarea 
+                    id="defectDescription" 
+                    name="defectDescription" 
+                    placeholder="Descreva o defeito" 
+                    [(ngModel)]="request.defectDescription" 
+                    #defectDescription="ngModel" 
+                    required></textarea>
             </div>
-            <!-- adicionar # em descrição do defeito -->
 
             <p class="required-field">* Campo de preenchimento obrigatório</p>
 
-            <button type="submit" class="submit-button">Solicitar manutenção
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="13" viewBox="0 0 18 13" fill="none">
-                    <path d="M6.5501 13L0.850098 7.29998L2.2751 5.87498L6.5501 10.15L15.7251 0.974976L17.1501 2.39998L6.5501 13Z" fill="var(--color-primary-lightest, #F3FAFA)"/>
-                </svg>
+            <button type="submit" class="submit-button" [disabled]="formRequest.invalid">
+                Solicitar manutenção
+                <mat-icon>check</mat-icon>
             </button> 
         </form>
     </div>
