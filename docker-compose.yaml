@@ -18,11 +18,15 @@ services:
     build:
       context: ./back-end
       dockerfile: back.dockerfile
+      target: dev
     ports:
       - "8080:8080"
     depends_on:
       mysql:
         condition: service_healthy
+    volumes:
+      - ./back-end:/app
+      - maven-repo:/root/.m2
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/remont_db?useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8
       - SPRING_DATASOURCE_USERNAME=springuser
@@ -53,3 +57,4 @@ services:
 
 volumes:
   mysql-data:
+  maven-repo:
