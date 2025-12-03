@@ -13,29 +13,9 @@
     </div>
     <div class="notification-container">
   
-  <button mat-icon-button (click)="togglePainelNotificacoes()">
-    <mat-icon [matBadge]="unreadCount > 0 ? unreadCount : null" matBadgeColor="warn">notifications</mat-icon>
-  </button>
+ 
 
-  <div class="notification-panel" *ngIf="painelVisivel">
-    <div class="panel-header">
-      <h3>Notificações</h3>
-    </div>
-    <div class="panel-content">
-      <div 
-        class="notification-item" 
-        *ngFor="let notificacao of notificacoes" 
-        [class.unread]="!notificacao.lida"
-        (click)="marcarComoLida(notificacao)">
-
-        <p class="item-title">{{ notificacao.titulo }}</p>
-        <p class="item-description">{{ notificacao.descricao }}</p>
-      </div>
-      <div class="notification-item" *ngIf="notificacoes.length === 0">
-        <p class="item-description">Nenhuma notificação nova.</p>
-      </div>
-    </div>
-  </div>
+  
 </div>
     <div style="display: flex; align-items: center; gap: 8px;" (click)="logout()">
       <span class="body_medium">Sair</span>

@@ -72,7 +72,7 @@ section{
 .row-link-btn {
     color: var(--color-text-default);
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     width: 100%;
 }
 

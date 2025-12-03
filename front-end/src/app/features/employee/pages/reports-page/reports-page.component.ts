@@ -35,6 +35,7 @@ export class ReportsPageComponent implements OnInit {
   datasource: MatTableDataSource<RevenueByDate> = new MatTableDataSource<RevenueByDate>(this.revenueByDate);
   range: FormGroup;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  receitaTotal: number = 0;
 
   displayedColumns: string[] = ['date', 'totalRevenue'];
 

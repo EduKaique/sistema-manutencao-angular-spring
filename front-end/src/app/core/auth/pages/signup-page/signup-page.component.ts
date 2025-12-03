@@ -14,6 +14,7 @@ import { ViaCepService, Endereco } from '../../../services/viacep.service';
 import { AuthService } from '../../services/auth.service';
 import { AppSuccessModalComponent } from '../../../../shared/components/modal-mensagem/app-success-modal';
 import { RegisterRequest } from '../../../../shared/models/register-request';
+import { CustomValidators } from '../../../../shared/utils/cpf-validator';
 
 @Component({
   selector: 'app-signup-page',
@@ -45,7 +46,7 @@ export class SignupPageComponent {
   ngOnInit(): void {
     this.firstFormGroup = this.fb.group({
       nameUser: ['', [Validators.required, Validators.minLength(3)]],
-      cpfUser: ['', [Validators.required]],
+      cpfUser:['', [Validators.required, CustomValidators.useExistingCpfValidator()]],
       phoneUser: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
     });

@@ -77,12 +77,12 @@ export class ViewRequestsPageComponent {
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
-
-    setTimeout(() => {
-      this.sort.active = 'requestDate';
-      this.sort.direction = 'desc';
-      this.sort.sortChange.emit();
-    });
+    this.dataSource.sortingDataAccessor = (item: any, property) => {
+      switch (property) {
+        case 'requestDate': return new Date(item.requestDate); // Garante ordenação cronológica
+        default: return item[property];
+      }
+    };
   }
 
   toggleView() {
