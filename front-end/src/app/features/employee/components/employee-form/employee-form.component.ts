@@ -46,7 +46,6 @@ export class EmployeeFormComponent implements OnInit {
   professionalInfoForm: FormGroup;
 
   isEdit = false;
-  //roles = Object.values(Role);
 
   constructor(
     private fb: FormBuilder,
@@ -100,7 +99,6 @@ onSubmit(): void {
     return;
   }
 
-  // Prepara os dados
   const employeeData: Employee = {
     id: this.data?.id,
     name: this.personalInfoForm.value.nome,

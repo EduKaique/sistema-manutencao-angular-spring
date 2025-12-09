@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Observable, of } from 'rxjs';
 
-// Ajuste os imports dos models conforme seu projeto
 import { RequestHistory } from '../../../../../shared/models/request-history';
 
 @Component({

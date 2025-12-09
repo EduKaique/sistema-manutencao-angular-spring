@@ -27,7 +27,9 @@ public class MaintenanceRequestController {
     @Autowired
     private MaintenanceRequestService maintenanceRequestService;
     
-
+    /**
+     * Criar nova solicitação de manutenção
+     */
     @PostMapping
     @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<MaintenanceRequestResponseDTO> createRequest(
@@ -39,6 +41,9 @@ public class MaintenanceRequestController {
         return new ResponseEntity<>(newRequest, HttpStatus.CREATED);
     }
 
+    /**
+     * Listar solicitações de manutenção para CLIENTE 
+     */
     @GetMapping("/client")
     @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<List<MaintenanceRequestResponseDTO>> getClientRequests(Authentication authentication) {
@@ -46,6 +51,9 @@ public class MaintenanceRequestController {
         return ResponseEntity.ok(maintenanceRequestService.getRequestsForClient(userPrincipal.getId()));
     }
 
+    /**
+     * Listar solicitações de manutenção para FUNCIONÁRIO 
+     */
     @GetMapping("/employee")
     @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<List<MaintenanceRequestResponseDTO>> getEmployeeRequests(Authentication authentication) {
@@ -82,6 +90,9 @@ public class MaintenanceRequestController {
         );
     }
 
+    /**
+     * Cria o orçamento para a solicitação de manutenção
+     */
     @PostMapping("/employee/{id}/budget")
     @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<MaintenanceRequestResponseDTO> setBudget(
@@ -92,6 +103,9 @@ public class MaintenanceRequestController {
         return ResponseEntity.ok(maintenanceRequestService.createBudget(id, dto, userPrincipal.getId()));
     }
 
+    /**
+     * Aprova o orçamento da solicitação de manutenção
+     */
     @PostMapping("/client/{id}/approve")
     @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<MaintenanceRequestResponseDTO> approveBudget(
@@ -101,6 +115,9 @@ public class MaintenanceRequestController {
         return ResponseEntity.ok(maintenanceRequestService.approveBudget(id, userPrincipal.getId()));
     }
 
+    /**
+     * Rejeita o orçamento da solicitação de manutenção
+     */
     @PostMapping("/client/{id}/reject")
     @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<MaintenanceRequestResponseDTO> rejectBudget(
@@ -111,6 +128,9 @@ public class MaintenanceRequestController {
         return ResponseEntity.ok(maintenanceRequestService.rejectBudget(id, dto, userPrincipal.getId()));
     }
 
+    /**
+     * Resgata a solicitação de manutenção rejeitada
+     */
     @PostMapping("/client/{id}/rescue")
     @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<MaintenanceRequestResponseDTO> rescueRequest(
@@ -120,6 +140,9 @@ public class MaintenanceRequestController {
         return ResponseEntity.ok(maintenanceRequestService.rescueRequest(id, userPrincipal.getId()));
     }
 
+    /**
+     * Executa a manutenção da solicitação
+     */
     @PostMapping("/employee/{id}/maintenance")
     @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<MaintenanceRequestResponseDTO> executeMaintenance(
@@ -130,6 +153,9 @@ public class MaintenanceRequestController {
         return ResponseEntity.ok(maintenanceRequestService.executeMaintenance(id, dto, userPrincipal.getId()));
     }
 
+    /**
+     * Redireciona a solicitação de manutenção para outro funcionário
+     */
     @PostMapping("/employee/{id}/redirect")
     @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<MaintenanceRequestResponseDTO> redirectMaintenance(
@@ -140,6 +166,9 @@ public class MaintenanceRequestController {
         return ResponseEntity.ok(maintenanceRequestService.redirectMaintenance(id, targetEmployeeId, userPrincipal.getId()));
     }
 
+    /**
+    * Realiza o pagamento da solicitação de manutenção
+    */
     @PostMapping("/client/{id}/pay")
     @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<MaintenanceRequestResponseDTO> payRequest(
@@ -149,6 +178,9 @@ public class MaintenanceRequestController {
         return ResponseEntity.ok(maintenanceRequestService.payRequest(id, userPrincipal.getId()));
     }
 
+    /**
+     * Finaliza a solicitação de manutenção
+     */
     @PostMapping("/employee/{id}/finalize")
     @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<MaintenanceRequestResponseDTO> finalizeRequest(

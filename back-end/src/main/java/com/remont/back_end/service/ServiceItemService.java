@@ -23,8 +23,6 @@ public class ServiceItemService {
     }
 
     public ServiceItem findByIdOrThrow(Long id) {
-        // orElseThrow funciona em Optional (Java 8+). Se ainda der erro,
-        // é porque repository NÃO é um JpaRepository (verifique o tipo/imports).
         return repository.findById(Objects.requireNonNull(id))
                 .orElseThrow();
     }

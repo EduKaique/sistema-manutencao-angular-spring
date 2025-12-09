@@ -1,7 +1,7 @@
 package com.remont.back_end.dto;
 
 import com.remont.back_end.model.Budget;
-import com.remont.back_end.model.BudgetService; // Importante para o map
+import com.remont.back_end.model.BudgetService; 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

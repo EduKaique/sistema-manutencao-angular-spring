@@ -26,7 +26,6 @@ export class PaymentPanelComponent implements OnInit {
   selectedMethod: 'cartao' | 'pix' | null = null;
   mostrarModal = false;
 
-  // Propriedades do modal de mensagem de confirmação
   data = new Date();
   modalTitulo = 'Pagamento realizado com sucesso!';
   modalSubtitulo = '';

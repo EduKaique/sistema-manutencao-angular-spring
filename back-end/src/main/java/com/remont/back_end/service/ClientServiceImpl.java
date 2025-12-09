@@ -35,7 +35,6 @@ public class ClientServiceImpl implements ClientService	{
         }
 
         Client client = convertToEntity(clientDTO);
-        // Senha padrão temporária - o cliente deve alterar no primeiro acesso
         String defaultPassword = "Temp@" + clientDTO.getCpf().substring(0, 4);
         client.setPassword(passwordEncoder.encode(defaultPassword));
         
@@ -71,12 +70,10 @@ public class ClientServiceImpl implements ClientService	{
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, 
                         "Cliente não encontrado com ID: " + id));
 
-        // Atualizar dados pessoais
         existingClient.setName(clientDTO.getName());
         existingClient.setEmail(clientDTO.getEmail());
         existingClient.setPhoneNumber(clientDTO.getPhoneNumber());
         
-        // Atualizar endereço
         existingClient.setZipCode(clientDTO.getZipCode());
         existingClient.setStreet(clientDTO.getStreet());
         existingClient.setNumber(clientDTO.getNumber());

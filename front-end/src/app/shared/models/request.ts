@@ -9,7 +9,6 @@ export interface Request {
   equipmentDescription: string;
   requestDate: Date;
   category: string;
-  //lastAtualization: Date;
   statusId: number;
   status?: 'APROVADA' | 'REJEITADA' | string;
   categoryId: number;

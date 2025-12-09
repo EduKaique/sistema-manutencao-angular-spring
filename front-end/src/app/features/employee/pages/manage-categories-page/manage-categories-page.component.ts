@@ -44,7 +44,7 @@ export class ManageCategoriesPageComponent implements OnInit {
   }
 
   editCategory(category: Category): void {
-    this.selectedCategory = { ...category }; // cria uma cópia
+    this.selectedCategory = { ...category };
     this.isModalShowing = true;
   }
 

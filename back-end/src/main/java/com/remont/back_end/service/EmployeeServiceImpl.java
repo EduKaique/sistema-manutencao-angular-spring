@@ -7,7 +7,6 @@ import com.remont.back_end.repository.EmployeeRepository;
 import com.remont.back_end.repository.UserRepository;
 import com.remont.back_end.exception.ResourceNotFoundException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -26,7 +25,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final UserRepository userRepository; 
     private final PasswordEncoder passwordEncoder;
 
-    @Autowired
     public EmployeeServiceImpl(EmployeeRepository employeeRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.employeeRepository = employeeRepository;
         this.userRepository = userRepository;

@@ -155,7 +155,6 @@ export class ClientDashboardPageComponent implements OnInit, AfterViewInit {
   remover(request: Request): void {
     console.log('Tentando remover solicitação:', request);
     if (confirm('Deseja realmente excluir essa solicitação?')) {
-      // this.requestService.remover(request.id!);
       this.loadRequests();
     }
   }

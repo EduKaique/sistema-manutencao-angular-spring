@@ -2,7 +2,6 @@ package com.remont.back_end.controller;
 
 import com.remont.back_end.dto.CategoryEquipmentDTO;
 import com.remont.back_end.service.CategoryEquipmentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +16,6 @@ public class CategoryEquipmentController {
 
     private final CategoryEquipmentService categoryEquipmentService;
 
-    @Autowired
     public CategoryEquipmentController(CategoryEquipmentService categoryEquipmentService) {
         this.categoryEquipmentService = categoryEquipmentService;
     }

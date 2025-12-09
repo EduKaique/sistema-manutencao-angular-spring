@@ -3,7 +3,6 @@ import { MaintenanceRequestResponseDTO as Request } from '../../../../../../shar
 import { DatePipe } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { CategoryService } from '../../../../services/category.service';
-import { CLIENT_MOCKS } from '../../../../../../shared/mocks/user.mock';
 import { Router } from '@angular/router';
 
 @Component({

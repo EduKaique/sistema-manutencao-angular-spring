@@ -1,6 +1,5 @@
 import { Component, inject, computed, ViewChild, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from '../../../../core/layout/header/header.component';
 import { InputPrimaryComponent } from '../../../../shared/components/input-primary/input-primary.component';
 import { MatIcon } from '@angular/material/icon';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -79,7 +78,7 @@ export class ViewRequestsPageComponent {
     this.dataSource.sort = this.sort;
     this.dataSource.sortingDataAccessor = (item: any, property) => {
       switch (property) {
-        case 'requestDate': return new Date(item.requestDate); // Garante ordenação cronológica
+        case 'requestDate': return new Date(item.requestDate); 
         default: return item[property];
       }
     };

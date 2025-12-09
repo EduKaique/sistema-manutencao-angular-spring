@@ -75,7 +75,6 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     /**
      * Converte a entidade Client para o DTO de resposta.
-     * (Este método não envia a senha)
      */
     private ClientDTO convertToDTO(Client client) {
         ClientDTO dto = new ClientDTO();

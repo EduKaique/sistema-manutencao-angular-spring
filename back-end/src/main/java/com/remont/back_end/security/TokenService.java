@@ -34,7 +34,7 @@ public class TokenService {
             return JWT.create()
                     .withIssuer(ISSUER)
                     .withSubject(user.getEmail())
-                    .withClaim("id", user.getId()) // CORREÇÃO: Usar "id" para bater com o Filtro
+                    .withClaim("id", user.getId())  
                     .withClaim("role", user.getRole().name())
                     .withClaim("name", user.getName())
                     .withIssuedAt(now)

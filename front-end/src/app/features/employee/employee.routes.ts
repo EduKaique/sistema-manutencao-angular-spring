@@ -8,32 +8,26 @@ import { ReportsPageComponent } from './pages/reports-page/reports-page.componen
 
 export const employeeRoutes: Routes = [
   {
-    //Exibe o Dashboard com estatísticas do funcionário
     path: 'dashboard',
     component: EmployeeDashboardPageComponent,
   },
   {
-    //Tela de entrega de orçamento
     path: 'budget-delivery/:id',
     component: BudgetDeliveryComponent,
   },
   {
-    //Lista todos os funcionários (Tabela com CRUD)
     path: 'employees-list',
     component: EmployeeListComponent,
   },
   {
-    // Rota operacional: Visualização das solicitações de manutenção recebidas
     path: 'view-requests',
     component: ViewRequestsPageComponent,
   },
   {
-    //Gerenciamento de categorias
     path: 'categories',
     component: ManageCategoriesPageComponent,
   },
   {
-    //Tela de relatórios e métricas do sistema
     path: 'reports',
     component: ReportsPageComponent,
   },

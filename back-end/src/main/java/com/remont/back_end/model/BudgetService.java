@@ -1,7 +1,7 @@
 package com.remont.back_end.model;
 
 import jakarta.persistence.*;
-import com.fasterxml.jackson.annotation.JsonIgnore; // Importante para evitar loop infinito no JSON
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "servicos_orcamento")

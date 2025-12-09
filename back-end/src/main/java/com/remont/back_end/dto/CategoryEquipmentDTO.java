@@ -14,7 +14,6 @@ public class CategoryEquipmentDTO {
     private String icon;
     private boolean active;
 
-    // Método auxiliar estático (opcional, mas útil)
     public static CategoryEquipmentDTO fromEntity(CategoryEquipment category) {
         return new CategoryEquipmentDTO(
             category.getId(), 
