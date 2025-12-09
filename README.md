@@ -27,7 +27,7 @@ O objetivo é criar um sistema completo para gerenciamento de ordens de serviço
 ## 💻 Sobre o projeto
 
 
-Projeto desenvolvido durante a diciplina de **Denvolvolvimento Web 2** do curso de [Tecnologia em Análise e Desenvolvimento de Sistemas - TADS](https://www.tads.ufpr.br/)  da [Universidade Federal do Paraná (UFPR)](https://ufpr.br/).
+Projeto desenvolvido durante a disciplina de **Desenvolvimento Web 2** do curso de [Tecnologia em Análise e Desenvolvimento de Sistemas - TADS](https://www.tads.ufpr.br/)  da [Universidade Federal do Paraná (UFPR)](https://ufpr.br/).
 
 ---
 
@@ -47,16 +47,16 @@ Documentação completa das funcionalidades do projeto: [Requisitos Manutenção
   - [x] Detalhe da solicitação com histórico
   - [x] Aprovar/Rejeitar orçamentos
   - [x] Resgatar solicitações
-  - [x] Pagar Solicitações
+  - [x] Pagar solicitações
 
 - [x] Dashboard de Funcionário:
   - [x] Visualização de solicitações em Kanban
   - [x] Gestão de solicitações:
     - Criar orçamento
-    - Atribuir/Redirecionar solicitação
+    - Atribuir/Redirecionar funcionários
     - Efetuar manutenção
     - Finalizar solicitações
-  - [x] CURD de funcionários
+  - [x] CRUD de funcionários
   - [x] CRUD de categorias de solicitações
   - [x] Emissão de relatórios em PDF
 
@@ -73,7 +73,7 @@ O layout da aplicação está disponível no Figma:
 ### Web
 
 <div align="center" style="display: flex; align-items: flex-start; justify-content: center; gap: 20px;">
-  <img alt="Página de Solcitações" title="Nome do Projeto" src="assets/solicitacoes-layout.png" width="50%">
+  <img alt="Página de Solicitações" title="Nome do Projeto" src="assets/solicitacoes-layout.png" width="50%">
 
   <img alt="Nome do Projeto" title="Nome do Projeto" src="assets/kanban-layout.png" width="50%">
 </div>
@@ -114,12 +114,12 @@ cd ./sistema-manutencao-angular-spring
 ```
 
 #### 2. Subir o docker
-Suba a docker compose da aplicação (front, back e mysql).
+Suba a Docker Compose da aplicação (frontend, backend e MySQL).
 ```bash
 docker compose up -d
 ```
 
-#### 3. Logar com usuários de teste
+#### 3. Entrar com usuários de teste
 - Funcionário:
     - email: admin@remont.com, senha: 9876
 - Cliente:
@@ -127,7 +127,7 @@ docker compose up -d
 
 ## 👨‍💻 Contribuidores
 
-Devs que contribuiram nesse projeto
+Devs que contribuíram neste projeto
 
 <table>
   <tr>
