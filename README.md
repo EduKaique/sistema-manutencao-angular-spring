@@ -71,9 +71,9 @@ O layout da aplicação está disponível no Figma:
 </a>
 
 <p align="center" style="display: flex; align-items: flex-start; justify-content: center;">
-  <img alt="Página de Solicitações" title="Nome do Projeto" src="assets/solicitacoes-layout.png" width="50%">
+  <img alt="Página de Solicitações" title="Nome do Projeto" src="assets/solicitacoes-layout.png">
 
-  <img alt="Página de detalhes da solcitação" title="Nome do Projeto" src="assets/request-datail-layout.png" width="50%">
+  <img alt="Página de detalhes da solcitação" title="Nome do Projeto" src="assets/request-datail-layout.png">
 </p>
 
 ---
