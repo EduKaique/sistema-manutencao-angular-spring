@@ -73,7 +73,7 @@ O layout da aplicação está disponível no Figma:
 <p align="center" style="display: flex; align-items: flex-start; justify-content: center;">
   <img alt="Página de Solicitações" title="Nome do Projeto" src="assets/solicitacoes-layout.png" width="50%">
 
-  <img alt="Nome do Projeto" title="Nome do Projeto" src="assets/kanban-layout.png" width="50%">
+  <img alt="Página de detalhes da solcitação" title="Nome do Projeto" src="assets/request-datail-layout.png" width="50%">
 </p>
 
 ---
