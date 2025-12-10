@@ -17,11 +17,11 @@ O objetivo é criar um sistema completo para gerenciamento de ordens de serviço
 
 <p align="center">
  <a href="#-sobre-o-projeto">Sobre</a> •
- <a href="#-funcionalidades">Funcionalidades</a> •
+ <a href="#%EF%B8%8F-funcionalidades">Funcionalidades</a> •
  <a href="#-layout">Layout</a> • 
- <a href="#-como-executar-o-projeto">Como executar</a> • 
  <a href="#-tecnologias">Tecnologias</a> • 
- <a href="#-contribuidores">Contribuidores</a> 
+ <a href="#%EF%B8%8F-como-executar-o-projeto">Como executar</a> • 
+ <a href="#%E2%80%8D-contribuidores">Contribuidores</a> 
 </p>
 
 ## 💻 Sobre o projeto
@@ -70,13 +70,11 @@ O layout da aplicação está disponível no Figma:
   <img alt="Figma" src="https://img.shields.io/badge/Acessar%20Layout%20-Figma-%2304D361">
 </a>
 
-### Web
-
-<div align="center" style="display: flex; align-items: flex-start; justify-content: center; gap: 20px;">
+<p align="center" style="display: flex; align-items: flex-start; justify-content: center;">
   <img alt="Página de Solicitações" title="Nome do Projeto" src="assets/solicitacoes-layout.png" width="50%">
 
   <img alt="Nome do Projeto" title="Nome do Projeto" src="assets/kanban-layout.png" width="50%">
-</div>
+</p>
 
 ---
 
