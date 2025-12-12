@@ -53,7 +53,7 @@ public class SecurityConfig {
         
         configuration.setAllowedOrigins(Arrays.asList(
             "http://localhost:4200/",
-            "https://special-couscous-5j47wxx5j49h7qrj-4200.app.github.dev/"
+            "https://improved-space-enigma-jv4pxqq9pgx3v6q-4200.app.github.dev/"
         ));
         
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
