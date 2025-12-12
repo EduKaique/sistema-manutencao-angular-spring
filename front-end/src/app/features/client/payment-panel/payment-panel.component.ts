@@ -47,7 +47,6 @@ export class PaymentPanelComponent implements OnInit {
     this.requestService.getRequestByIdForClient(id).subscribe({
       next: (data) => {
         this.requests = data;
-        console.log('Detalhes da solicitação carregados:', data);
         this.isLoading = false;
       },
       error: (err) => {
@@ -60,7 +59,6 @@ export class PaymentPanelComponent implements OnInit {
 
   selectMethod(method: 'cartao' | 'pix') {
     this.selectedMethod = method;
-    console.log('Método selecionado:', method);
   }
 
   payRequest(): void {

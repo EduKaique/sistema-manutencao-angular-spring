@@ -124,7 +124,6 @@ export class BudgetService {
     };
     
     this.saveBudget(budget);
-    console.log('Budget created for request:', requestId, budget);
   }
 
 
@@ -146,12 +145,7 @@ export class BudgetService {
     status: 'APROVADA' | 'REJEITADA',
     rejectionReason?: string
   ) {
-    console.log(
-      'Updating status for request:',
-      requestId,
-      status,
-      rejectionReason
-    );
+    
     let budget = this.getBudget(requestId);
 
 
@@ -166,7 +160,6 @@ export class BudgetService {
       budget.rejectionReason = rejectionReason;
     }
 
-    console.log('Saving budget:', budget);
     this.saveBudget(budget);
 
 
@@ -179,7 +172,6 @@ export class BudgetService {
         request.rejectionReason = rejectionReason;
         request.statusId = status === 'REJEITADA' ? 3 : 2;
         localStorage.setItem('requests', JSON.stringify(parsedRequests));
-        console.log('Updated request:', request);
       }
     }
 

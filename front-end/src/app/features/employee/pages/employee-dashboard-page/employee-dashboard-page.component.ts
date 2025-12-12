@@ -48,7 +48,6 @@ export class EmployeeDashboardPageComponent {
   createdToday = 0;
 
   makeQuote(request: any) {
-    console.log('Efetuando orçamento para:', request.title);
   
   }
   getOpenRequestCount(): number {

@@ -49,7 +49,6 @@ export class HeaderComponent {
 
   logout() {
     this.authService.logout();
-    console.log('Logout realizado com sucesso!');
   }
 
   isSidebarExpanded(): boolean {

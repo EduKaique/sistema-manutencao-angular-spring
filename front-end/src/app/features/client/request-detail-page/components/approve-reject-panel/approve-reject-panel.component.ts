@@ -46,7 +46,6 @@ export class ApproveRejectPanelComponent {
 
   confirmRejection(rejectionReason: string) {
     this.rejectionReason = rejectionReason;
-    console.log('Motivo da recusa:', this.rejectionReason);
     if (!this.rejectionReason.trim()) {
       this.toast.warn('Atenção', 'Informe o motivo da recusa.');
       return;

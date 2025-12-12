@@ -141,7 +141,6 @@ export class ClientDashboardPageComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log('Solicitação enviada', result);
         this.loadRequests();
       } 
     });
@@ -153,14 +152,12 @@ export class ClientDashboardPageComponent implements OnInit, AfterViewInit {
   }
 
   remover(request: Request): void {
-    console.log('Tentando remover solicitação:', request);
     if (confirm('Deseja realmente excluir essa solicitação?')) {
       this.loadRequests();
     }
   }
 
   verServico(id: number) {
-    console.log('Tentando navegar para:', `/client/request-detail/${id}`);
 
     this.router.navigate(['/client/request-detail', id]);
   }

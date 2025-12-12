@@ -40,7 +40,6 @@ export class NewRequestPageComponent implements OnInit {
       next: (cats) => this.categories = cats,
       error: (err) => this.toast.error('Erro', 'Falha ao carregar categorias: ' + err)
     });
-    console.log('Categorias carregadas:', this.categories);
   }
 
   confirmCloseRequest() {
@@ -59,11 +58,9 @@ export class NewRequestPageComponent implements OnInit {
       return; 
     }
 
-    console.log('Enviando solicitação:', this.request);
 
     this.requestService.create(this.request).subscribe({
       next: (response) => {
-        console.log('Solicitação criada com sucesso:', response);
         this.toast.success('Sucesso', 'Solicitação criada com sucesso!');
         this.dialogRef.close(true);
       },

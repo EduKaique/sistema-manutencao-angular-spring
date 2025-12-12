@@ -54,7 +54,6 @@ export class ReportsPageComponent implements OnInit {
   loadRevenueByDateData(startDate: string, endDate: string) {
     this.reportService.getRevenueByDateData(startDate, endDate).subscribe({
       next: (data) => {
-        console.log('Dados de Receita por Data:', data);
         this.datasource = new MatTableDataSource<RevenueByDate>(data as RevenueByDate[]);
         this.datasource.paginator = this.paginator;
       },
@@ -76,7 +75,6 @@ export class ReportsPageComponent implements OnInit {
   loadRevenueByCategoryData() {
     this.reportService.getRevenueByCategoryData().subscribe({
       next: (data) => {
-        console.log('Dados de Receita por Categoria:', data);
         this.revenueByCategory = data as RevenueByCategory[];
       },
       error: (error) => {

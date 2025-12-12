@@ -29,7 +29,6 @@ export class ManageCategoriesPageComponent implements OnInit {
     this.categoryService.getAllCategories().subscribe({
       next: (data: Category[]) => {
         (this.categories = data);
-        console.log(this.categories)
       },
       error: (err) => {
         console.error('Erro ao carregar categorias', err);

@@ -82,11 +82,9 @@ export class SignupPageComponent {
         city: addressData.city,
         state: addressData.state
       };
-      console.log(requestData);
 
       this.authService.signup(requestData).subscribe({
         next: () => {
-          console.log('Cadastro realizado com sucesso!');
           this.showModal = true;
         },
         error: (err) => {

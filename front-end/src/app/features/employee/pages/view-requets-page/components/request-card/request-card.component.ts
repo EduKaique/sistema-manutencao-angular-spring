@@ -32,7 +32,6 @@ export class RequestCardComponent implements OnInit {
   }
 
   verServico(id: number) {
-    console.log('Tentando navegar para:', `/employee/budget-delivery/${id}`);
 
     this.router.navigate(['/employee/budget-delivery', id]);
   }
